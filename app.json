@@ -60,7 +60,8 @@
     "pages/admin-infra/goview/index",
     "pages/admin-infra/form-build/index",
     "pages/admin-infra/websocket/index",
-    "pages/admin-pay/wallet-adjustment/index"
+    "pages/admin-pay/wallet-adjustment/index",
+    "pages/admin-report/jimu/index"
   ],
   "window": {
     "navigationBarTitleText": "门店管理",
