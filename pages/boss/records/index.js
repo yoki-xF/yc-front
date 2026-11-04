@@ -5,13 +5,14 @@ Page({
   data: { title: '', loading: false, loaded: false, error: '', rows: [], total: 0, keyword: '', start: '', end: '', searchLabel: '', pageNo: 0, canCreate: false, depts: [], deptIndex: 0 },
   onLoad(o) {
     this.version = 0; this.session = wx.getStorageSync('yc_session'); this.type = o.type
-    try { const r = getResource(this.type); this.setData({ title: r.title, searchLabel: r.searchField ? (this.type === 'users' ? '账号' : '名称') : '' }); wx.setNavigationBarTitle({ title: r.title }); this.init() }
+    try { const r = getResource(this.type); this.setData({ title: r.title, searchLabel: r.searchField ? (this.type === 'users' ? '账号' : '名称') : '' }); wx.setNavigationBarTitle({ title: r.title }); this.init(); if(this.type==='commission')api.identity(this.session).then(info=>{if(!this.disposed)this.setData({canCreateCommission:require('../../../utils/boss/resources').can(info.permissions,'sport:check-game-sales:create')})}).catch(()=>{}) }
     catch (e) { this.setData({ error: e.message }) }
   },
   onUnload() { this.disposed=true;this.version++;exportApi.unlink(this.exportPath) },
   onShow() { if (this.opened && !this.data.loading) this.load(true); this.opened = true },
   async init() { try { if(getResource(this.type).dept) { const depts=await api.options(this.session); if(this.disposed)return;this.setData({depts:[{id:'',name:'全部可见门店'},...depts]}) } if(!this.disposed)await this.load(true) } catch(e) { this.setData({error:e.message || '读取门店失败'}) } },
   department(e) { const index=Number(e.detail.value); if(this.data.depts[index]&&!this.data.loading)this.setData({deptIndex:index}) },
+  commissionCreate() { wx.navigateTo({url:'/pages/boss/commission-create/index'}) },
   create() { if(this.data.canCreate)wx.navigateTo({url:this.type==='attendance'?'/pages/boss/schedule/index':'/pages/boss/form/index?type='+encodeURIComponent(this.type)}) },
   input(e) { this.setData({ keyword: e.detail.value }) },
   date(e) { const key = e.currentTarget.dataset.key; if (['start', 'end'].includes(key)) this.setData({ [key]: e.detail.value }) },

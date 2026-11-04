@@ -62,7 +62,8 @@
     "pages/admin-infra/websocket/index",
     "pages/admin-pay/wallet-adjustment/index",
     "pages/admin-report/jimu/index",
-    "pages/admin-infra/tracing/index"
+    "pages/admin-infra/tracing/index",
+    "pages/boss/commission-create/index"
   ],
   "window": {
     "navigationBarTitleText": "门店管理",
