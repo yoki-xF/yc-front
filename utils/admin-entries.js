@@ -136,16 +136,14 @@ const entries=[
     "title": "登录日志",
     "permission": "system:login-log:query",
     "url": "/pages/admin-system/logs/index?type=login",
-    "group": "系统管理",
-    "platformOnly": true
+    "group": "系统管理"
   },
   {
     "key": "系统管理:admin-system-operate-logs",
     "title": "操作日志",
     "permission": "system:operate-log:query",
     "url": "/pages/admin-system/logs/index?type=operate",
-    "group": "系统管理",
-    "platformOnly": true
+    "group": "系统管理"
   },
   {
     "key": "messages:sms-channels",
