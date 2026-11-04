@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="heading">经营设置</view>
+  <view wx:if="{{loading}}" class="card">正在读取经营设置…</view>
+  <block wx:else>
+    <view wx:if="{{error}}" class="card error">{{error}}</view>
+    <view wx:if="{{notice}}" class="card">{{notice}}</view>
+    <block wx:if="{{record}}">
+      <view class="card hint">这些设置适用于本组织所有门店。库存、五类资金和盈亏统一归门店；个人只统计电彩和竞彩销量。</view>
+      <view wx:if="{{record.reason}}" class="card">{{record.reason}}</view>
+      <view wx:for="{{fields}}" wx:key="key" class="card">
+        <view class="setting-row"><text>{{item.label}}</text><switch checked="{{item.checked}}" disabled="{{busy || needsReload || !record.canSave || record.locked}}" data-key="{{item.key}}" bindchange="change" /></view>
+        <view class="hint">{{item.hint}}</view>
+      </view>
+      <view class="card hint">原“销售员后台登录”是旧系统兼容字段，不控制新版员工登录。账号登录资格请在账号管理中设置。</view>
+      <block wx:if="{{record.canSave &amp;&amp; !record.locked}}">
+        <view class="card"><view>设置原因</view><textarea placeholder="填写5至200字，说明本次设置原因" value="{{reason}}" maxlength="200" disabled="{{busy || needsReload}}" bindinput="reason" /></view>
+        <button type="primary" loading="{{busy}}" disabled="{{busy || needsReload}}" bindtap="submit">保存经营设置</button>
+      </block>
+    </block>
+    <button disabled="{{busy}}" bindtap="retry">重新读取</button>
+  </block>
+</view>

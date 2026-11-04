@@ -7,6 +7,7 @@
     <view wx:if="{{!modules.length}}" class="card">当前账号未开通老板管理功能，请联系管理员。</view>
     <view class="grid"><button wx:for="{{modules}}" wx:key="key" data-key="{{item.key}}" bindtap="open">{{item.title}}</button></view>
     <button wx:if="{{adminAccess}}" bindtap="admin">后台管理与门店配置</button>
+    <button wx:if="{{settingsAccess}}" bindtap="settings">经营设置</button>
     <button wx:if="{{operatingAccess}}" bindtap="operatingDay">门店开店与结店</button>
     <button wx:if="{{openingAccess}}" bindtap="opening">新门店首次初始化</button>
     <button class="wide-button" wx:if="{{reportAccess}}" type="primary" bindtap="reports">门店报表与销量排名</button>

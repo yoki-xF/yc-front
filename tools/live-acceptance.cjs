@@ -34,6 +34,7 @@ async function run(){
  const form=await api.form(session,'users');assert.ok(Array.isArray(form.departments)&&Array.isArray(form.posts));checks.push('user-form-options')
  const profile=await api.profile(session);assert.equal(profile.username,credentials.username);checks.push('profile')
  const caps=await api.capabilities(session);assert.equal(caps.correctionsEnabled,true);checks.push('capabilities')
+ const settings=await require('../utils/boss/business-settings').get(session);assert.equal(typeof settings.values.personalSalesEnabled,'boolean');checks.push('native-business-settings-read')
  const entries=require('../utils/admin-entries').visible(info);assert.ok(entries.length>10);checks.push('admin-entry-permissions')
  await request('/system/auth/logout',{method:'POST',data:{},header:{Authorization:'Bearer '+session.accessToken,'tenant-id':String(session.tenantId)}});storage.clear();checks.push('native-request-logout')
  console.log(JSON.stringify({passed:true,checks},null,2))

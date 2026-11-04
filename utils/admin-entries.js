@@ -1,5 +1,6 @@
 const migrationScope=require('./migration-scope')
 const entries=[
+  {key:"门店业务配置:business-settings",title:"经营设置",permission:"system:service-config:query",url:"/pages/boss/business-settings/index",group:"门店业务配置"},
   {
     "key": "门店业务配置:departments",
     "title": "门店管理",

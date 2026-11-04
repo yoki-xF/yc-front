@@ -63,7 +63,8 @@
     "pages/admin-pay/wallet-adjustment/index",
     "pages/admin-report/jimu/index",
     "pages/admin-infra/tracing/index",
-    "pages/boss/commission-create/index"
+    "pages/boss/commission-create/index",
+    "pages/boss/business-settings/index"
   ],
   "window": {
     "navigationBarTitleText": "门店管理",
