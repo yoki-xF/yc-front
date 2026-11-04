@@ -36,6 +36,10 @@
       {
         "type": "file",
         "value": "utils/admin-infra/goview.test.js"
+      },
+      {
+        "type": "file",
+        "value": "utils/admin-infra/form-component.test.js"
       }
     ]
   }

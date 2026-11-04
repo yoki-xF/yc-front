@@ -4,4 +4,4 @@
 
 本机后端、隔离数据库及测试数据说明见 [本地开发环境](../local-dev/README.md)。`utils/config.js` 指向本地开发服务；真实设备验收需独立测试 HTTPS 与微信合法域名。不要在源码中存放账号密码。
 
-运行页面模拟测试：在仓库根目录执行 `for test in yc-native-miniapp/tests/*.test.js; do node "$test" || break; done`。模拟测试不代替后端集成、真实账目或真机验收。
+运行页面模拟测试：在仓库根目录执行 `for test in tests/*.test.js; do node "$test" || break; done`。模拟测试不代替后端集成、真实账目或真机验收。
