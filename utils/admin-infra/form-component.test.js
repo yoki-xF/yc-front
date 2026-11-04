@@ -1,0 +1,8 @@
+const assert=require('node:assert/strict'),vm=require('node:vm'),{generate}=require('./form-component')
+const rules=[{type:'input',field:'name',title:'{{malicious()}}',validate:[{required:true}]},{type:'select',field:'choice',options:[{label:'A',value:9000}]},{type:'checkbox',field:'flags',options:[{label:'B',value:false}]}]
+const files=generate(JSON.stringify(rules),'{}');assert.equal(files.length,5);assert(!files.find(f=>f.name.endsWith('wxml')).content.includes('malicious'));let component,toasts=0,event
+vm.runInNewContext(files.find(f=>f.name==='component.js').content,{Component:c=>component=c,wx:{showToast(){toasts++}}})
+const instance={data:component.data,...component.methods,setData(values){for(const [key,value] of Object.entries(values)){const [a,b]=key.split('.');if(b)this.data[a][b]=value;else this.data[a]=value}},triggerEvent(name,value){event={name,value}}}
+instance.submit();assert.equal(toasts,1);assert(!event);instance.onInput({currentTarget:{dataset:{field:'name'}},detail:{value:'员工'}});instance.onPick({currentTarget:{dataset:{field:'choice'}},detail:{value:'0'}});instance.onCheck({currentTarget:{dataset:{field:'flags'}},detail:{value:['0']}});instance.submit();assert.equal(event.value.values.choice,9000);assert.equal(event.value.values.flags[0],false);assert.equal(instance.data.options.flags[0].checked,true);instance.reset();assert.equal(instance.data.options.flags[0].checked,false)
+assert.throws(()=>generate('[{"type":"input","field":"constructor"}]','{}'),/字段名/);assert.throws(()=>generate('[{"type":"select","field":"x"}]','{}'),/选项/);assert.throws(()=>generate('[{"type":"iframe","field":"x"}]','{}'),/七种/)
+console.log('Generated native component required validation, typed options, checkbox reset and nonexecuting labels pass')
