@@ -5,10 +5,13 @@
   <view wx:else class="card">
     <view class="line"><text>现金</text><input type="text" value="{{xj}}" data-field="xj" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
     <view class="line"><text>微信余额</text><input type="text" value="{{wxBalance}}" data-field="wxBalance" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view class="line"><text>微信余额笔数</text><input type="number" value="{{wxBalanceCount}}" data-field="wxBalanceCount" bindinput="input" disabled="{{busy}}" placeholder="选填" /><text>笔</text></view>
     <view class="line"><text>收银通</text><input type="text" value="{{hsk}}" data-field="hsk" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
     <view class="line"><text>收银通笔数</text><input type="number" value="{{hskCount}}" data-field="hskCount" bindinput="input" disabled="{{busy}}" placeholder="选填" /><text>笔</text></view>
     <view class="line"><text>支付宝</text><input type="text" value="{{zfb}}" data-field="zfb" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view class="line"><text>支付宝笔数</text><input type="number" value="{{zfbCount}}" data-field="zfbCount" bindinput="input" disabled="{{busy}}" placeholder="选填" /><text>笔</text></view>
     <view class="line"><text>数字人民币</text><input type="text" value="{{szRmb}}" data-field="szRmb" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view class="line"><text>数字人民币笔数</text><input type="number" value="{{szRmbCount}}" data-field="szRmbCount" bindinput="input" disabled="{{busy}}" placeholder="选填" /><text>笔</text></view>
     <view wx:if="{{notice}}" class="notice">{{notice}}</view><view wx:if="{{error}}" class="error">{{error}}</view>
     <button wx:if="{{conflict}}" bindtap="reloadLatest">放弃草稿并加载最新数据</button>
     <button wx:if="{{uncertain}}" bindtap="confirmChecked">已核对当天记录和余额</button>

@@ -2,9 +2,10 @@ const operatingDay = require('../../utils/operating-day')
 const { request, sameSession } = require('../../utils/request')
 function auth(s) { return { Authorization: 'Bearer ' + s.accessToken, 'tenant-id': String(s.tenantId) } }
 function amount(value) { return /^-?(?:0|[1-9]\d{0,9})(?:\.\d{1,2})?$/.test(String(value)) }
+const countFields = ['hskCount', 'zfbCount', 'szRmbCount', 'wxBalanceCount']
 function count(value) { return value === '' || /^\d{1,8}$/.test(String(value)) }
 Page({
-  data: { deptName: '', loading: true, busy: false, error: '', notice: '', uncertain: false, conflict: false, existing: false, ready: false, xj: '', wxBalance: '', hsk: '', hskCount: '', zfb: '', szRmb: '' },
+  data: { deptName: '', loading: true, busy: false, error: '', notice: '', uncertain: false, conflict: false, existing: false, ready: false, xj: '', wxBalance: '', hsk: '', hskCount: '', zfbCount: '', szRmbCount: '', wxBalanceCount: '', zfb: '', szRmb: '' },
   onLoad(options) {
     this.session = wx.getStorageSync('yc_session'); this.deptId = String(options.deptId || ''); this.userId = String(options.userId || '')
     this.setData({ deptName: options.deptName ? decodeURIComponent(options.deptName) : '' })
@@ -25,21 +26,21 @@ Page({
       this.revision = draft ? draft.revision : result.revision
       const conflict = !!draft && draft.revision !== result.revision
       const value = key => String(draft ? (draft[key] == null ? '' : draft[key]) : (row[key] == null ? '' : row[key]))
-      this.setData({ ready: true, xj: value('xj'), wxBalance: value('wxBalance'), hsk: value('hsk'), hskCount: value('hskCount'), zfb: value('zfb'), szRmb: value('szRmb'), existing: !!row.id, uncertain: !!(draft && draft.uncertain), conflict, notice: conflict ? '资金已变化，草稿仍保存在本机，请记录后加载最新数据。' : (draft ? '已恢复本机草稿，请核对后提交。' : '') })
+      this.setData({ ready: true, xj: value('xj'), wxBalance: value('wxBalance'), hsk: value('hsk'), hskCount: value('hskCount'), zfbCount: value('zfbCount'), szRmbCount: value('szRmbCount'), wxBalanceCount: value('wxBalanceCount'), zfb: value('zfb'), szRmb: value('szRmb'), existing: !!row.id, uncertain: !!(draft && draft.uncertain), conflict, notice: conflict ? '资金已变化，草稿仍保存在本机，请记录后加载最新数据。' : (draft ? '已恢复本机草稿，请核对后提交。' : '') })
     } catch (error) { if (sameSession(this.session, wx.getStorageSync('yc_session'))) this.setData({ error: error.message || '加载失败，请重试' }) }
     finally { if (sameSession(this.session, wx.getStorageSync('yc_session'))) this.setData({ loading: false }) }
   },
-  saveDraft() { if (!this.draftKey || !sameSession(this.session, wx.getStorageSync('yc_session')) || this.destroyed) return; const { xj, wxBalance, hsk, zfb, szRmb, hskCount, uncertain } = this.data; wx.setStorageSync(this.draftKey, { revision: this.revision, xj, wxBalance, hsk, zfb, szRmb, hskCount, uncertain }) },
-  input(event) { const field = event.currentTarget.dataset.field; if (!['xj','wxBalance','hsk','zfb','szRmb','hskCount'].includes(field)) return; this.setData({ [field]: event.detail.value }); this.saveDraft() },
+  saveDraft() { if (!this.draftKey || !sameSession(this.session, wx.getStorageSync('yc_session')) || this.destroyed) return; const { xj, wxBalance, hsk, zfb, szRmb, hskCount, zfbCount, szRmbCount, wxBalanceCount, uncertain } = this.data; wx.setStorageSync(this.draftKey, { revision: this.revision, xj, wxBalance, hsk, zfb, szRmb, hskCount, zfbCount, szRmbCount, wxBalanceCount, uncertain }) },
+  input(event) { const field = event.currentTarget.dataset.field; if (!['xj','wxBalance','hsk','zfb','szRmb',...countFields].includes(field)) return; this.setData({ [field]: event.detail.value }); this.saveDraft() },
   retry() { if (!this.data.loading && !this.data.busy) this.load() },
   async submit() {
     if (this.data.busy || this.data.uncertain || this.data.conflict) return
     if (!sameSession(this.session, wx.getStorageSync('yc_session'))) { this.setData({ error: '账号已切换，请返回重新进入' }); return }
-    if (![this.data.xj,this.data.wxBalance,this.data.hsk,this.data.zfb,this.data.szRmb].every(amount) || !count(this.data.hskCount)) { this.setData({ error: '请填写五类资金金额（最多两位小数），笔数须为非负整数。' }); return }
+    if (![this.data.xj,this.data.wxBalance,this.data.hsk,this.data.zfb,this.data.szRmb].every(amount) || !countFields.every(key => count(this.data[key]))) { this.setData({ error: '请填写五类资金金额（最多两位小数），笔数须为非负整数。' }); return }
     const confirmed = await new Promise(resolve => wx.showModal({ title: '提交资金盘点', content: this.data.existing ? '当天已有资金盘点，提交将替换原记录并更新资金余额。请核对后继续。' : '提交将更新门店资金余额，请确认金额无误。', success: r => resolve(r.confirm), fail: () => resolve(false) }))
     if (!confirmed || this.data.busy || !sameSession(this.session, wx.getStorageSync('yc_session'))) return
     const data = { deptId: this.deptId, xj: this.data.xj, wxBalance: this.data.wxBalance, hsk: this.data.hsk, zfb: this.data.zfb, szRmb: this.data.szRmb }
-    if (this.data.hskCount !== '') data.hskCount = Number(this.data.hskCount)
+    countFields.forEach(key => { if (this.data[key] !== '') data[key] = Number(this.data[key]) })
     this.setData({ busy: true, error: '', notice: '' })
     try {
       await request('/sport/wx/night/count/fund/safe-submit', { method: 'POST', data: { deptId: this.deptId, revision: this.revision, record: data }, header: operatingDay.header(this, auth(wx.getStorageSync('yc_session'))) })
