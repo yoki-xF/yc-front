@@ -1,0 +1,52 @@
+<view class="container">
+  <view class="title">门店管理</view>
+  <view wx:if="{{!session}}" class="card">
+    <view class="heading">欢迎使用</view><view class="description">登录后查看当前账号信息。</view>
+    <button type="primary" bindtap="login">登录</button>
+  </view>
+  <view wx:else class="card">
+    <view class="heading">{{session.tenantName}}</view>
+    <view wx:if="{{loading}}" class="description">正在读取账号信息…</view>
+    <view wx:elif="{{user}}">
+      <view class="description">{{user.nickname}}</view>
+      <picker wx:if="{{deptIndex >= 0}}" range="{{depts}}" range-key="name" value="{{deptIndex}}" bindchange="changeDept">
+        <view class="store">当前门店：{{depts[deptIndex].name}} <text class="change">切换</text></view>
+      </picker>
+      <view wx:else class="description">当前账号没有可选择的门店，请联系管理员。</view>
+    </view>
+    <view wx:elif="{{error}}" class="error">{{error}}<button wx:if="{{sessionExpired}}" size="mini" bindtap="relogin">重新登录</button><button wx:else size="mini" bindtap="retry">重试</button></view>
+    <view wx:if="{{user && deptIndex >= 0}}" class="sales">
+      <view class="heading">销量概览</view>
+      <view wx:if="{{salesLoading}}" class="description">正在读取销量…</view>
+      <view wx:elif="{{salesError}}" class="error">{{salesError}}<button wx:if="{{salesExpired}}" size="mini" bindtap="relogin">重新登录</button><button wx:else size="mini" bindtap="retrySales">重试</button></view>
+      <view wx:elif="{{sales}}" class="sales-grid">
+        <view>本月已结店 {{sales.freshDays}} 天，其余 {{sales.pendingDays}} 天暂无已结店日报</view>
+        <view>我的电彩 <text>{{sales.personal ? sales.personal.electronic : '—'}}</text></view>
+        <view>我的竞彩 <text>{{sales.personal ? sales.personal.sportsBetting : '—'}}</text></view>
+        <view>门店即开 <text>{{sales.store ? sales.store.instant : '—'}}</text></view>
+        <view>门店电彩 <text>{{sales.store ? sales.store.electronic : '—'}}</text></view>
+        <view>门店竞彩 <text>{{sales.store ? sales.store.sportsBetting : '—'}}</text></view>
+        <view>已结店门店合计 <text>{{sales.store ? sales.store.total : '—'}}</text></view>
+        <view>月目标 <text>{{sales.target.configured ? sales.target.amount : '未配置'}}</text></view>
+        <view>目标进度（已结店，%） <text>{{sales.target.progressPercent == null ? '—' : sales.target.progressPercent}}</text></view>
+      </view>
+    </view>
+    <view class="description">请选择门店后办理盘点、单据或查看已结店日报。</view>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="checkStatus">当天盘点状态</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="morning">早盘点</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="evening">晚盘点</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="business">营业数据</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="fund">资金盘点</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="orders">即开票单据</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="cashTransfer">备付金转入</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="report">销量报表</button>
+    <button wx:if="{{user && deptIndex >= 0}}" bindtap="activity">促销活动</button>
+    <button bindtap="inbox">我的消息</button>
+    <button bindtap="manual">使用手册</button>
+    <button bindtap="profile">个人信息</button>
+    <button bindtap="contact">联系客服</button>
+    <button bindtap="logout">退出登录</button>
+  </view>
+</view>
+
+<boss-entry />

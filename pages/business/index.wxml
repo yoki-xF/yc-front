@@ -1,0 +1,16 @@
+<view class="page">
+  <view class="store">当前门店：{{deptName}}</view>
+  <view wx:if="{{loading}}" class="card">正在读取营业数据…</view>
+  <view wx:elif="{{error && !ready}}" class="card error">{{error}}<button size="mini" bindtap="retry">重试</button></view>
+  <view wx:else>
+    <view class="card">
+      <view wx:for="{{fields}}" wx:key="key" class="line"><text>{{item.label}}</text><input type="text" value="{{values[item.key]}}" data-key="{{item.key}}" bindinput="input" disabled="{{busy || conflict}}" placeholder="选填"/><text>{{item.unit}}</text></view>
+      <picker range="{{classes}}" range-key="dictLabel" value="{{classIndex}}" bindchange="changeClass" disabled="{{busy || conflict}}"><view class="line"><text>班次</text><text>{{classIndex >= 0 ? classes[classIndex].dictLabel : '请选择'}}</text></view></picker>
+      <view class="other">盘点人员为当前登录账号。</view>
+    </view>
+    <view class="card"><view class="section">凭证（最多 6 张）</view><view wx:for="{{images}}" wx:key="index" class="image-row"><view wx:if="{{item.ref}}" data-index="{{index}}" bindtap="preview">受控凭证 · 点击查看</view><image wx:else src="{{item.url || item.local}}" mode="aspectFill" data-index="{{index}}" bindtap="preview"/><button wx:if="{{item.url}}" size="mini" data-index="{{index}}" bindtap="protectLegacy" disabled="{{busy || conflict || uncertain || scanning}}">复制为受控凭证</button><button wx:if="{{item.legacyUrl}}" size="mini" data-index="{{index}}" bindtap="revertLegacy" disabled="{{busy || conflict}}">恢复原引用</button><button size="mini" data-index="{{index}}" bindtap="removeImage" disabled="{{busy || conflict}}">移除</button></view><button wx:if="{{images.length < 6}}" bindtap="addImage" disabled="{{busy || conflict}}">添加凭证</button></view>
+    <view class="card"><button bindtap="scan" loading="{{scanning}}" disabled="{{busy || scanning || conflict}}">拍照识别</button><view wx:if="{{suggestions.length}}"><view class="other">识别结果：</view><view wx:for="{{suggestions}}" wx:key="key" class="line">{{item.label}}：{{item.value}} {{item.unit}}</view><button bindtap="applyScan" disabled="{{busy || conflict}}">应用识别结果</button></view></view>
+    <view wx:if="{{notice}}" class="notice">{{notice}}</view><view wx:if="{{error}}" class="error">{{error}}</view>
+    <button wx:if="{{conflict}}" bindtap="reloadLatest" disabled="{{busy || loading || scanning}}">放弃草稿并加载最新记录</button><button wx:if="{{uncertain}}" bindtap="confirmChecked">已核对当天记录</button><button type="primary" bindtap="submit" loading="{{busy}}" disabled="{{busy || scanning || uncertain || conflict}}">提交营业数据</button>
+  </view>
+</view>

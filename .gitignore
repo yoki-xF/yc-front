@@ -1,0 +1,17 @@
+
+# Local credentials and generated files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.log
+.DS_Store
+project.private.config.json
+.runtime/
+runtime/
+**/target/
+**/.flattened-pom.xml
+node_modules/

@@ -1,0 +1,4 @@
+@import "../form/index.wxss";
+.page button.full{width:100%;max-width:none;font-size:30rpx}.option{display:flex;align-items:flex-start;gap:12rpx;min-height:70rpx}.option text{flex:1;overflow-wrap:anywhere}.search{margin:20rpx 0}
+
+.page{padding-bottom:calc(32rpx + env(safe-area-inset-bottom))}

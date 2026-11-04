@@ -1,0 +1,13 @@
+<view class="page">
+ <view class="heading">后台管理</view>
+ <view class="hint">按当前账号权限展示功能。门店业务操作和更正仍从对应工作台进入。</view>
+ <view wx:if="{{loading}}" class="card">正在读取权限…</view>
+ <view wx:elif="{{error}}" class="card error">{{error}}<button bindtap="retry">重试</button></view>
+ <block wx:else>
+  <view wx:if="{{!groups.length}}" class="card">当前账号没有后台管理权限，请联系管理员。</view>
+  <view wx:for="{{groups}}" wx:key="title" class="card">
+   <view class="heading">{{item.title}}</view>
+   <button wx:for="{{item.entries}}" wx:for-item="entry" wx:key="key" data-key="{{entry.key}}" bindtap="open">{{entry.title}}</button>
+  </view>
+ </block>
+</view>

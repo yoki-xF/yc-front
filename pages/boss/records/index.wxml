@@ -1,0 +1,20 @@
+<view class="page">
+  <view class="card filters">
+    <picker wx:if="{{depts.length}}" range="{{depts}}" range-key="name" value="{{deptIndex}}" bindchange="department" disabled="{{loading}}"><view class="row">门店：{{depts[deptIndex].name}}</view></picker>
+    <input wx:if="{{searchLabel}}" value="{{keyword}}" bindinput="input" placeholder="按{{searchLabel}}查询" />
+    <view class="row"><picker mode="date" value="{{start}}" data-key="start" bindchange="date">{{start || '开始日期'}}</picker><text>至</text><picker mode="date" value="{{end}}" data-key="end" bindchange="date">{{end || '结束日期'}}</picker></view>
+    <view class="actions"><button bindtap="search" disabled="{{loading}}">查询</button><button bindtap="clear" disabled="{{loading}}">重置</button></view>
+  </view>
+  <button wx:if="{{canCreate}}" type="primary" bindtap="create">新增{{title}}</button>
+  <button wx:if="{{canExport}}" bindtap="exportCsv" disabled="{{loading}}">导出查询结果 CSV（最多2000行）</button>
+  <button wx:if="{{hasExport}}" bindtap="shareCsv">发送 CSV 文件</button>
+  <view wx:if="{{error}}" class="card error">{{error}}<button bindtap="search" disabled="{{loading}}">重新查询</button></view>
+  <view wx:if="{{loaded}}" class="hint">共 {{total}} 条</view>
+  <view wx:for="{{rows}}" wx:for-item="record" wx:for-index="rowIndex" wx:key="key" class="card" data-index="{{rowIndex}}" bindtap="open">
+    <view class="heading">{{record.title}} <text wx:if="{{record.canOpen}}" class="arrow">›</text></view>
+    <view wx:for="{{record.fields}}" wx:key="key" class="row"><text>{{item.label}}</text><text>{{item.value}}</text></view>
+  </view>
+  <view wx:if="{{loading}}" class="card">正在读取…</view>
+  <view wx:elif="{{loaded && !rows.length}}" class="card">所选范围内暂无记录</view>
+  <button wx:if="{{loaded && rows.length < total}}" bindtap="more" disabled="{{loading}}">加载更多</button>
+</view>

@@ -1,0 +1,2 @@
+@import "../../boss/home/index.wxss";
+.page{font-size:30rpx;line-height:1.6}textarea{width:100%;box-sizing:border-box;min-height:360rpx;background:#f5f7fa;padding:20rpx}.field{margin:24rpx 0}.hint{font-size:28rpx}.pagination{display:flex;align-items:center;gap:16rpx}.pagination button{flex:1}

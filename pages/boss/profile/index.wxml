@@ -1,0 +1,24 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="card">正在读取个人资料…</view>
+  <view wx:if="{{error}}" class="card error">{{error}}<button wx:if="{{!profile}}" bindtap="retry" disabled="{{busy}}">重新读取</button></view>
+  <block wx:if="{{profile}}">
+    <view class="card"><image wx:if="{{profile.avatar}}" src="{{profile.avatar}}" mode="aspectFill" class="avatar"/><view class="heading">{{profile.username}}</view><button bindtap="avatar" disabled="{{busy || uncertain}}">更换头像</button><view class="hint">支持2MB以内的JPEG、PNG或WebP图片。</view><view>所属部门：{{profile.department}}</view><view>角色：{{profile.roles}}</view></view>
+    <view class="tabs"><button class="{{!passwordMode ? 'selected' : ''}}" data-mode="profile" bindtap="mode" disabled="{{busy}}">个人资料</button><button class="{{passwordMode ? 'selected' : ''}}" data-mode="password" bindtap="mode" disabled="{{busy}}">修改密码</button></view>
+    <view class="card">
+      <block wx:if="{{!passwordMode}}">
+        <view class="field"><view>姓名</view><input value="{{values.nickname}}" data-key="nickname" bindinput="input" maxlength="30" disabled="{{busy || uncertain}}" /></view>
+        <view class="field"><view>手机号</view><input value="{{values.mobile}}" data-key="mobile" bindinput="input" type="number" maxlength="11" disabled="{{busy || uncertain}}" /></view>
+        <view class="field"><view>邮箱</view><input value="{{values.email}}" data-key="email" bindinput="input" maxlength="50" disabled="{{busy || uncertain}}" /></view>
+      </block>
+      <block wx:else>
+        <view class="hint">密码长度为4至16位。忘记密码请联系管理员协助重置。</view>
+        <view class="field"><view>原密码</view><input value="{{passwords.oldPassword}}" data-key="oldPassword" bindinput="input" password maxlength="16" disabled="{{busy || uncertain}}" /></view>
+        <view class="field"><view>新密码</view><input value="{{passwords.newPassword}}" data-key="newPassword" bindinput="input" password maxlength="16" disabled="{{busy || uncertain}}" /></view>
+        <view class="field"><view>确认新密码</view><input value="{{passwords.confirmation}}" data-key="confirmation" bindinput="input" password maxlength="16" disabled="{{busy || uncertain}}" /></view>
+      </block>
+      <view wx:if="{{notice}}" class="hint notice">{{notice}}</view>
+      <button type="primary" bindtap="submit" loading="{{busy}}" disabled="{{busy || uncertain}}">{{passwordMode ? '修改密码' : '保存资料'}}</button>
+      <button wx:if="{{uncertain && !passwordMode}}" bindtap="retry" disabled="{{busy}}">重新读取资料核对结果</button>
+    </view>
+  </block>
+</view>

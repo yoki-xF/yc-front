@@ -1,0 +1,7 @@
+const realSession=require('../utils/request').sameSession
+const assert=require('node:assert/strict'),Module=require('node:module');let definition;const pending=[],session={tenantId:1,accessToken:'token'},storage={yc_session:session};global.wx={getStorageSync:()=>storage.yc_session};global.Page=p=>definition=p
+const old=Module._load;Module._load=function(n,...args){if(n==='../../utils/request')return{sameSession:realSession,request:(path,options)=>new Promise((resolve,reject)=>pending.push({path,options,resolve,reject}))};return old.call(this,n,...args)};require('../pages/index/index');Module._load=old
+const page=Object.assign({},definition,{data:{...definition.data},salesVersion:0,setData(v){Object.assign(this.data,v)}})
+function response(i,n){let {deptId,start,end}=pending[i].options.data;return {deptId,start,end,days:[],store:{total:n},personal:{electronic:'1.00',sportsBetting:'2.00'},target:{configured:false},freshDays:1,pendingDays:1}}
+async function run(){const a=page.loadSales(session,{id:1}),b=page.loadSales(session,{id:2});pending[1].resolve(response(1,'8.00'));await b;pending[0].resolve(response(0,'99.00'));await a;assert.equal(page.data.sales.store.total,'8.00');assert.ok(pending.every(p=>p.path==='/sport/wx/store/unified-report'));const c=page.loadSales(session,{id:2});pending[2].reject(Error('网络异常'));await c;assert.equal(page.data.sales.store.total,'8.00');assert.equal(page.data.salesError,'网络异常');console.log('统一销量切店竞态与刷新失败检查通过')}
+run().catch(e=>{console.error(e);process.exitCode=1})

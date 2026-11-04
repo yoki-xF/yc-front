@@ -1,0 +1,7 @@
+const assert=require('node:assert/strict'),layout=require('./goview-layout')
+const text=JSON.stringify({editCanvasConfig:{width:1000,height:500},unknown:{keep:true},componentList:[{id:'original',chartConfig:{title:'销售'},attr:{x:100,y:50,w:200,h:100},option:{script:'do not run'}}]})
+assert.match(layout.preview(text).items[0].style,/left:10%;top:10%;width:20%;height:20%/)
+const changed=JSON.parse(layout.change(text,0,'geometry',{x:20,y:30,w:300,h:200}));assert.deepEqual(changed.unknown,{keep:true});assert.equal(changed.componentList[0].option.script,'do not run');assert.equal(changed.componentList[0].attr.w,300)
+assert.throws(()=>layout.change(text,0,'geometry',{x:NaN,y:0,w:0,h:2}),/范围/)
+const copy=JSON.parse(layout.change(text,0,'duplicate'));assert.equal(copy.componentList.length,2);assert.notEqual(copy.componentList[0].id,copy.componentList[1].id);assert.equal(JSON.parse(layout.change(text,0,'remove')).componentList.length,0);assert.throws(()=>layout.change(text,8,'remove'),/重新选择/)
+console.log('GoView layout coordinates, nonexecuting preview, unknown config preservation and bounded edits pass')

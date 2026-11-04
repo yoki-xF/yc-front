@@ -1,0 +1,12 @@
+<view class="page">
+ <view wx:if="{{loading}}" class="card">正在读取角色授权…</view>
+ <view wx:if="{{error}}" class="card error">{{error}}<button bindtap="retry" disabled="{{busy || loading}}">重新读取</button></view>
+ <view wx:if="{{notice}}" class="card">{{notice}}</view>
+ <block wx:if="{{record}}">
+  <view class="card"><view class="heading">{{record.name}}</view><view class="hint">授权影响拥有该角色的账号。仅本组织具有相应权限的管理员可操作。</view></view>
+  <view wx:if="{{record.menuWarning}}" class="card">{{record.menuWarning}}</view>
+  <view wx:if="{{record.canMenus}}" class="card"><view class="heading">功能权限</view><view class="hint">入口和按钮权限分别选择，请同时核对其上级入口。搜索时保留未显示项目的选择。</view><input class="search" placeholder="搜索功能名称" value="{{keyword}}" bindinput="search" disabled="{{busy}}"/><checkbox-group bindchange="menus"><label wx:for="{{visibleMenus}}" wx:key="id" class="option"><checkbox value="{{item.id}}" checked="{{item.checked}}" disabled="{{busy || uncertain}}"/><text>{{item.label}}</text></label></checkbox-group><view wx:if="{{menusEmpty}}" class="hint empty-state">暂无匹配功能。</view><button class="full" data-action="menus" bindtap="submit" disabled="{{busy || uncertain}}">保存功能权限</button></view>
+  <view wx:if="{{record.scopeWarning}}" class="card">{{record.scopeWarning}}</view>
+  <view wx:if="{{record.canScope}}" class="card"><view class="heading">数据范围</view><picker range="{{scopes}}" range-key="name" value="{{scopeIndex}}" bindchange="scope" disabled="{{busy || uncertain}}"><view class="choice">{{scopeIndex >= 0 ? scopes[scopeIndex].name : '请选择数据范围'}}</view></picker><checkbox-group wx:if="{{scopeIndex === 1}}" bindchange="departments"><label wx:for="{{departments}}" wx:key="id" class="option"><checkbox value="{{item.id}}" checked="{{item.checked}}" disabled="{{busy || uncertain}}"/><text>{{item.name}}</text></label></checkbox-group><button class="full" data-action="scope" bindtap="submit" disabled="{{busy || uncertain}}">保存数据范围</button></view>
+ </block>
+</view>

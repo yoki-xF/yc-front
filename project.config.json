@@ -1,0 +1,42 @@
+{
+  "description": "门店管理原生微信小程序",
+  "compileType": "miniprogram",
+  "appid": "wx5e8f55e5ce9d5794",
+  "projectname": "yc-native-miniapp",
+  "setting": {
+    "es6": true,
+    "minified": false
+  },
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "tests"
+      },
+      {
+        "type": "file",
+        "value": "ROUTES-business.json"
+      },
+      {
+        "type": "file",
+        "value": "ENTRIES-business.json"
+      },
+      {
+        "type": "file",
+        "value": "utils/admin-infra/codegen.test.js"
+      },
+      {
+        "type": "file",
+        "value": "utils/admin-infra/form-builder.test.js"
+      },
+      {
+        "type": "file",
+        "value": "utils/admin-infra/socket.test.js"
+      },
+      {
+        "type": "file",
+        "value": "utils/admin-infra/goview.test.js"
+      }
+    ]
+  }
+}

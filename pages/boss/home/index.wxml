@@ -1,0 +1,16 @@
+<view class="page">
+  <view class="heading">老板工作台</view>
+  <view wx:if="{{loading}}" class="card">正在读取权限…</view>
+  <view wx:elif="{{error}}" class="card error">{{error}}<button bindtap="retry">重试</button><button bindtap="login">登录账号</button></view>
+  <block wx:else>
+    <view class="card"><view>{{nickname}}</view><view class="hint">选择要查看的业务记录</view></view>
+    <view wx:if="{{!modules.length}}" class="card">当前账号未开通老板管理功能，请联系管理员。</view>
+    <view class="grid"><button wx:for="{{modules}}" wx:key="key" data-key="{{item.key}}" bindtap="open">{{item.title}}</button></view>
+    <button wx:if="{{adminAccess}}" bindtap="admin">后台管理与门店配置</button>
+    <button wx:if="{{operatingAccess}}" bindtap="operatingDay">门店开店与结店</button>
+    <button wx:if="{{openingAccess}}" bindtap="opening">新门店首次初始化</button>
+    <button class="wide-button" wx:if="{{reportAccess}}" type="primary" bindtap="reports">门店报表与销量排名</button>
+    <view wx:if="{{availabilityNotice}}" class="hint">{{availabilityNotice}}</view>
+    <button class="wide-button" bindtap="profile">个人资料与密码</button>
+  </block>
+</view>

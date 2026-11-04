@@ -1,0 +1,1 @@
+.container { padding: 60rpx 32rpx; } .title { font-size: 40rpx; font-weight: 600; margin-bottom: 36rpx; } .card { background: white; border-radius: 20rpx; padding: 36rpx; } .label { margin: 24rpx 0 12rpx; font-weight: 500; } input { background: #f5f7fa; padding: 20rpx; border-radius: 10rpx; } button { margin-top: 36rpx; } .error { color: #b42318; margin-top: 20rpx; }

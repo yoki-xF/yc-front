@@ -1,0 +1,2 @@
+@import "../../boss/home/index.wxss";
+.hint{font-size:28rpx}.row{padding:24rpx 0}

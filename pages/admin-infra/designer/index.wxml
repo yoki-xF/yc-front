@@ -1,0 +1,1 @@
+<view class="page"><view class="title">{{title}}</view><view>{{description}}</view><view class="hint">请勿将账号令牌或密码粘贴到链接、聊天或其他不可信位置。此页面不会生成带凭据的链接。</view></view>

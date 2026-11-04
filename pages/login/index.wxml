@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="title">登录门店管理</view>
+  <view class="card">
+    <view class="label">组织名称</view><input value="{{tenant}}" data-field="tenant" bindinput="onInput" placeholder="请输入组织名称" maxlength="30" />
+    <view class="label">账号</view><input value="{{username}}" data-field="username" bindinput="onInput" placeholder="请输入账号" maxlength="16" />
+    <view class="label">密码</view><input value="{{password}}" data-field="password" bindinput="onInput" password placeholder="请输入密码" maxlength="16" />
+    <view wx:if="{{error}}" class="error">{{error}}</view>
+    <button type="primary" loading="{{busy}}" disabled="{{busy}}" bindtap="submit">登录</button>
+  </view>
+</view>

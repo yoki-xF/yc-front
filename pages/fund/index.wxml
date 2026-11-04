@@ -1,0 +1,17 @@
+<view class="page">
+  <view class="store">当前门店：{{deptName}}</view>
+  <view wx:if="{{loading}}" class="card">正在读取资金盘点…</view>
+  <view wx:elif="{{error && !ready}}" class="card error">{{error}}<button size="mini" bindtap="retry">重试</button></view>
+  <view wx:else class="card">
+    <view class="line"><text>现金</text><input type="text" value="{{xj}}" data-field="xj" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view class="line"><text>微信余额</text><input type="text" value="{{wxBalance}}" data-field="wxBalance" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view class="line"><text>收银通</text><input type="text" value="{{hsk}}" data-field="hsk" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view class="line"><text>收银通笔数</text><input type="number" value="{{hskCount}}" data-field="hskCount" bindinput="input" disabled="{{busy}}" placeholder="选填" /><text>笔</text></view>
+    <view class="line"><text>支付宝</text><input type="text" value="{{zfb}}" data-field="zfb" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view class="line"><text>数字人民币</text><input type="text" value="{{szRmb}}" data-field="szRmb" bindinput="input" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view wx:if="{{notice}}" class="notice">{{notice}}</view><view wx:if="{{error}}" class="error">{{error}}</view>
+    <button wx:if="{{conflict}}" bindtap="reloadLatest">放弃草稿并加载最新数据</button>
+    <button wx:if="{{uncertain}}" bindtap="confirmChecked">已核对当天记录和余额</button>
+    <button type="primary" bindtap="submit" loading="{{busy}}" disabled="{{busy || uncertain || conflict}}">提交资金盘点</button>
+  </view>
+</view>

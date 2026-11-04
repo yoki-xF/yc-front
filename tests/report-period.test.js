@@ -1,0 +1,5 @@
+const assert=require('node:assert/strict'),{period}=require('../utils/report-period')
+assert.deepEqual(period('week',new Date(2026,10,1)),{start:'2026-10-26',end:'2026-11-01'})
+assert.deepEqual(period('month',new Date(2026,1,12)),{start:'2026-02-01',end:'2026-02-28'})
+assert.deepEqual(period('day',new Date(2026,10,4)),{start:'2026-11-04',end:'2026-11-04'})
+console.log('日周月与跨月范围检查通过')

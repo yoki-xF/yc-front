@@ -1,0 +1,2 @@
+@import "../../boss/home/index.wxss";
+.page .hint{font-size:28rpx;color:#475467;line-height:1.6}.page button{font-size:30rpx;text-align:left;white-space:normal}

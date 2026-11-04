@@ -1,0 +1,2 @@
+const assert=require('node:assert/strict'),api=require('../utils/admin-system/user-import')
+const rows=api.parse('username,nickname,deptId,email,mobile,sex,status\na123,"Name, A",9007199254740993,,,0,0\n');assert.equal(rows[0].deptId,'9007199254740993');assert.equal(rows[0].nickname,'Name, A');assert.throws(()=>api.parse('bad\na'));assert.throws(()=>api.parse('username,nickname,deptId,email,mobile,sex,status\na,b,1,,,0,0\na,b,1,,,0'));console.log('import CSV parsing and exact identifiers passed')

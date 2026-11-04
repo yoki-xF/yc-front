@@ -1,0 +1,22 @@
+<block wx:if="{{deferred}}"><view class="page">此功能已预留，待第三方接入方案确定后再启用。</view></block><block wx:else><view class="page">
+ <view wx:if="{{loading}}" class="card">正在读取…</view><view wx:if="{{error}}" class="card error">{{error}}</view><view wx:if="{{notice}}" class="card">{{notice}}</view>
+ <block wx:if="{{!editing}}">
+  <view class="card"><input value="{{keyword}}" bindinput="filter" placeholder="搜索名称、收件人或客户端" disabled="{{loading || busy}}"/><button bindtap="search" disabled="{{loading || busy}}">查询 / 刷新</button><button wx:if="{{canCreate}}" bindtap="create" disabled="{{loading || busy}}">新增</button><button wx:if="{{canExport}}" bindtap="exportCsv" disabled="{{loading || busy}}">导出 CSV（最多2000行）</button><button wx:if="{{hasExport}}" bindtap="shareCsv">发送 CSV 文件</button></view>
+  <view wx:for="{{rows}}" wx:key="id" class="card" data-id="{{item.id}}" bindtap="open"><view>{{item.title}}</view><view class="hint">编号 {{item.id}} {{item.status}}</view></view><view wx:if="{{!loading && !rows.length}}" class="card">暂无记录</view>
+  <view class="pagination"><button bindtap="previous" disabled="{{loading || pageNo &lt;= 1}}">上一页</button><text>{{pageNo}} 页 / {{total}} 条</text><button bindtap="next" disabled="{{loading || pageNo * 20 &gt;= total}}">下一页</button></view>
+ </block>
+ <block wx:else>
+  <view wx:if="{{!fields.length}}" class="card"><view wx:for="{{details}}" wx:key="key" class="row"><view>{{item.label}}</view><view class="value">{{item.value}}</view></view></view>
+  <view wx:if="{{!sending}}" class="card">
+   <view wx:for="{{fields}}" wx:key="key" wx:for-index="i" class="field"><view>{{item.label}}</view><view wx:if="{{item.hint}}" class="hint">{{item.hint}}</view>
+    <picker wx:if="{{item.kind === 'status' || item.kind === 'boolean' || item.kind === 'userType'}}" range="{{item.kind === 'status' ? ['启用','停用'] : item.kind === 'boolean' ? ['关闭','开启'] : ['会员','管理员']}}" value="{{item.kind === 'boolean' ? (values[item.key] === 'true' ? 1 : 0) : item.kind === 'userType' ? values[item.key] - 1 : values[item.key]}}" data-index="{{i}}" bindchange="choose" disabled="{{busy || uncertain || saved || !canSave}}"><view class="field">{{item.kind === 'status' ? (values[item.key] === '0' ? '启用' : '停用') : item.kind === 'boolean' ? (values[item.key] === 'true' ? '开启' : '关闭') : (values[item.key] === '1' ? '会员' : '管理员')}} ›</view></picker>
+    <textarea wx:elif="{{item.kind === 'textarea' || item.kind === 'list'}}" value="{{values[item.key]}}" data-key="{{item.key}}" bindinput="input" maxlength="10000" disabled="{{busy || uncertain || saved || !canSave}}"/>
+    <input wx:else value="{{values[item.key]}}" password="{{item.kind === 'secret'}}" data-key="{{item.key}}" bindinput="input" maxlength="500" disabled="{{busy || uncertain || saved || !canSave}}"/>
+   </view>
+   <button wx:if="{{canSave}}" type="primary" bindtap="submit" loading="{{busy}}" disabled="{{loading || busy || uncertain || saved}}">保存配置</button><button wx:if="{{canSend}}" bindtap="beginSend" disabled="{{loading || busy || uncertain || saved}}">使用此模板发送</button><button wx:if="{{canRemove}}" bindtap="remove" disabled="{{loading || busy || uncertain || saved}}">{{removeLabel}}</button>
+  </view>
+  <view wx:else class="card"><view class="heading">核对收件人与参数</view><view class="hint">短信填手机号，邮件填邮箱，站内信填账号编号。发送后请查询发送记录。</view><input value="{{sendInput.recipient}}" data-key="recipient" bindinput="sendInput" placeholder="收件地址或账号编号" disabled="{{busy || uncertain || saved}}"/><picker range="{{userTypes}}" value="{{sendInput.userType - 1}}" bindchange="sendType" disabled="{{busy || uncertain || saved}}"><view class="field">用户类型：{{sendInput.userType === '1' ? '会员' : '管理员'}} ›</view></picker><view>模板参数（JSON对象）</view><textarea value="{{sendInput.params}}" data-key="params" bindinput="sendInput" maxlength="20000" disabled="{{busy || uncertain || saved}}"/><button type="primary" bindtap="send" loading="{{busy}}" disabled="{{busy || uncertain || saved}}">核对并发送</button></view>
+  <button bindtap="back" disabled="{{busy}}">返回列表核对</button>
+ </block>
+</view>
+</block>

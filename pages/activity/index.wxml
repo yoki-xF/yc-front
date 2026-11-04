@@ -1,0 +1,14 @@
+<view class="page">
+  <view class="store">当前门店：{{deptName}}</view>
+  <view wx:if="{{loading}}" class="card">正在加载活动…</view>
+  <view wx:elif="{{error && !items.length}}" class="card error">{{error}}<button size="mini" bindtap="retry">重试</button></view>
+  <view wx:elif="{{!items.length}}" class="card">当前没有可填报的促销活动。</view>
+  <view wx:else class="card">
+    <picker range="{{users}}" range-key="label" value="{{userIndex}}" bindchange="changeUser" disabled="{{busy}}"><view class="row">校对人员 <text>{{userIndex >= 0 ? users[userIndex].label : '请选择'}}</text></view></picker>
+    <view wx:for="{{items}}" wx:key="activityId" class="row"><text>{{item.activityName}}</text><input type="digit" value="{{item.salesAmount}}" data-index="{{index}}" bindinput="inputAmount" disabled="{{busy}}" placeholder="请输入金额" /><text>元</text></view>
+    <view wx:if="{{notice}}" class="notice">{{notice}}</view><view wx:if="{{error}}" class="error">{{error}}</view>
+    <button wx:if="{{conflict}}" bindtap="reloadLatest">放弃草稿并加载最新数据</button>
+    <button wx:if="{{uncertain}}" bindtap="confirmChecked">已核对当天记录</button>
+    <button type="primary" bindtap="submit" loading="{{busy}}" disabled="{{busy || uncertain || conflict}}">提交</button>
+  </view>
+</view>

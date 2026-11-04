@@ -1,0 +1,10 @@
+const {request,sameSession}=require('../request')
+const configs={
+ menus:{title:'菜单',fields:[['name','名称','text'],['parentId','父菜单编号（根为0）','id'],['type','类型（1目录/2菜单/3按钮）','integer'],['sort','排序','integer'],['permission','权限标识','text'],['path','路由地址','text'],['icon','图标','text'],['component','组件路径','text'],['componentName','组件名','text'],['status','状态（0启用/1停用）','integer'],['visible','显示（true/false）','bool'],['keepAlive','缓存（true/false）','bool'],['alwaysShow','总是显示（true/false）','bool']]},
+ 'dict-types':{title:'字典类型',fields:[['name','名称','text'],['type','类型编码','text'],['status','状态（0启用/1停用）','integer'],['remark','备注','text']]},
+ 'dict-data':{title:'字典数据',fields:[['dictType','字典类型编码','text'],['label','标签','text'],['value','值','text'],['sort','排序','integer'],['status','状态（0启用/1停用）','integer'],['colorType','颜色','text'],['cssClass','CSS 类','text'],['remark','备注','text']]}
+}
+function header(session){const current=wx.getStorageSync('yc_session');if(!sameSession(session,current))throw Error('账号已切换，请返回重新进入');return {Authorization:'Bearer '+current.accessToken,'tenant-id':String(current.tenantId)}}
+async function call(session,type,path,options={}){if(!configs[type])throw Error('不支持的类型');const r=await request('/system/admin-native/global/'+type+'/'+path,{...options,header:header(session)});header(session);return r}
+function fields(type,values){const result={};for(const [key,label,kind] of configs[type].fields){const v=String(values[key]==null?'':values[key]);if(kind==='integer'){if(!/^\d{1,9}$/.test(v))throw Error(label+'须为有效整数');result[key]=Number(v)}else if(kind==='id'){if(!/^\d+$/.test(v))throw Error(label+'须为有效编号');result[key]=v}else if(kind==='bool'){if(v!=='true'&&v!=='false')throw Error(label+'须填写 true 或 false');result[key]=v==='true'}else result[key]=v}return result}
+module.exports={configs,header,fields,capabilities:(s,t)=>call(s,t,'capabilities'),tree:(s,search)=>call(s,'menus','tree',{data:{search}}),page:(s,t,p,search,dictType)=>call(s,t,'page',{data:{pageNo:p,pageSize:20,search,dictType}}),detail:(s,t,id)=>call(s,t,'get',{data:{id:String(id)}}),save:(s,t,data)=>call(s,t,'save',{method:'POST',data})}

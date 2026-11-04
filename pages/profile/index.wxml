@@ -1,0 +1,12 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="notice">正在读取个人信息…</view>
+  <view wx:elif="{{error}}" class="notice">{{error}}<button size="mini" bindtap="retry">{{error === '请先登录' || sessionExpired ? '去登录' : '重试'}}</button></view>
+  <view wx:elif="{{profile}}" class="card">
+    <view class="row"><text>头像</text><image wx:if="{{profile.avatar}}" class="avatar" src="{{profile.avatar}}" mode="aspectFill" /><text wx:else>未设置</text></view>
+    <view class="row"><text>名字</text><text>{{profile.nickname || '未填写'}}</text></view>
+    <view class="row"><text>组织</text><text>{{tenantName}}</text></view>
+    <view class="row"><text>部门</text><text>{{profile.dept && profile.dept.name ? profile.dept.name : '未填写'}}</text></view>
+    <view class="row"><text>手机号</text><text>{{phone}}</text></view>
+    <view class="row"><text>邮箱</text><text>{{profile.email || '未填写'}}</text></view>
+  </view>
+</view>

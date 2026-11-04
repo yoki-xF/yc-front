@@ -1,0 +1,9 @@
+const assert=require('node:assert/strict'),Module=require('node:module')
+let definition,calls=0,fail=false,sent
+const session={tenantId:1,accessToken:'a',refreshToken:'r'},storage={yc_session:session}
+global.wx={getStorageSync:k=>storage[k],setStorageSync:(k,v)=>storage[k]=structuredClone(v),removeStorageSync:k=>delete storage[k],showToast(){},showModal:o=>o.success({confirm:true})};global.Page=p=>definition=p
+const old=Module._load;Module._load=function(n,...args){if(n==='../../utils/operating-day')return require('./operating-day-fixture');if(n==='../../utils/request')return {sameSession:(a,b)=>!!(a&&b&&a.tenantId===b.tenantId&&a.refreshToken===b.refreshToken),request:async(path,opts)=>{if(opts.method==='POST'){calls++;sent=opts.data;if(fail)throw Error('timeout');return 11}return [{id:3,materialName:'票',money:'10.00',price:'200.00'}]}};return old.call(this,n,...args)}
+require('../pages/purchase-create/index');Module._load=old
+const page=Object.assign({},definition,{data:structuredClone(definition.data),setData(o){for(const [key,value] of Object.entries(o)){const match=key.match(/^items\[(\d+)\]\.(\w+)$/);if(match)this.data.items[+match[1]][match[2]]=value;else this.data[key]=value}}})
+async function run(){page.onLoad({deptId:'1',userId:'1',deptName:'测试'});await new Promise(r=>setImmediate(r));page.add({detail:{value:0}});await page.submit();assert.equal(calls,0);page.input({currentTarget:{dataset:{index:0,field:'packages'}},detail:{value:'2'}});assert.equal(page.data.total,'400.00');fail=true;await page.submit();assert.equal(page.data.uncertain,true);await page.submit();assert.equal(calls,1);page.confirmChecked();fail=false;await page.submit();assert.equal(calls,2);assert.equal(sent.items[0].expectedPrice,'200.00');assert.equal(storage[page.draftKey],undefined);console.log('订票数量、金额、草稿与提交未知状态检查通过')}
+run().catch(e=>{console.error(e);process.exitCode=1})

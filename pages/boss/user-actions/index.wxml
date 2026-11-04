@@ -1,0 +1,10 @@
+<view class="page">
+ <view wx:if="{{loading}}" class="card">正在读取账号管理权限…</view>
+ <view wx:if="{{error}}" class="card error">{{error}}<button bindtap="retry" disabled="{{busy || loading}}">重新读取账号信息</button></view>
+ <view wx:if="{{notice}}" class="card">{{notice}}</view>
+ <block wx:if="{{record}}">
+  <view class="card"><view class="heading">{{record.username}}</view><view>{{record.nickname}}</view><view class="hint">账号状态：{{record.status === 0 ? '启用' : '停用'}}</view><button wx:if="{{record.canStatus}}" class="full" data-action="status" bindtap="submit" disabled="{{busy || uncertain}}">{{record.status === 0 ? '停用账号' : '启用账号'}}</button></view>
+  <view wx:if="{{record.canAssign}}" class="card"><view class="heading">分配角色</view><checkbox-group bindchange="roles"><label wx:for="{{roles}}" wx:key="id" class="option"><checkbox value="{{item.id}}" checked="{{item.checked}}" disabled="{{busy || uncertain || item.disabled}}"/><text>{{item.name}}{{item.disabled ? '（已停用，保留原分配）' : ''}}</text></label></checkbox-group><view wx:if="{{rolesEmpty}}" class="hint empty-state">暂无可分配的自定义角色。</view><button class="full" data-action="roles" bindtap="submit" disabled="{{busy || uncertain}}">保存角色分配</button></view>
+  <view wx:if="{{record.canReset}}" class="card"><view class="heading">管理员重置密码</view><view class="hint">仅用于协助账号持有人恢复访问。不会显示原密码。</view><view class="input-row"><view>新密码（4至16位）</view><input password maxlength="16" value="{{password}}" data-key="password" bindinput="input" disabled="{{busy || uncertain}}"/></view><view class="input-row"><view>确认新密码</view><input password maxlength="16" value="{{confirmation}}" data-key="confirmation" bindinput="input" disabled="{{busy || uncertain}}"/></view><button class="full" data-action="password" bindtap="submit" disabled="{{busy || uncertain}}">重置密码</button></view>
+ </block>
+</view>

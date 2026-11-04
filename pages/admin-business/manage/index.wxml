@@ -1,0 +1,28 @@
+<view class="page">
+ <view wx:if="{{loading}}" class="notice">正在读取…</view>
+ <view wx:if="{{error}}" class="error">{{error}}</view>
+ <view wx:if="{{notice}}" class="notice">{{notice}}</view>
+ <block wx:if="{{!editing}}">
+  <input placeholder="搜索名称或编码" value="{{filters.keyword}}" bindinput="filter" disabled="{{loading || busy}}"/>
+  <picker range="{{filterDepartments}}" range-key="name" bindchange="filterDept" disabled="{{loading || busy}}"><view class="field">门店筛选：{{filters.deptId || '全部'}}（选择门店后搜索）</view></picker>
+  <button bindtap="search" disabled="{{loading || busy}}">搜索 / 刷新</button>
+  <button wx:if="{{canExport}}" bindtap="exportCsv" disabled="{{loading || busy}}">导出 CSV（最多2000行）</button>
+  <button wx:if="{{hasExport}}" bindtap="shareCsv">发送 CSV 文件</button>
+  <button wx:if="{{canCreate}}" bindtap="edit" disabled="{{loading || busy}}">新增</button>
+  <view wx:for="{{rows}}" wx:key="id" class="card" data-id="{{item.id}}" bindtap="edit"><view>{{item.title}}</view><view class="muted">{{item.summary}}</view><view class="muted">编号 {{item.id}}</view></view>
+  <view wx:if="{{!loading && !rows.length}}" class="notice">暂无记录</view>
+  <view class="pagination"><button bindtap="previous" disabled="{{loading || pageNo <= 1}}">上一页</button><text>第 {{pageNo}} 页 / 共 {{total}} 条</text><button bindtap="next" disabled="{{loading || pageNo * 20 >= total}}">下一页</button></view>
+ </block>
+ <block wx:else>
+  <view wx:if="{{explanation}}" class="notice">{{explanation}}</view>
+  <view wx:for="{{fields}}" wx:key="key" class="field" wx:for-index="i" wx:for-item="field">
+   <view>{{field.label}}{{field.required ? ' *' : ''}}</view>
+   <picker wx:if="{{field.kind === 'shiftType' || field.kind === 'dept' || field.kind === 'optionalDept' || field.kind === 'status'}}" range="{{field.options}}" range-key="name" value="{{field.selected}}" data-index="{{i}}" bindchange="pick" disabled="{{busy || uncertain || saved || !canSave}}"><view class="input">{{field.display}}</view></picker>
+   <checkbox-group wx:elif="{{field.kind === 'departments'}}" data-key="{{field.key}}" bindchange="input"><label wx:for="{{field.options}}" wx:key="id"><checkbox value="{{item.id}}" checked="{{item.checked}}" disabled="{{busy || uncertain || saved || !canSave}}"/>{{item.name}}</label></checkbox-group>
+   <input wx:else value="{{values[field.key]}}" data-key="{{field.key}}" bindinput="input" disabled="{{busy || uncertain || saved || !canSave}}" placeholder="{{field.label}}" maxlength="250"/>
+  </view>
+  <button wx:if="{{canSave}}" type="primary" bindtap="submit" loading="{{busy}}" disabled="{{loading || busy || uncertain || saved}}">保存</button>
+  <button wx:if="{{canRemove}}" class="danger" bindtap="remove" disabled="{{loading || busy || uncertain || saved}}">{{removeLabel}}</button>
+  <button bindtap="back" disabled="{{busy}}">返回列表核对</button>
+ </block>
+</view>

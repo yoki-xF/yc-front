@@ -1,0 +1,2 @@
+@import "../../boss/home/index.wxss";
+.content{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;margin:20rpx 0}.unread{font-weight:600}.pagination{display:flex;align-items:center;gap:16rpx}.pagination button{flex:1}

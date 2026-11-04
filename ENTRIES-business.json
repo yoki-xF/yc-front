@@ -1,0 +1,32 @@
+[
+  {
+    "key": "departments",
+    "title": "门店管理",
+    "permission": "system:dept:query",
+    "url": "/pages/admin-business/manage/index?type=departments"
+  },
+  {
+    "key": "shifts",
+    "title": "班次配置",
+    "permission": "sport:staff-schedule-config:query",
+    "url": "/pages/admin-business/manage/index?type=shifts"
+  },
+  {
+    "key": "activities",
+    "title": "促销活动",
+    "permission": "sport:sales-activity:query",
+    "url": "/pages/admin-business/manage/index?type=activities"
+  },
+  {
+    "key": "games",
+    "title": "返佣玩法",
+    "permission": "sport:game-sales-config:query",
+    "url": "/pages/admin-business/manage/index?type=games"
+  },
+  {
+    "key": "targets",
+    "title": "门店月目标",
+    "permission": "sport:dept-sales-check:query",
+    "url": "/pages/admin-business/manage/index?type=targets"
+  }
+]

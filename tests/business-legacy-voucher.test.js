@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict'),Module=require('node:module')
+let def,fail=false,posted,accept=true
+const ref='pv:'+'b'.repeat(32),legacy='https://files.example/old.png',session={tenantId:1,accessToken:'a',refreshToken:'r'},storage={yc_session:session}
+global.wx={getStorageSync:k=>storage[k],setStorageSync:(k,v)=>storage[k]=structuredClone(v),removeStorageSync:k=>delete storage[k],showToast(){},showModal:o=>o.success({confirm:accept})}
+global.Page=p=>def=p
+const old=Module._load;Module._load=function(n,...args){if(n==='../../utils/operating-day')return require('./operating-day-fixture');if(n==='../../utils/request')return {sameSession:(a,b)=>!!(a&&b&&a.tenantId===b.tenantId&&a.refreshToken===b.refreshToken),request:async(path,opts)=>{if(path.endsWith('/safe-item'))return {revision:'rev1',record:{id:2,classes:'Late',voucherPic:legacy}};if(path.endsWith('/dict-data/type'))return [{dictValue:'Late',dictLabel:'晚班'}];if(path.endsWith('/copy-legacy')){posted=opts.data;if(fail){const e=Error('无法读取历史文件');e.code=10086;throw e}return ref};if(path.endsWith('/safe-submit'))return true}};if(n==='../../utils/config')return {apiBase:'http://localhost'};return old.call(this,n,...args)}
+require('../pages/business/index');Module._load=old
+const page=Object.assign({},def,{data:structuredClone(def.data),setData(v){for(const [k,x] of Object.entries(v)){if(k.startsWith('values.'))this.data.values[k.slice(7)]=x;else this.data[k]=x}}})
+const event={currentTarget:{dataset:{index:0}}}
+async function run(){page.onLoad({deptId:'1',userId:'1'});await new Promise(r=>setImmediate(r));fail=true;await page.protectLegacy(event);assert.equal(page.data.images[0].url,legacy);assert.equal(storage[page.draftKey].images[0].url,legacy);fail=false;await page.protectLegacy(event);assert.equal(posted.legacyUrl,legacy);assert.equal(posted.revision,'rev1');assert.equal(page.data.images[0].ref,ref);assert.equal(page.data.images[0].legacyUrl,legacy);assert.equal(storage[page.draftKey].images[0].ref,ref);page.revertLegacy(event);assert.equal(page.data.images[0].url,legacy);assert.equal(storage[page.draftKey].images[0].url,legacy);console.log('历史凭证复制失败保留原文、草稿恢复和撤销检查通过')}
+run().catch(e=>{console.error(e);process.exitCode=1})

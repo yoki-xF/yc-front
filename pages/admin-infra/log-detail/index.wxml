@@ -1,0 +1,2 @@
+<view class="page"><view wx:if="{{loading}}">正在读取…</view><view wx:if="{{error}}" class="error">{{error}}</view><view wx:for="{{rows}}" wx:key="label" class="card">{{item.label}}：{{item.value}}</view></view>
+<view class="page" wx:if="{{canProcess}}"><button data-status="1" bindtap="process" disabled="{{loading || uncertain}}">标为已处理</button><button data-status="2" bindtap="process" disabled="{{loading || uncertain}}">标为已忽略</button></view>
