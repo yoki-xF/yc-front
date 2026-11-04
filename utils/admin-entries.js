@@ -441,7 +441,8 @@ const entries=[
     "group": "开发与运维",
     "platformOnly": true
   },
-  {"key":"jimu","title":"积木报表模板","url":"/pages/admin-report/jimu/index","permission":"report:jmreport:query","platformOnly":true,"group":"报表与表单"}
+  {"key":"jimu","title":"积木报表模板","url":"/pages/admin-report/jimu/index","permission":"report:jmreport:query","platformOnly":true,"group":"报表与表单"},
+ {"key":"infra:skywalking","title":"链路追踪","url":"/pages/admin-infra/tracing/index","permission":"infra:skywalking:query","platformOnly":true,"group":"开发与运维"}
 ]
 function visible(info){const ps=info&&info.permissions||[],roles=info&&info.roles||[];return entries.filter(e=>!migrationScope.deferredEntry(e)&&(e.authOnly?!!(info&&info.user):(ps.includes("*:*:*")||ps.includes(e.permission)))&&(!e.platformOnly||roles.includes("super_admin")))}
 module.exports={entries,visible}
