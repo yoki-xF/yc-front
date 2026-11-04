@@ -22,7 +22,7 @@ async function list(session, key, filters, pageNo) {
   const result = await request((resource.queryBase || resource.base) + '/page', { data: query(key, filters, pageNo), header: header(session) })
   active(session)
   if (!result || !Array.isArray(result.list) || !Number.isInteger(Number(result.total)) || Number(result.total) < 0) throw Error('列表数据不完整，请重试')
-  return { canExport:key!=='roles'&&can(resource.permissions,actionPermission(resource,'export')), rows: result.list.map((x, index) => Object.assign(recordView(key, x), { key: key + ':' + pageNo + ':' + index, canOpen: recordView(key,x).canOpen && can(resource.permissions, resource.detailPermission || resource.permission) })), total: Number(result.total), canCreate: result.writeScopeAllowed!==false && ['materials','roles','users','costs','attendance'].includes(key) && can(resource.permissions,actionPermission(resource,'create')) }
+  return { canExport:can(resource.permissions,actionPermission(resource,'export')), rows: result.list.map((x, index) => Object.assign(recordView(key, x), { key: key + ':' + pageNo + ':' + index, canOpen: recordView(key,x).canOpen && can(resource.permissions, resource.detailPermission || resource.permission) })), total: Number(result.total), canCreate: result.writeScopeAllowed!==false && ['materials','roles','users','costs','attendance'].includes(key) && can(resource.permissions,actionPermission(resource,'create')) }
 }
 async function detail(session, key, id) {
   if (!/^[1-9]\d*$/.test(String(id))) throw Error('记录编号无效')

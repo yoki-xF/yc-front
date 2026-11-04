@@ -32,6 +32,6 @@ Page({
     finally { if (version === this.version) this.setData({ loading: false }) }
   },
   async exportCsv(){if(this.data.loading||this.exportBusy||!this.data.canExport)return;this.exportBusy=true;this.setData({error:''});let path;try{path=await exportApi.download(this.session,this.type,this.filters||{});api.active(this.session);if(this.disposed){exportApi.unlink(path);return}exportApi.unlink(this.exportPath);this.exportPath=path;this.setData({hasExport:true})}catch(e){exportApi.unlink(path);if(!this.disposed)this.setData({error:e.message||'导出失败'})}finally{this.exportBusy=false}},
-  shareCsv(){try{api.active(this.session);if(!this.disposed&&this.exportPath)wx.shareFileMessage({filePath:this.exportPath,fileName:'business.csv',fail:()=>{if(!this.disposed)this.setData({error:'文件未发送，可重新操作'})}})}catch(e){this.setData({error:e.message})}},
+  shareCsv(){try{api.active(this.session);if(!this.disposed&&this.exportPath)wx.shareFileMessage({filePath:this.exportPath,fileName:this.type+'.csv',fail:()=>{if(!this.disposed)this.setData({error:'文件未发送，可重新操作'})}})}catch(e){this.setData({error:e.message})}},
   open(e) { const index = Number(e.currentTarget.dataset.index), row = this.data.rows[index]; if (!row || !row.canOpen) return; wx.navigateTo({ url: '/pages/boss/detail/index?type=' + encodeURIComponent(this.type) + '&id=' + encodeURIComponent(row.id) }) }
 })
