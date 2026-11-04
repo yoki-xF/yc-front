@@ -5,6 +5,7 @@ Module._load=function(name,parent,main){
   if(name==='../request')return {sameSession:(a,b)=>!!a&&!!b&&a.tenantId===b.tenantId&&a.accessToken===b.accessToken,request:async(path,options)=>{
     calls.push({path,options})
     if(path.endsWith('permission-info'))return {user:{id:1},permissions:['*:*:*']}
+    if(path==='/system/boss/directory/users/post-options')return [{id:'9007199254740993',name:'Post',status:'0'}]
     if(path==='/sport/boss/departments')return [{id:'10',name:'Store'}]
     if(resolveRead)return new Promise(r=>{resolveRead=r})
     if(path.endsWith('/get'))return {id:'1',deptId:'10',cost:100,revision:'v1'}
@@ -35,9 +36,12 @@ async function run(){
   writeScopeAllowed=true
   calls=[];const userForm=await api.form(session,'users','1')
   assert.ok(calls.some(c=>c.path==='/system/boss/directory/users/get'))
-  calls=[];await api.save(session,'users',{username:'demo01',nickname:'Employee',deptId:'10',deptIds:['10'],mobile:'',email:'',remark:''},userForm.record,userForm.departments)
+  assert.equal(userForm.posts[0].id,'9007199254740993')
+  assert.deepEqual(calls.find(c=>c.path.endsWith('/post-options')).options.data,{userId:'1'})
+  calls=[];await api.save(session,'users',{username:'demo01',nickname:'Employee',deptId:'10',deptIds:['10'],mobile:'',email:'',remark:'',sex:1,postIds:['9007199254740993']},userForm.record,userForm.departments,userForm.posts)
   assert.equal(calls.find(c=>c.path.endsWith('/update')).path,'/system/boss/directory/users/update')
   assert.equal(calls.find(c=>c.path.endsWith('/update')).options.data.revision,'v1')
+  assert.deepEqual(calls.find(c=>c.path.endsWith('/update')).options.data.postIds,['9007199254740993'])
   calls=[];await api.save(session,'roles',{name:'Manager',code:'manager',sort:'0',status:'0',remark:''},{id:'1',revision:'v1'},[])
   assert.equal(calls.find(c=>c.path.endsWith('/update')).path,'/system/boss/directory/roles/update')
   resolveRead=true;const previous=session,pending=api.form(previous,'materials','1')

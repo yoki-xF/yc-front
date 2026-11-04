@@ -14,6 +14,7 @@ const definitions = {
   users: [
     ['username','账号','username',true,30], ['nickname','姓名','text',true,30],
     ['deptId','主部门','department',true], ['deptIds','授权门店','departments',true],
+    ['sex','性别','sex',false], ['postIds','岗位','posts',false],
     ['mobile','手机号','phone',false], ['email','邮箱','email',false,50],
     ['password','初始密码','password',true,16], ['remark','备注','text',false,500]
   ]
@@ -22,10 +23,21 @@ function fields(type, edit) {
   if (!Object.prototype.hasOwnProperty.call(definitions,type)) throw Error('该功能暂不支持此操作')
   return definitions[type].filter(f => !(edit && f[0] === 'password')).map(([key,label,kind,required,max]) => ({key,label,kind,required,max:max || 100}))
 }
-function payload(type, values, original, departments) {
+function payload(type, values, original, departments, posts = []) {
   const edit = original && original.id != null, output = edit ? {id:original.id} : {}
   for (const f of fields(type,edit)) {
     let value = values[f.key]
+    if (['sex','posts'].includes(f.kind) && value == null) continue
+    if (f.kind==='sex') {
+      if(!['0','1','2'].includes(String(value)))throw Error('请选择有效性别')
+      output.sex=Number(value);continue
+    }
+    if (f.kind==='posts') {
+      if(!Array.isArray(value))throw Error('请选择有效岗位')
+      const existing=(original&&original.postIds||[]).map(String)
+      if(value.some(id=>!posts.some(p=>String(p.id)===String(id)&&String(p.status)==='0')&&!existing.includes(String(id))))throw Error('请选择启用的本组织岗位')
+      output.postIds=[...new Set(value.map(String))];continue
+    }
     if (f.kind==='departments') {
       if(!Array.isArray(value) || !value.length || value.some(id => !departments.some(d => String(d.id)===String(id)))) throw Error('请选择有权限的授权门店')
       output[f.key]=[...new Set(value.map(String))];continue
@@ -61,8 +73,8 @@ function payload(type, values, original, departments) {
     }
   }
   if(type==='users'&&edit) {
-    // 新表单不编辑的岗位、性别和头像仍保留，避免覆盖原有资料。
-    for(const key of ['postIds','sex','avatar'])if(original[key]!=null)output[key]=original[key]
+    // 头像由现有服务保留。
+    for(const key of ['avatar'])if(original[key]!=null)output[key]=original[key]
   }
   return output
 }

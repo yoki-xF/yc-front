@@ -69,10 +69,15 @@ async function form(session,key,id) {
     active(session);if(!record||String(record.id)!==String(id))throw Error('记录不存在或无权访问');if(record.writeScopeAllowed===false)throw Error('此账号或角色不能在此编辑，请由其他管理员核对处理')
   }
   const departments=['users','costs'].includes(key)?await options(session):[]
-  return {record,departments}
+  let posts=[]
+  if(key==='users'){
+    posts=await request('/system/boss/directory/users/post-options',{data:id?{userId:id}:{},header:header(session)})
+    active(session);if(!Array.isArray(posts)||posts.some(p=>!p||typeof p.id!=='string'||!/^[1-9]\d*$/.test(p.id)))throw Error('岗位选项数据不完整')
+  }
+  return {record,departments,posts}
 }
-async function save(session,key,values,original,departments) {
-  const {payload}=require('./forms'), resource=getResource(key), data=payload(key,values,original,departments)
+async function save(session,key,values,original,departments,posts) {
+  const {payload}=require('./forms'), resource=getResource(key), data=payload(key,values,original,departments,posts)
   const info=await identity(session), action=original&&original.id!=null?'update':'create'
   if(!can(info.permissions,actionPermission(resource,action)))throw Error('当前账号没有此操作权限')
   if(resource.writeBase&&action==='update'){if(!original.revision)throw Error('记录版本缺失，请重新读取');data.revision=original.revision}
