@@ -1,3 +1,5 @@
+> 历史验证交接：下文旧源码路径已归档删除，不能照旧命令继续开发。当前仅使用 yc-front 与 yc-backend 两仓库；后端在根目录执行 Maven，不再使用 -pl/-am。当前交付状态以新仓库 README 和后端 docs/MIGRATION.md 为准。
+
 # Jimu 原生模板管理交接
 
 工作区：`/Users/yoki/Projects/yc-report-coop-20261104-next`。这是本轮唯一开发任务；未启动子任务。只新增规定的 Jimu Java、原生页面、工具和测试文件，以及本 delivery 目录。412 个 `root-handoff-baseline.json` 文件 SHA 全部保持一致。没有复制回主项目、修改运行环境、连接真实数据库、保存真实模板、调用外部提供方、部署或提交推送。
