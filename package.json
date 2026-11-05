@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "check": "node tools/check.cjs",
-    "test": "node tools/check.cjs --tests-only"
+    "test": "node tools/check.cjs --tests-only",
+    "check:native": "node tools/check-native.cjs"
   }
 }

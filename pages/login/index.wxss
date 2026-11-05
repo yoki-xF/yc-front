@@ -1,1 +1,4 @@
-.container { padding: 60rpx 32rpx; } .title { font-size: 40rpx; font-weight: 600; margin-bottom: 36rpx; } .card { background: white; border-radius: 20rpx; padding: 36rpx; } .label { margin: 24rpx 0 12rpx; font-weight: 500; } input { background: #f5f7fa; padding: 20rpx; border-radius: 10rpx; } button { margin-top: 36rpx; } .error { color: #b42318; margin-top: 20rpx; }
+@import "../../styles/workspace.wxss";
+.label { margin: 24rpx 0 16rpx; font-size: 32rpx; font-weight: 500; }
+input { background: var(--yc-background); color: var(--yc-text); padding: 24rpx; border-radius: 16rpx; min-height: 48rpx; font-size: 32rpx; }
+.workspace .ws-error { margin-top: 24rpx; }

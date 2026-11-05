@@ -3,7 +3,7 @@ const path = require('node:path')
 const { spawnSync } = require('node:child_process')
 const root = path.resolve(__dirname, '..')
 const errors = []
-const ignored = new Set(['node_modules', '.git', 'runtime'])
+const ignored = new Set(['node_modules', '.git', 'runtime', '.runtime'])
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
     if (ignored.has(entry.name)) return []

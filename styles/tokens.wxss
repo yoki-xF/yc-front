@@ -1,0 +1,11 @@
+page {
+  --yc-primary: #0052d9;
+  --yc-primary-soft: #edf3ff;
+  --yc-text: #172b4d;
+  --yc-muted: #52647c;
+  --yc-background: #f4f7fc;
+  --yc-surface: #ffffff;
+  --yc-border: #e4ebf5;
+  --yc-error: #b42318;
+  --yc-success: #157347;
+}

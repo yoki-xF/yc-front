@@ -12,7 +12,7 @@
         <view class="hint">{{item.hint}}</view>
       </view>
       <view class="card hint">原“销售员后台登录”是旧系统兼容字段，不控制新版员工登录。账号登录资格请在账号管理中设置。</view>
-      <block wx:if="{{record.canSave &amp;&amp; !record.locked}}">
+      <block wx:if="{{record.canSave && !record.locked}}">
         <view class="card"><view>设置原因</view><textarea placeholder="填写5至200字，说明本次设置原因" value="{{reason}}" maxlength="200" disabled="{{busy || needsReload}}" bindinput="reason" /></view>
         <button type="primary" loading="{{busy}}" disabled="{{busy || needsReload}}" bindtap="submit">保存经营设置</button>
       </block>

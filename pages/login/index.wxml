@@ -1,10 +1,11 @@
-<view class="container">
-  <view class="title">登录门店管理</view>
-  <view class="card">
+<view class="workspace">
+  <view class="ws-header"><view class="ws-eyebrow">易彩 · 门店管理</view><view class="ws-title">欢迎回来</view><view class="ws-subtitle">使用组织账号，进入你的工作台。</view></view>
+  <view class="ws-card">
     <view class="label">组织名称</view><input value="{{tenant}}" data-field="tenant" bindinput="onInput" placeholder="请输入组织名称" maxlength="30" />
     <view class="label">账号</view><input value="{{username}}" data-field="username" bindinput="onInput" placeholder="请输入账号" maxlength="16" />
     <view class="label">密码</view><input value="{{password}}" data-field="password" bindinput="onInput" password placeholder="请输入密码" maxlength="16" />
-    <view wx:if="{{error}}" class="error">{{error}}</view>
-    <button type="primary" loading="{{busy}}" disabled="{{busy}}" bindtap="submit">登录</button>
+    <view wx:if="{{error}}" class="ws-error">{{error}}</view>
+    <button class="ws-primary" type="primary" loading="{{busy}}" disabled="{{busy}}" bindtap="submit">登录工作台</button>
   </view>
+  <view class="ws-note">账号由管理员开通；如需重置密码，请联系管理员。</view>
 </view>

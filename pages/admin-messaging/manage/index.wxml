@@ -3,7 +3,7 @@
  <block wx:if="{{!editing}}">
   <view class="card"><input value="{{keyword}}" bindinput="filter" placeholder="搜索名称、收件人或客户端" disabled="{{loading || busy}}"/><button bindtap="search" disabled="{{loading || busy}}">查询 / 刷新</button><button wx:if="{{canCreate}}" bindtap="create" disabled="{{loading || busy}}">新增</button><button wx:if="{{canExport}}" bindtap="exportCsv" disabled="{{loading || busy}}">导出 CSV（最多2000行）</button><button wx:if="{{hasExport}}" bindtap="shareCsv">发送 CSV 文件</button></view>
   <view wx:for="{{rows}}" wx:key="id" class="card" data-id="{{item.id}}" bindtap="open"><view>{{item.title}}</view><view class="hint">编号 {{item.id}} {{item.status}}</view></view><view wx:if="{{!loading && !rows.length}}" class="card">暂无记录</view>
-  <view class="pagination"><button bindtap="previous" disabled="{{loading || pageNo &lt;= 1}}">上一页</button><text>{{pageNo}} 页 / {{total}} 条</text><button bindtap="next" disabled="{{loading || pageNo * 20 &gt;= total}}">下一页</button></view>
+  <view class="pagination"><button bindtap="previous" disabled="{{loading || pageNo <= 1}}">上一页</button><text>{{pageNo}} 页 / {{total}} 条</text><button bindtap="next" disabled="{{loading || pageNo * 20 >= total}}">下一页</button></view>
  </block>
  <block wx:else>
   <view wx:if="{{!fields.length}}" class="card"><view wx:for="{{details}}" wx:key="key" class="row"><view>{{item.label}}</view><view class="value">{{item.value}}</view></view></view>

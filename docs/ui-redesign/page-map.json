@@ -19,7 +19,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/login/index",
@@ -38,7 +39,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/manual/index",
@@ -57,7 +59,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/profile/index",
@@ -76,7 +79,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/activity/index",
@@ -95,7 +99,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/morning/index",
@@ -114,7 +119,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/evening/index",
@@ -133,7 +139,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/fund/index",
@@ -152,7 +159,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/business/index",
@@ -171,7 +179,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/report/index",
@@ -190,7 +199,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/cash-transfer/index",
@@ -209,7 +219,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/order-ledger/index",
@@ -228,7 +239,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/transfer-create/index",
@@ -247,7 +259,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/order-detail/index",
@@ -266,7 +279,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/purchase-create/index",
@@ -285,7 +299,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/check-status/index",
@@ -304,7 +319,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/home/index",
@@ -322,7 +338,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/records/index",
@@ -340,7 +357,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/detail/index",
@@ -358,7 +376,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/form/index",
@@ -376,7 +395,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/correction/index",
@@ -394,7 +414,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/reports/index",
@@ -412,7 +433,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/profile/index",
@@ -430,7 +452,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/schedule/index",
@@ -448,7 +471,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/user-actions/index",
@@ -466,7 +490,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/role-actions/index",
@@ -484,7 +509,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/vouchers/index",
@@ -502,7 +528,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/opening/index",
@@ -520,7 +547,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/operating-day/index",
@@ -538,7 +566,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin/home/index",
@@ -556,7 +585,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-business/manage/index",
@@ -574,7 +604,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-ledger/index",
@@ -592,7 +623,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-system/posts/index",
@@ -610,7 +642,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-system/notices/index",
@@ -628,7 +661,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-system/global/index",
@@ -646,7 +680,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-system/platform/index",
@@ -664,7 +699,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-system/logs/index",
@@ -682,7 +718,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-messaging/manage/index",
@@ -700,7 +737,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-messaging/inbox/index",
@@ -718,7 +756,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-pay/app/index",
@@ -736,7 +775,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-pay/channel/index",
@@ -754,7 +794,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-pay/notify/index",
@@ -772,7 +813,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-pay/package/index",
@@ -790,7 +832,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-pay/transactions/index",
@@ -808,7 +851,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-pay/wallet/index",
@@ -826,7 +870,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-system/user-import/index",
@@ -844,7 +889,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/admin-pay/wallet-adjustment/index",
@@ -862,7 +908,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/commission-create/index",
@@ -880,7 +927,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     },
     {
       "route": "pages/boss/business-settings/index",
@@ -898,7 +946,8 @@
         "草稿按账号门店营业日隔离",
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
-      ]
+      ],
+      "implementation": "planned"
     }
   ],
   "adminEntries": [
