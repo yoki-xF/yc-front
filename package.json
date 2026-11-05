@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "scripts": {
+    "check": "node tools/check.cjs",
+    "test": "node tools/check.cjs --tests-only"
+  }
+}

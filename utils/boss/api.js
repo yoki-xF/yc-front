@@ -104,7 +104,6 @@ async function correctionRecord(session,key,id) {
 async function correctionHistory(session,key,id) { getResource(key);const result=await request('/sport/boss/corrections/history',{data:{type:key,id},header:header(session)});active(session);if(!Array.isArray(result))throw Error('更正记录读取失败');return result }
 async function correctionPreview(session,command) { const result=await request('/sport/boss/corrections/preview',{method:'POST',data:command,header:header(session)});active(session);if(!result||!result.revision||!Array.isArray(result.changes))throw Error('预览结果不完整');return result }
 async function correctionApply(session,command) { const auth=header(session);try{const result=await request('/sport/boss/corrections/apply',{method:'POST',data:command,header:auth});active(session);if(!result||result.status!=='APPLIED'||!result.auditId)throw Error('未取得更正结果');return result}catch(e){e.mayHaveWritten=e.code==null || e.code>=500&&e.code<600;throw e} }
-async function report(session,filters){const result=await request('/sport/boss/reports',{data:filters,header:header(session)});active(session);if(!result||!Array.isArray(result.rows)||result.completedSales==null)throw Error('报表数据不完整');return result}
 async function capabilities(session){const result=await request('/sport/boss/capabilities',{header:header(session)});active(session);if(!result||typeof result.reportsEnabled!=='boolean'||typeof result.correctionsEnabled!=='boolean')throw Error('功能状态数据不完整');return result}
 async function profile(session){
   const info=await identity(session)
@@ -124,4 +123,4 @@ async function saveProfile(session,values,original,password=false){
     return result
   }catch(e){e.mayHaveWritten=e.code==null || e.code>=500&&e.code<600;throw e}
 }
-module.exports = { identity, list, detail, active, options, form, save, removeCatalog, actionPermission, correctionRecord, correctionHistory, correctionPreview, correctionApply, report, profile, saveProfile, capabilities }
+module.exports = { identity, list, detail, active, options, form, save, removeCatalog, actionPermission, correctionRecord, correctionHistory, correctionPreview, correctionApply, profile, saveProfile, capabilities }

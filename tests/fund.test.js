@@ -42,7 +42,7 @@ async function run(){
  }
  assert.deepEqual(storage[oldKey],savedDraft)
  empty=true;const initial=fresh();initial.onLoad({deptId:'3',userId:'1'});await new Promise(r=>setImmediate(r));assert.equal(initial.data.existing,false);assert.deepEqual(countFields.map(k=>initial.data[k]),['','','',''])
- storage.yc_session={...session,refreshToken:'changed'};await page.submit();assert.equal(calls,2);assert.match(page.data.error,/账号已切换/);storage.yc_session=session
+ storage.yc_session={...session,refreshToken:'changed'};await page.submit();assert.equal(calls,2);assert.equal(page.current(),false);storage.yc_session=session
  console.log('资金精度、草稿和提交未知状态检查通过')
 }
 run().catch(err=>{console.error(err);process.exitCode=1})
