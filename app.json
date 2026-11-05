@@ -69,19 +69,27 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "工作台"
+        "text": "工作台",
+        "iconPath": "assets/navigation/work-normal.png",
+        "selectedIconPath": "assets/navigation/work-selected.png"
       },
       {
         "pagePath": "pages/workspace/ledger/index",
-        "text": "单据"
+        "text": "单据",
+        "iconPath": "assets/navigation/ledger-normal.png",
+        "selectedIconPath": "assets/navigation/ledger-selected.png"
       },
       {
         "pagePath": "pages/workspace/reports/index",
-        "text": "报表"
+        "text": "报表",
+        "iconPath": "assets/navigation/reports-normal.png",
+        "selectedIconPath": "assets/navigation/reports-selected.png"
       },
       {
         "pagePath": "pages/workspace/mine/index",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "assets/navigation/mine-normal.png",
+        "selectedIconPath": "assets/navigation/mine-selected.png"
       }
     ]
   }

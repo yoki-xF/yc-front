@@ -25,6 +25,16 @@ const files = walk(root)
 if (!process.argv.includes('--tests-only')) {
   const app = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8'))
   for (const page of app.pages || []) registered(path.resolve(root, page))
+  for (const tab of app.tabBar?.list || []) {
+    if (!(app.pages || []).includes(tab.pagePath)) errors.push('Unregistered tab page: ' + tab.pagePath)
+    for (const key of ['iconPath', 'selectedIconPath']) {
+      if (!tab[key]) continue
+      const icon = path.resolve(root, tab[key])
+      if (!icon.startsWith(root + path.sep) || !fs.existsSync(icon) || !fs.statSync(icon).isFile()) {
+        errors.push('Missing local navigation icon: ' + tab[key])
+      } else if (fs.statSync(icon).size > 40 * 1024) errors.push('Navigation icon exceeds project asset budget: ' + tab[key])
+    }
+  }
   for (const pack of app.subPackages || app.subpackages || []) {
     for (const page of pack.pages || []) registered(path.resolve(root, pack.root, page))
   }
