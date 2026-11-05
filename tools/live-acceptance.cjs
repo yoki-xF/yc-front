@@ -36,6 +36,12 @@ async function run(){
  const caps=await api.capabilities(session);assert.equal(caps.correctionsEnabled,true);checks.push('capabilities')
  const settings=await require('../utils/boss/business-settings').get(session);assert.equal(typeof settings.values.personalSalesEnabled,'boolean');checks.push('native-business-settings-read')
  const entries=require('../utils/admin-entries').visible(info);assert.ok(entries.length>10);checks.push('admin-entry-permissions')
+ for(const kind of ['ledger','reports','mine']){
+  const page=require('../utils/workspace-page').createWorkspacePage(kind)
+  page.data={...page.data};page.session=session;page.setData=patch=>Object.assign(page.data,patch)
+  await page.load();assert.equal(page.data.error,'');assert.equal(page.data.loading,false);assert.ok(page.data.items.length>0)
+  checks.push('native-workspace-'+kind)
+ }
  await request('/system/auth/logout',{method:'POST',data:{},header:{Authorization:'Bearer '+session.accessToken,'tenant-id':String(session.tenantId)}});storage.clear();checks.push('native-request-logout')
  console.log(JSON.stringify({passed:true,checks},null,2))
 }
