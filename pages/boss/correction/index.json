@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"盘点更正"}
+{
+  "navigationBarTitleText": "盘点更正",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"门店开店与结店"}
+{
+  "navigationBarTitleText": "门店开店与结店",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

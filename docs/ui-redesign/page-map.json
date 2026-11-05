@@ -358,7 +358,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/detail/index",
@@ -377,7 +377,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/form/index",
@@ -396,7 +396,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/correction/index",
@@ -415,7 +415,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/reports/index",
@@ -434,7 +434,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/profile/index",
@@ -453,7 +453,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/schedule/index",
@@ -472,7 +472,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/user-actions/index",
@@ -491,7 +491,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/role-actions/index",
@@ -510,7 +510,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/vouchers/index",
@@ -529,7 +529,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/opening/index",
@@ -548,7 +548,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/operating-day/index",
@@ -567,7 +567,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin/home/index",
@@ -928,7 +928,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/business-settings/index",
@@ -947,7 +947,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     }
   ],
   "adminEntries": [

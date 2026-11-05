@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"安排员工班次"}
+{
+  "navigationBarTitleText": "安排员工班次",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

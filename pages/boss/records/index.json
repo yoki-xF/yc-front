@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "业务记录"
+  "navigationBarTitleText": "业务记录",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
 }

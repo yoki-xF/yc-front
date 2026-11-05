@@ -1,5 +1,6 @@
-<view class="page">
-  <view class="heading">门店开店与结店</view>
+<view class="page yc-page">
+  <page-heading eyebrow="经营管理" title="开店与结店" description="营业日由有权限的人确认结束，跨午夜仍归开店当天。" />
+
   <view class="card hint">新门店先完成首次资金与库存初始化。开店后，由员工完成早盘、营业记账与晚盘。跨午夜仍归开店当天；核对后结店，统一生成门店日报。</view>
   <view wx:if="{{loading}}" class="card">正在读取…</view>
   <block wx:else>

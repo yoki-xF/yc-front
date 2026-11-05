@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"编辑资料"}
+{
+  "navigationBarTitleText": "编辑资料",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

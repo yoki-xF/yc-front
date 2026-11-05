@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"经营设置"}
+{
+  "navigationBarTitleText": "经营设置",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

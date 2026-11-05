@@ -1,4 +1,5 @@
-<view class="page">
+<view class="page yc-page">
+  <page-heading eyebrow="经营管理" title="角色权限" description="核对角色授权范围，停用后仍保留历史关联。" />
  <view wx:if="{{loading}}" class="card">正在读取角色授权…</view>
  <view wx:if="{{error}}" class="card error">{{error}}<button bindtap="retry" disabled="{{busy || loading}}">重新读取</button></view>
  <view wx:if="{{notice}}" class="card">{{notice}}</view>

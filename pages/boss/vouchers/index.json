@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"营业凭证"}
+{
+  "navigationBarTitleText": "营业凭证",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

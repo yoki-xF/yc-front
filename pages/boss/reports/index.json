@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"门店报表与排名"}
+{
+  "navigationBarTitleText": "门店报表与排名",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

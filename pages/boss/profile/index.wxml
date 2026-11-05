@@ -1,4 +1,5 @@
-<view class="page">
+<view class="page yc-page">
+  <page-heading eyebrow="经营管理" title="个人资料与密码" description="维护账号资料，密码修改单独核对。" />
   <view wx:if="{{loading}}" class="card">正在读取个人资料…</view>
   <view wx:if="{{error}}" class="card error">{{error}}<button wx:if="{{!profile}}" bindtap="retry" disabled="{{busy}}">重新读取</button></view>
   <block wx:if="{{profile}}">

@@ -1,4 +1,5 @@
-<view class="page">
+<view class="page yc-page">
+  <page-heading eyebrow="经营管理" title="账号管理" description="管理门店、岗位和角色；停用替代删除，保留历史。" />
  <view wx:if="{{loading}}" class="card">正在读取账号管理权限…</view>
  <view wx:if="{{error}}" class="card error">{{error}}<button bindtap="retry" disabled="{{busy || loading}}">重新读取账号信息</button></view>
  <view wx:if="{{notice}}" class="card">{{notice}}</view>

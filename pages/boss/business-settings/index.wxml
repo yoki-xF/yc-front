@@ -1,5 +1,6 @@
-<view class="page">
-  <view class="heading">经营设置</view>
+<view class="page yc-page">
+  <page-heading eyebrow="经营管理" title="经营设置" description="配置门店经营规则；存在历史数据时保留变更限制。" />
+
   <view wx:if="{{loading}}" class="card">正在读取经营设置…</view>
   <block wx:else>
     <view wx:if="{{error}}" class="card error">{{error}}</view>

@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"门店首次初始化"}
+{
+  "navigationBarTitleText": "门店首次初始化",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

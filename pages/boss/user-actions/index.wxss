@@ -2,3 +2,5 @@
 .page button.full{width:100%;max-width:none;font-size:30rpx}.option{display:flex;align-items:center;gap:12rpx;min-height:70rpx}.input-row{margin-top:20rpx}.input-row>view{margin-bottom:12rpx}
 
 .page{padding-bottom:calc(32rpx + env(safe-area-inset-bottom))}
+
+@import "../../../styles/business-page.wxss";
