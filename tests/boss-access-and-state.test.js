@@ -44,10 +44,10 @@ async function run() {
   await assert.rejects(pending, /账号已变化/)
   // 分页失败后可以重试；翻页沿用已提交筛选，不混入尚未点击查询的条件。
   let definition, resolveList, fail = false, snapshots = []
-  const context = { Page: value => { definition = value }, wx: { getStorageSync: () => session, setNavigationBarTitle() {} }, require: name => name.endsWith('/api') ? { list: async (_s,_key,filters,page) => { snapshots.push({ filters: {...filters}, page }); if (fail) throw Error('offline'); return new Promise(resolve => { resolveList = resolve }) } } : require('../utils/boss/resources') }
+  const context = { Page: value => { definition = value }, wx: { getStorageSync: () => session, setNavigationBarTitle() {} }, require: name => name.endsWith('/api') ? { list: async (_s,_key,filters,page) => { snapshots.push({ filters: {...filters}, page }); if (fail) throw Error('offline'); return new Promise(resolve => { resolveList = resolve }) } } : name.endsWith('/request') ? require('../utils/request') : name.endsWith('/export') ? { unlink() {} } : require('../utils/boss/resources') }
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../pages/boss/records/index.js'), 'utf8'), context)
   const page = { ...definition, data: structuredClone(definition.data), version: 0, session, type: 'funds', setData(update) { Object.assign(this.data, update) } }
-  page.data.start = '2026-11-01'; page.data.end = '2026-11-02'
+  page.data.ready = true; page.data.start = '2026-11-01'; page.data.end = '2026-11-02'
   const first = page.load(true); resolveList({ rows: [{ key: 'one' }], total: 2 }); await first
   page.data.start = '2020-01-01'
   const next = page.load(false); resolveList({ rows: [{ key: 'two' }], total: 2 }); await next
