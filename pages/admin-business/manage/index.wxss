@@ -1,1 +1,3 @@
 .page{padding:28rpx;background:#f6f7fa;min-height:100vh;color:#18202b}.field,.card{background:white;padding:24rpx;margin:18rpx 0;border-radius:12rpx}input,.input{background:white;min-height:72rpx;padding:12rpx;border:1rpx solid #d4d9e0;border-radius:8rpx;margin-top:12rpx}.error{padding:20rpx;background:#fff0ef;color:#a92218;white-space:pre-wrap}.notice{padding:20rpx;background:#eaf3ff;color:#21496f}.muted{font-size:24rpx;color:#687280;margin-top:10rpx}.pagination{display:flex;align-items:center;justify-content:space-between;gap:12rpx}.pagination button{font-size:24rpx}.pagination text{font-size:24rpx}button{margin-top:16rpx}.danger{color:#a92218}label{display:block;margin-top:14rpx}
+
+@import "../../../styles/business-page.wxss";

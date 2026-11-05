@@ -1,4 +1,4 @@
-<view class="container">
+<view class="page container yc-page"><page-heading eyebrow="我的账号" title="个人资料" description="查看账号信息与联系方式，资料变更按原权限处理。" />
   <view wx:if="{{loading}}" class="notice">正在读取个人信息…</view>
   <view wx:elif="{{error}}" class="notice">{{error}}<button size="mini" bindtap="retry">{{error === '请先登录' || sessionExpired ? '去登录' : '重试'}}</button></view>
   <view wx:elif="{{profile}}" class="card">

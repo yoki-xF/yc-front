@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"账号导入"}
+{
+  "navigationBarTitleText": "账号导入",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

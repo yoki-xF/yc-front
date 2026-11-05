@@ -1,1 +1,7 @@
-{"navigationBarTitleText":"业务配置管理","enablePullDownRefresh":false}
+{
+  "navigationBarTitleText": "业务配置管理",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

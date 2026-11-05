@@ -60,7 +60,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/profile/index",
@@ -80,7 +80,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/activity/index",
@@ -100,7 +100,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/morning/index",
@@ -280,7 +280,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/purchase-create/index",
@@ -605,7 +605,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-ledger/index",
@@ -624,7 +624,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-system/posts/index",
@@ -643,7 +643,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-system/notices/index",
@@ -662,7 +662,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-system/global/index",
@@ -681,7 +681,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-system/platform/index",
@@ -700,7 +700,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-system/logs/index",
@@ -719,7 +719,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-messaging/manage/index",
@@ -738,7 +738,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-messaging/inbox/index",
@@ -757,7 +757,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-pay/app/index",
@@ -890,7 +890,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/admin-pay/wallet-adjustment/index",

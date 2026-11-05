@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"促销活动"}
+{
+  "navigationBarTitleText": "促销活动",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

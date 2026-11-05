@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"公告管理"}
+{
+  "navigationBarTitleText": "公告管理",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

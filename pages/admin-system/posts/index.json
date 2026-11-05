@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"岗位管理"}
+{
+  "navigationBarTitleText": "岗位管理",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

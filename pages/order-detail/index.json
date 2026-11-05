@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"单据详情"}
+{
+  "navigationBarTitleText": "单据详情",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

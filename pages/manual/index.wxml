@@ -1,5 +1,5 @@
-<view class="page">
-  <view class="card"><view class="title">门店操作手册</view><view class="hint">请先确认当前账号和门店。数据以服务端保存结果为准。</view></view>
+<view class="page yc-page"><page-heading eyebrow="帮助与支持" title="门店操作手册" description="营业日、资金账差和常用操作，按真实业务规则办理。" />
+  <view class="card"><view class="hint">请先确认当前账号和门店。数据以服务端保存结果为准。</view></view>
   <view class="card"><view class="heading">每日办理</view><view class="text">1. 在首页选择有权限的门店，打开“当天盘点状态”查看所需项目。</view><view class="text">2. 先由有权限人员开店，再完成早盘、晚盘、五类资金盘点及营业数据。填写后请核对并提交。</view><view class="text">3. 处理待确认订票和调拨，由有权限人员核对结店，统一生成门店日报；跨午夜仍归开店当天。</view></view>
   <view class="card"><view class="heading">订票、调拨与备付金</view><view class="text">订票和调拨先创建待确认单；确认后才更新库存。调拨由调出门店确认，调入门店员工可发起申请，调出门店员工确认；两家门店均需开店并完成早盘。</view><view class="text">备付金转入后请核对流水和余额。旧待确认调拨单暂不能在新端办理。</view></view>
   <view class="card"><view class="heading">保存失败与凭证</view><view class="text">表单会保留本机草稿。若提示记录已变化，请先记录需要保留的内容，再按提示加载最新记录。</view><view class="text">若提交结果未确认，请先核对记录、流水及库存，再决定是否重试。拍照识别结果需要人工核对。</view><view class="text">新增凭证通过授权读取。历史公开链接即使复制为受控凭证，原链接仍可能可访问。</view></view>
