@@ -254,102 +254,6 @@ const resources={
       }
     ]
   },
-  "oauth-clients": {
-    "title": "OAuth客户端",
-    "permission": "oauth2-client",
-    "fields": [
-      {
-        "key": "clientId",
-        "label": "客户端标识",
-        "kind": "text",
-        "required": true
-      },
-      {
-        "key": "secret",
-        "label": "客户端密钥（修改留空保留）",
-        "kind": "secret",
-        "required": true
-      },
-      {
-        "key": "name",
-        "label": "名称",
-        "kind": "text",
-        "required": true
-      },
-      {
-        "key": "logo",
-        "label": "图标网址",
-        "kind": "text",
-        "required": true
-      },
-      {
-        "key": "description",
-        "label": "描述",
-        "kind": "textarea",
-        "required": false
-      },
-      {
-        "key": "status",
-        "label": "状态",
-        "kind": "status",
-        "required": true
-      },
-      {
-        "key": "accessTokenValiditySeconds",
-        "label": "访问令牌有效秒数",
-        "kind": "integer",
-        "required": true
-      },
-      {
-        "key": "refreshTokenValiditySeconds",
-        "label": "刷新令牌有效秒数",
-        "kind": "integer",
-        "required": true
-      },
-      {
-        "key": "redirectUris",
-        "label": "回调网址（每行一项）",
-        "kind": "list",
-        "required": true
-      },
-      {
-        "key": "authorizedGrantTypes",
-        "label": "授权类型（每行一项）",
-        "kind": "list",
-        "required": true
-      },
-      {
-        "key": "scopes",
-        "label": "权限范围（每行一项）",
-        "kind": "list",
-        "required": false
-      },
-      {
-        "key": "autoApproveScopes",
-        "label": "自动授权范围（每行一项）",
-        "kind": "list",
-        "required": false
-      },
-      {
-        "key": "authorities",
-        "label": "授权列表（每行一项）",
-        "kind": "list",
-        "required": false
-      },
-      {
-        "key": "resourceIds",
-        "label": "资源编号（每行一项）",
-        "kind": "list",
-        "required": false
-      },
-      {
-        "key": "additionalInformation",
-        "label": "扩展信息",
-        "kind": "textarea",
-        "required": false
-      }
-    ]
-  },
   "social-clients": {
     "title": "社交客户端",
     "permission": "social-client",
@@ -413,12 +317,6 @@ const resources={
   "notify-messages": {
     "title": "站内信记录",
     "permission": "notify-message",
-    "readonly": true,
-    "fields": []
-  },
-  "oauth-tokens": {
-    "title": "授权令牌",
-    "permission": "oauth2-token",
     "readonly": true,
     "fields": []
   },

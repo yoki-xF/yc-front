@@ -3,7 +3,7 @@ const {apiBase}=require('../config')
 const auth=require('../boss/api'),model=require('./model')
 const can=(ps,p)=>ps.includes('*:*:*')||ps.includes(p)
 function header(session){const s=auth.active(session);return {Authorization:'Bearer '+s.accessToken,'tenant-id':String(s.tenantId)}}
-async function identity(session,key){const info=await auth.identity(session),r=model.resource(key);if(!Array.isArray(info.roles)||!info.roles.includes('super_admin'))throw Error('此功能仅供平台管理员使用');const action=key==='oauth-tokens'?'page':'query';if(!can(info.permissions,'system:'+r.permission+':'+action))throw Error('没有此功能查询权限');return info}
+async function identity(session,key){const info=await auth.identity(session),r=model.resource(key);if(!Array.isArray(info.roles)||!info.roles.includes('super_admin'))throw Error('此功能仅供平台管理员使用');const action='query';if(!can(info.permissions,'system:'+r.permission+':'+action))throw Error('没有此功能查询权限');return info}
 async function read(session,key,path,data){const result=await request('/system/admin-native/messages/'+key+'/'+path,{data,header:header(session)});auth.active(session);return result}
 async function page(session,key,pageNo,keyword){const info=await identity(session,key);const result=await read(session,key,'page',{pageNo,pageSize:20,keyword});if(!result||!Array.isArray(result.list)||!Number.isInteger(Number(result.total))||Number(result.total)<0)throw Error('列表数据不完整');return {...result,permissions:info.permissions}}
 async function detail(session,key,id){await identity(session,key);if(!/^[1-9]\d{0,18}$/.test(String(id)))throw Error('记录编号无效');const result=await read(session,key,'get',{id:String(id)});if(!result||String(result.id)!==String(id)||!/^[a-f0-9]{64}$/.test(result.revision||''))throw Error('记录或版本不完整');return result}

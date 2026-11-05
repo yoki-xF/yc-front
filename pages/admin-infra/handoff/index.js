@@ -1,2 +1,0 @@
-const labels={server:'服务器监控',druid:'Druid',skywalking:'SkyWalking',swagger:'API 文档',websocket:'WebSocket'}
-Page({data:{title:'',message:''},onLoad(o){const title=labels[o.type];if(!title){this.setData({title:'未知功能',message:'此功能不可用。'});return}wx.setNavigationBarTitle({title});this.setData({title,message:o.type==='websocket'?'原页面使用 URL 传递刷新令牌。安全的原生连接与鉴权尚未接入，请勿复制令牌到地址。':'此功能由独立控制台提供。请通过组织配置的可信浏览器入口自行登录；本页面不会传递账号、令牌或其他凭据。'})}})

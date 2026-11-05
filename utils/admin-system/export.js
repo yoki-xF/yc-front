@@ -1,5 +1,5 @@
 const {request,sameSession}=require('../request')
-const {utf8Bytes}=require('../admin-infra/json-size')
+const {utf8Bytes}=require('../json-size')
 function current(session){const live=wx.getStorageSync('yc_session');if(!sameSession(session,live))throw Error('账号已切换，请重新进入');return live}
 function unlink(path){try{wx.getFileSystemManager().unlink({filePath:path,fail:()=>{}})}catch(_){}}
 async function exportFile(session,kind,search,dictType,filter={}){

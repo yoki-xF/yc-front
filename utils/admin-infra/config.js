@@ -1,6 +1,0 @@
-const api=require('./api')
-function id(v){if(!/^[1-9]\d*$/.test(String(v)))throw Error('配置编号无效');return String(v)}
-function revision(v){if(!/^[0-9a-f]{64}$/.test(String(v||'')))throw Error('版本缺失，请重新读取');return v}
-function payload(v,editing){const out={};for(const [key,max] of [['category',50],['name',100],['key',100]]){const x=String(v[key]||'').trim();if(!x||x.length>max)throw Error('分类、名称和键名均为必填项');out[key]=x}out.visible=!!v.visible;if(v.value){out.value=String(v.value);if(out.value.length>500)throw Error('参数值过长')}else if(!editing)throw Error('请输入参数值');if(v.remark){out.remark=String(v.remark);if(out.remark.length>500)throw Error('备注过长')}if(editing){out.id=id(v.id);out.revision=revision(v.revision)}return out}
-async function write(s,path,method,data){try{const r=await api.call(s,path,{method,data});if(!(r===true||typeof r==='string'&&/^[1-9]\d*$/.test(r))){const e=Error('结果未知');e.mayHaveWritten=true;throw e}return r}catch(e){if(e.code==null||e.code>=500)e.mayHaveWritten=true;throw e}}
-module.exports={get:(s,v)=>api.call(s,'config/get',{data:{id:id(v)}}),save:(s,v,editing)=>write(s,'config/'+(editing?'update':'create'),editing?'PUT':'POST',payload(v,editing)),remove:(s,v,rev)=>write(s,'config/delete?id='+id(v)+'&revision='+revision(rev),'DELETE')}

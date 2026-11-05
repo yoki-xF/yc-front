@@ -6,7 +6,7 @@ assert.equal(store.length,1);assert.equal(store[0].permission,'system:dept:query
 assert.ok(visible({permissions:['system:menu:query'],roles:['super_admin']}).some(e=>e.title==='菜单管理'))
 const routes=new Set(JSON.parse(fs.readFileSync(path.join(root,'app.json'))).pages)
 for(const entry of entries){const route=entry.url.split('?')[0].slice(1);assert.ok(routes.has(route),entry.url);for(const ext of ['js','json','wxml'])assert.ok(fs.existsSync(path.join(root,route+'.'+ext)),route+'.'+ext)}
-for(const group of ['admin-business','admin-system','admin-ledger','admin','admin-infra','admin-pay','admin-messaging']){
+for(const group of ['admin-business','admin-system','admin-ledger','admin','admin-pay','admin-messaging']){
  const dir=path.join(root,'pages',group)
  for(const p of fs.readdirSync(dir,{recursive:true}).filter(p=>p.endsWith('.wxml'))){const s=fs.readFileSync(path.join(dir,p),'utf8');assert.ok(!/wx:(if|elif)="(?!\{\{)/.test(s),'条件必须绑定表达式: '+p)}
 }

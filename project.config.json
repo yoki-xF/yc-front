@@ -22,26 +22,6 @@
         "value": "ENTRIES-business.json"
       },
       {
-        "type": "file",
-        "value": "utils/admin-infra/codegen.test.js"
-      },
-      {
-        "type": "file",
-        "value": "utils/admin-infra/form-builder.test.js"
-      },
-      {
-        "type": "file",
-        "value": "utils/admin-infra/socket.test.js"
-      },
-      {
-        "type": "file",
-        "value": "utils/admin-infra/goview.test.js"
-      },
-      {
-        "type": "file",
-        "value": "utils/admin-infra/form-component.test.js"
-      },
-      {
         "type": "folder",
         "value": "tools"
       }

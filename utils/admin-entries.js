@@ -1,6 +1,12 @@
 const migrationScope=require('./migration-scope')
 const entries=[
-  {key:"门店业务配置:business-settings",title:"经营设置",permission:"system:service-config:query",url:"/pages/boss/business-settings/index",group:"门店业务配置"},
+  {
+    "key": "门店业务配置:business-settings",
+    "title": "经营设置",
+    "permission": "system:service-config:query",
+    "url": "/pages/boss/business-settings/index",
+    "group": "门店业务配置"
+  },
   {
     "key": "门店业务配置:departments",
     "title": "门店管理",
@@ -187,14 +193,6 @@ const entries=[
     "platformOnly": true
   },
   {
-    "key": "messages:oauth-clients",
-    "title": "OAuth客户端",
-    "permission": "system:oauth2-client:query",
-    "url": "/pages/admin-messaging/manage/index?type=oauth-clients",
-    "group": "消息与授权",
-    "platformOnly": true
-  },
-  {
     "key": "messages:social-clients",
     "title": "社交客户端",
     "permission": "system:social-client:query",
@@ -227,14 +225,6 @@ const entries=[
     "platformOnly": true
   },
   {
-    "key": "messages:oauth-tokens",
-    "title": "授权令牌",
-    "permission": "system:oauth2-token:page",
-    "url": "/pages/admin-messaging/manage/index?type=oauth-tokens",
-    "group": "消息与授权",
-    "platformOnly": true
-  },
-  {
     "key": "messages:social-users",
     "title": "社交用户",
     "permission": "system:social-user:query",
@@ -246,13 +236,6 @@ const entries=[
     "key": "inbox",
     "title": "我的消息",
     "url": "/pages/admin-messaging/inbox/index",
-    "group": "消息与地区",
-    "authOnly": true
-  },
-  {
-    "key": "area",
-    "title": "地区与IP查询",
-    "url": "/pages/admin-messaging/area/index",
     "group": "消息与地区",
     "authOnly": true
   },
@@ -311,137 +294,7 @@ const entries=[
     "url": "/pages/admin-system/user-import/index",
     "permission": "system:user:import",
     "group": "系统管理"
-  },
-  {
-    "key": "infra:config",
-    "title": "参数配置",
-    "url": "/pages/admin-infra/catalog/index?type=config",
-    "permission": "infra:config:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:file",
-    "title": "文件管理",
-    "url": "/pages/admin-infra/storage/index?type=file",
-    "permission": "infra:file:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:file-config",
-    "title": "文件存储配置",
-    "url": "/pages/admin-infra/storage/index?type=file-config",
-    "permission": "infra:file-config:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:data-source-config",
-    "title": "数据源管理",
-    "url": "/pages/admin-infra/datasource/index",
-    "permission": "infra:data-source-config:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:job",
-    "title": "定时任务",
-    "url": "/pages/admin-infra/jobs/index",
-    "permission": "infra:job:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:job-log",
-    "title": "任务执行日志",
-    "url": "/pages/admin-infra/catalog/index?type=job-log",
-    "permission": "infra:job:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:api-access-log",
-    "title": "API访问日志",
-    "url": "/pages/admin-infra/catalog/index?type=api-access-log",
-    "permission": "infra:api-access-log:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:api-error-log",
-    "title": "API错误日志",
-    "url": "/pages/admin-infra/catalog/index?type=api-error-log",
-    "permission": "infra:api-error-log:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:redis",
-    "title": "Redis监控",
-    "url": "/pages/admin-infra/redis/index",
-    "permission": "infra:redis:get-monitor-info",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:codegen",
-    "title": "代码生成器",
-    "url": "/pages/admin-infra/codegen/index",
-    "permission": "infra:codegen:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:server",
-    "title": "服务器监控",
-    "url": "/pages/admin-infra/monitor/index?type=server",
-    "permission": "infra:server:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:druid",
-    "title": "数据库连接池",
-    "url": "/pages/admin-infra/monitor/index?type=druid",
-    "permission": "infra:druid:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:swagger",
-    "title": "API接口文档",
-    "url": "/pages/admin-infra/monitor/index?type=swagger",
-    "permission": "infra:swagger:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {
-    "key": "goview",
-    "title": "GoView项目配置",
-    "url": "/pages/admin-infra/goview/index",
-    "permission": "report:go-view-project:query",
-    "group": "报表与表单",
-    "platformOnly": true
-  },
-  {
-    "key": "form-build",
-    "title": "表单设计",
-    "url": "/pages/admin-infra/form-build/index",
-    "permission": "infra:codegen:query",
-    "group": "报表与表单",
-    "platformOnly": true
-  },
-  {
-    "key": "infra:websocket",
-    "title": "WebSocket连接测试",
-    "url": "/pages/admin-infra/websocket/index",
-    "permission": "infra:websocket:query",
-    "group": "开发与运维",
-    "platformOnly": true
-  },
-  {"key":"jimu","title":"积木报表模板","url":"/pages/admin-report/jimu/index","permission":"report:jmreport:query","platformOnly":true,"group":"报表与表单"},
- {"key":"infra:skywalking","title":"链路追踪","url":"/pages/admin-infra/tracing/index","permission":"infra:skywalking:query","platformOnly":true,"group":"开发与运维"}
+  }
 ]
 function visible(info){const ps=info&&info.permissions||[],roles=info&&info.roles||[];return entries.filter(e=>!migrationScope.deferredEntry(e)&&(e.authOnly?!!(info&&info.user):(ps.includes("*:*:*")||ps.includes(e.permission)))&&(!e.platformOnly||roles.includes("super_admin")))}
 module.exports={entries,visible}
