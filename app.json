@@ -48,7 +48,10 @@
     "pages/admin-system/user-import/index",
     "pages/admin-pay/wallet-adjustment/index",
     "pages/boss/commission-create/index",
-    "pages/boss/business-settings/index"
+    "pages/boss/business-settings/index",
+    "pages/workspace/ledger/index",
+    "pages/workspace/reports/index",
+    "pages/workspace/mine/index"
   ],
   "window": {
     "navigationBarTitleText": "门店管理",
@@ -57,5 +60,29 @@
     "backgroundColor": "#f5f7fa"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#52647c",
+    "selectedColor": "#0052d9",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "工作台"
+      },
+      {
+        "pagePath": "pages/workspace/ledger/index",
+        "text": "单据"
+      },
+      {
+        "pagePath": "pages/workspace/reports/index",
+        "text": "报表"
+      },
+      {
+        "pagePath": "pages/workspace/mine/index",
+        "text": "我的"
+      }
+    ]
+  }
 }

@@ -948,6 +948,69 @@
         "提交结果不明不自动重放"
       ],
       "implementation": "layout-first-pass"
+    },
+    {
+      "route": "pages/workspace/ledger/index",
+      "title": "单据与记录",
+      "section": "单据",
+      "template": "权限与范围驱动入口",
+      "roles": [
+        "employee",
+        "boss",
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "implementation": "layout-first-pass",
+      "layout": "账号状态 → 可选门店范围 → 按权限分组的入口 → 消息/帮助",
+      "guardrails": [
+        "真实服务器权限和门店范围",
+        "长ID文本",
+        "隐藏、卸载、换账号后丢弃迟到响应",
+        "不调用第三方或财务写接口",
+        "退出响应不清理后续账号会话"
+      ]
+    },
+    {
+      "route": "pages/workspace/reports/index",
+      "title": "报表入口",
+      "section": "报表",
+      "template": "权限与范围驱动入口",
+      "roles": [
+        "employee",
+        "boss",
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "implementation": "layout-first-pass",
+      "layout": "账号状态 → 可选门店范围 → 按权限分组的入口 → 消息/帮助",
+      "guardrails": [
+        "真实服务器权限和门店范围",
+        "长ID文本",
+        "隐藏、卸载、换账号后丢弃迟到响应",
+        "不调用第三方或财务写接口",
+        "退出响应不清理后续账号会话"
+      ]
+    },
+    {
+      "route": "pages/workspace/mine/index",
+      "title": "我的",
+      "section": "我的",
+      "template": "权限与范围驱动入口",
+      "roles": [
+        "employee",
+        "boss",
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "implementation": "layout-first-pass",
+      "layout": "账号状态 → 可选门店范围 → 按权限分组的入口 → 消息/帮助",
+      "guardrails": [
+        "真实服务器权限和门店范围",
+        "长ID文本",
+        "隐藏、卸载、换账号后丢弃迟到响应",
+        "不调用第三方或财务写接口",
+        "退出响应不清理后续账号会话"
+      ]
     }
   ],
   "adminEntries": [

@@ -1,0 +1,14 @@
+<view class="workspace">
+  <page-heading eyebrow="易彩 · 门店管理" title="{{title}}" description="{{description}}" />
+  <view wx:if="{{!signedIn}}" class="ws-card"><view class="ws-note">登录后查看当前账号可用的功能。</view><button class="ws-primary" bindtap="login">登录账号</button></view>
+  <view wx:elif="{{loading}}" class="ws-card ws-note">正在读取账号与权限…</view>
+  <view wx:elif="{{error}}" class="ws-card"><view class="ws-error">{{error}}</view><button bindtap="retry">重试读取</button><button bindtap="login">重新登录</button></view>
+  <block wx:else>
+    <view wx:if="{{nickname}}" class="ws-eyebrow">{{nickname}}</view>
+    <picker wx:if="{{showStore && deptIndex >= 0}}" range="{{depts}}" range-key="name" value="{{deptIndex}}" bindchange="department"><view class="ws-scope"><view class="ws-scope-name"><text>{{depts[deptIndex].name}}</text><text class="ws-link">切换门店 ›</text></view><view class="ws-subtitle">员工入口使用此门店；管理查询以进入后的筛选范围为准。</view></view></picker>
+    <view wx:if="{{notice}}" class="ws-note">{{notice}}</view>
+    <view wx:if="{{!groups.length}}" class="ws-card ws-note">当前账号暂无可用入口。请确认门店授权或联系管理员。</view>
+    <view wx:for="{{groups}}" wx:key="title"><view class="ws-section">{{item.title}}</view><view class="ws-card"><button class="ws-row" wx:for="{{item.entries}}" wx:for-item="entry" wx:key="key" data-key="{{entry.key}}" bindtap="open"><view class="ws-row-label"><text>{{entry.title}}</text><text>›</text></view></button></view></view>
+    <block wx:if="{{!showStore}}"><button class="ws-row" bindtap="contact">联系客服</button><button class="ws-row" bindtap="logout">退出当前账号</button></block>
+  </block>
+</view>
