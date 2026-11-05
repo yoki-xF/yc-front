@@ -1,0 +1,24 @@
+.yc-page { min-height: 100vh; box-sizing: border-box; padding: 32rpx; padding-bottom: calc(48rpx + env(safe-area-inset-bottom)); background: var(--yc-background); color: var(--yc-text); font-size: 32rpx; }
+.yc-page .store { color: var(--yc-text); background: var(--yc-surface); border: 1rpx solid var(--yc-border); padding: 24rpx 28rpx; border-radius: 18rpx; margin: 24rpx 0; font-size: 30rpx; line-height: 1.6; overflow-wrap: anywhere; }
+.yc-page .card { background: var(--yc-surface); border: 1rpx solid var(--yc-border); border-radius: 24rpx; padding: 28rpx; margin-bottom: 24rpx; }
+.yc-page .heading, .yc-page .section { color: var(--yc-text); font-size: 34rpx; font-weight: 600; line-height: 1.6; }
+.yc-page .hint, .yc-page .other, .yc-page .empty { color: var(--yc-muted); font-size: 28rpx; line-height: 1.7; }
+.yc-page .line { min-height: 104rpx; gap: 16rpx; padding: 10rpx 0; }
+.yc-page .line > text:first-child { max-width: 50%; line-height: 1.6; overflow-wrap: anywhere; }
+.yc-page input { color: var(--yc-text); min-width: 0; font-size: 34rpx; font-variant-numeric: tabular-nums; }
+.yc-page textarea { background: var(--yc-background); color: var(--yc-text); border-radius: 14rpx; font-size: 30rpx; line-height: 1.6; }
+.yc-page button { font-size: 30rpx; border-radius: 16rpx; white-space: normal; }
+.yc-page button[type=primary] { background: var(--yc-primary); color: white; min-height: 96rpx; }
+.yc-page button[type=primary][disabled] { background: #9cb5dc; color: white; }
+.yc-page .error, .yc-page .warning { color: var(--yc-error); line-height: 1.7; font-size: 28rpx; overflow-wrap: anywhere; }
+.yc-page .notice { color: var(--yc-success); line-height: 1.7; font-size: 28rpx; }
+.yc-page .selected { color: var(--yc-primary); border-color: var(--yc-primary); }
+.yc-page .link, .yc-page .state, .yc-page .status { color: var(--yc-primary); }
+.yc-page .account-title { display: flex; align-items: center; gap: 16rpx; font-size: 34rpx; font-weight: 600; margin: 8rpx 0; }
+.yc-page .account-number { background: var(--yc-primary-soft); color: var(--yc-primary); font-size: 26rpx; padding: 6rpx 12rpx; border-radius: 10rpx; }
+.yc-page .feedback { padding: 24rpx 28rpx; border: 1rpx solid var(--yc-border); border-radius: 18rpx; background: var(--yc-surface); margin: 24rpx 0; }
+.yc-page .submit-note { color: var(--yc-muted); font-size: 28rpx; line-height: 1.7; margin: 24rpx 0 12rpx; }
+.yc-page .report-metric { display: flex; justify-content: space-between; align-items: baseline; gap: 20rpx; padding: 20rpx 0; border-bottom: 1rpx solid var(--yc-border); }
+.yc-page .report-metric:last-child { border: 0; }
+.yc-page .report-metric text:first-child { color: var(--yc-muted); }
+.yc-page .report-metric text:last-child { min-width: 0; text-align: right; overflow-wrap: anywhere; font-size: 36rpx; font-weight: 600; font-variant-numeric: tabular-nums; }

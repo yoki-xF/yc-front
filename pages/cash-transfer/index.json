@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"备付金转入"}
+{
+  "navigationBarTitleText": "备付金转入",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

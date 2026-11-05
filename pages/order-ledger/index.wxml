@@ -1,4 +1,5 @@
-<view class="page"><view class="store">当前门店：{{deptName}}</view>
+<view class="page yc-page">
+  <page-heading eyebrow="业务单据" title="即开票单据" description="采购与调拨分开查看，详情中办理有权限的操作。" dept-name="{{deptName}}" />
   <view class="tabs"><view data-type="purchase" bindtap="switchType" class="tab {{type === 'purchase' ? 'selected' : ''}}">订票单据</view><view data-type="transfer" bindtap="switchType" class="tab {{type === 'transfer' ? 'selected' : ''}}">调拨单据</view></view>
   <view class="hint">订票支持建单、确认入库和作废；调拨由调入门店建单、调出门店确认。</view>
   <view wx:if="{{type === 'transfer'}}" class="tabs"><view data-direction="in" bindtap="switchDirection" class="tab {{direction === 'in' ? 'selected' : ''}}">调入</view><view data-direction="out" bindtap="switchDirection" class="tab {{direction === 'out' ? 'selected' : ''}}">调出</view></view>

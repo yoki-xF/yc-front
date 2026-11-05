@@ -1,2 +1,4 @@
 @import "../../styles/employee-form.wxss";
 .other { color: #526276; line-height: 1.6; margin-top: 24rpx; }
+
+@import "../../styles/business-page.wxss";

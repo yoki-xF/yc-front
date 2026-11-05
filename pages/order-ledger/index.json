@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"即开票单据"}
+{
+  "navigationBarTitleText": "即开票单据",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

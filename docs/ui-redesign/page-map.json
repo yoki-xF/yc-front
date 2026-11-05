@@ -120,7 +120,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/evening/index",
@@ -140,7 +140,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/fund/index",
@@ -160,7 +160,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/business/index",
@@ -180,7 +180,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/report/index",
@@ -200,7 +200,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/cash-transfer/index",
@@ -220,7 +220,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/order-ledger/index",
@@ -240,7 +240,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/transfer-create/index",
@@ -260,7 +260,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/order-detail/index",
@@ -300,7 +300,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/check-status/index",
@@ -320,7 +320,7 @@
         "离页和换账号后忽略迟到响应",
         "提交结果不明不自动重放"
       ],
-      "implementation": "planned"
+      "implementation": "layout-first-pass"
     },
     {
       "route": "pages/boss/home/index",

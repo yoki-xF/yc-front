@@ -1,5 +1,6 @@
-<view class="page">
-  <view class="store">当前门店：{{deptName}}</view>
+<view class="page yc-page">
+  <page-heading eyebrow="营业任务" title="早盘点" description="核对即开库存与期初资金，保留当天原始盘点依据。" dept-name="{{deptName}}" />
+
   <view wx:if="{{loading}}" class="card">正在读取盘点数据…</view>
   <view wx:elif="{{error && !users.length}}" class="card error">{{error}}<button size="mini" bindtap="retry">重试</button></view>
   <block wx:else>

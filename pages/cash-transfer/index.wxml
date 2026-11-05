@@ -1,7 +1,8 @@
-<view class="page">
-  <view class="store">当前门店：{{deptName}}</view>
+<view class="page yc-page">
+  <page-heading eyebrow="资金单据" title="备付金转入" description="登记转入金额及来源，提交将更新门店现金余额。" dept-name="{{deptName}}" />
+
   <view class="card">
-    <view class="heading">备付金转入</view><view class="hint">来源：备用金申请。提交后增加当前门店现金余额。</view>
+    <view class="hint">来源：备用金申请。提交后增加当前门店现金余额。</view>
     <view class="line"><text>转入金额</text><input type="text" value="{{amount}}" data-key="amount" bindinput="input" disabled="{{busy || uncertain}}" placeholder="请输入金额"/><text>元</text></view>
     <view class="hint">备注（选填，最多 300 字）</view><textarea value="{{remark}}" data-key="remark" bindinput="input" disabled="{{busy || uncertain}}" maxlength="300" placeholder="请输入备注"/>
     <view wx:if="{{notice}}" class="notice">{{notice}}</view><view wx:if="{{error}}" class="error">{{error}}</view>

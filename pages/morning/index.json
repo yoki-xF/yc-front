@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"早盘点"}
+{
+  "navigationBarTitleText": "早盘点",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

@@ -1,0 +1,6 @@
+<view class="header">
+  <view wx:if="{{eyebrow}}" class="eyebrow">{{eyebrow}}</view>
+  <view class="title">{{title}}</view>
+  <view wx:if="{{description}}" class="description">{{description}}</view>
+</view>
+<view wx:if="{{deptName}}" class="scope">{{scopeLabel}}：{{deptName}}</view>

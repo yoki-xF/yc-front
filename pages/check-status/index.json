@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"盘点状态"}
+{
+  "navigationBarTitleText": "盘点状态",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}

@@ -1,1 +1,6 @@
-{"navigationBarTitleText":"销量报表"}
+{
+  "navigationBarTitleText": "销量报表",
+  "usingComponents": {
+    "page-heading": "/components/page-heading/index"
+  }
+}
