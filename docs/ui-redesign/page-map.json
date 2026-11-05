@@ -1,0 +1,1288 @@
+{
+  "date": "2026-11-05",
+  "frontendBaseline": "0ab9296",
+  "pages": [
+    {
+      "route": "pages/index/index",
+      "title": "今日营业",
+      "section": "今日营业",
+      "template": "工作台",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围 → 主要任务 → 业务入口 → 辅助入口",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/login/index",
+      "title": "账号登录",
+      "section": "今日营业",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/manual/index",
+      "title": "帮助与手册",
+      "section": "我的",
+      "template": "列表或工具",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/profile/index",
+      "title": "个人资料",
+      "section": "我的",
+      "template": "列表或工具",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/activity/index",
+      "title": "促销活动",
+      "section": "今日营业",
+      "template": "列表或工具",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/morning/index",
+      "title": "早盘点",
+      "section": "今日营业",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/evening/index",
+      "title": "晚盘点",
+      "section": "今日营业",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/fund/index",
+      "title": "资金盘点",
+      "section": "今日营业",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/business/index",
+      "title": "营业记账",
+      "section": "今日营业",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/report/index",
+      "title": "个人与门店销量",
+      "section": "报表",
+      "template": "筛选与报表",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "门店/时间范围 → 已结店口径 → 汇总 → 明细 → 有权限导出",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/cash-transfer/index",
+      "title": "备付金转入",
+      "section": "单据",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/order-ledger/index",
+      "title": "即开票单据",
+      "section": "单据",
+      "template": "列表或工具",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/transfer-create/index",
+      "title": "新建调拨",
+      "section": "单据",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/order-detail/index",
+      "title": "单据详情",
+      "section": "单据",
+      "template": "详情与操作",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/purchase-create/index",
+      "title": "采购入库",
+      "section": "单据",
+      "template": "分组表单",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/check-status/index",
+      "title": "盘点进度",
+      "section": "今日营业",
+      "template": "列表或工具",
+      "roles": [
+        "employee",
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/home/index",
+      "title": "工作台",
+      "section": "经营管理",
+      "template": "工作台",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围 → 主要任务 → 业务入口 → 辅助入口",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/records/index",
+      "title": "记录列表",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/detail/index",
+      "title": "记录详情",
+      "section": "经营管理",
+      "template": "详情与操作",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/form/index",
+      "title": "业务表单",
+      "section": "经营管理",
+      "template": "分组表单",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/correction/index",
+      "title": "留痕更正",
+      "section": "经营管理",
+      "template": "分组表单",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/reports/index",
+      "title": "经营报表",
+      "section": "报表",
+      "template": "筛选与报表",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "门店/时间范围 → 已结店口径 → 汇总 → 明细 → 有权限导出",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/profile/index",
+      "title": "个人资料",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/schedule/index",
+      "title": "排班考勤",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/user-actions/index",
+      "title": "账号操作",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/role-actions/index",
+      "title": "角色权限",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/vouchers/index",
+      "title": "营业凭证",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/opening/index",
+      "title": "首次初始化",
+      "section": "经营管理",
+      "template": "分组表单",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/operating-day/index",
+      "title": "开店与结店",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin/home/index",
+      "title": "工作台",
+      "section": "平台管理",
+      "template": "工作台",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围 → 主要任务 → 业务入口 → 辅助入口",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-business/manage/index",
+      "title": "管理列表与表单",
+      "section": "门店配置",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-ledger/index",
+      "title": "admin-ledger",
+      "section": "库存与资金",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-system/posts/index",
+      "title": "岗位管理",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-system/notices/index",
+      "title": "公告管理",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-system/global/index",
+      "title": "全局配置",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-system/platform/index",
+      "title": "客户与套餐",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-system/logs/index",
+      "title": "日志中心",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-messaging/manage/index",
+      "title": "管理列表与表单",
+      "section": "消息中心",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-messaging/inbox/index",
+      "title": "我的消息",
+      "section": "消息中心",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-pay/app/index",
+      "title": "支付应用",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "deferred",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-pay/channel/index",
+      "title": "支付渠道",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "deferred",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-pay/notify/index",
+      "title": "支付通知",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "deferred",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-pay/package/index",
+      "title": "充值套餐",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "deferred",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-pay/transactions/index",
+      "title": "支付交易",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "deferred",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-pay/wallet/index",
+      "title": "钱包流水",
+      "section": "平台管理",
+      "template": "列表或工具",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "deferred",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-system/user-import/index",
+      "title": "账号导入",
+      "section": "平台管理",
+      "template": "分组表单",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/admin-pay/wallet-adjustment/index",
+      "title": "钱包调整",
+      "section": "平台管理",
+      "template": "分组表单",
+      "roles": [
+        "permission-scoped-admin"
+      ],
+      "status": "deferred",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/commission-create/index",
+      "title": "新增返佣",
+      "section": "经营管理",
+      "template": "分组表单",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与营业日 → 分组字段 → 校验反馈 → 核对与提交",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    },
+    {
+      "route": "pages/boss/business-settings/index",
+      "title": "经营设置",
+      "section": "经营管理",
+      "template": "列表或工具",
+      "roles": [
+        "boss"
+      ],
+      "status": "retained",
+      "layout": "范围与筛选 → 状态 → 记录/字段 → 有权限操作",
+      "guardrails": [
+        "保留实际接口权限",
+        "ID字符串和金额文本",
+        "草稿按账号门店营业日隔离",
+        "离页和换账号后忽略迟到响应",
+        "提交结果不明不自动重放"
+      ]
+    }
+  ],
+  "adminEntries": [
+    {
+      "key": "门店业务配置:business-settings",
+      "title": "经营设置",
+      "permission": "system:service-config:query",
+      "url": "/pages/boss/business-settings/index",
+      "group": "门店业务配置",
+      "status": "retained"
+    },
+    {
+      "key": "门店业务配置:departments",
+      "title": "门店管理",
+      "permission": "system:dept:query",
+      "url": "/pages/admin-business/manage/index?type=departments",
+      "group": "门店业务配置",
+      "status": "retained"
+    },
+    {
+      "key": "门店业务配置:shifts",
+      "title": "班次配置",
+      "permission": "sport:staff-schedule-config:query",
+      "url": "/pages/admin-business/manage/index?type=shifts",
+      "group": "门店业务配置",
+      "status": "retained"
+    },
+    {
+      "key": "门店业务配置:activities",
+      "title": "促销活动",
+      "permission": "sport:sales-activity:query",
+      "url": "/pages/admin-business/manage/index?type=activities",
+      "group": "门店业务配置",
+      "status": "retained"
+    },
+    {
+      "key": "门店业务配置:games",
+      "title": "返佣玩法",
+      "permission": "sport:game-sales-config:query",
+      "url": "/pages/admin-business/manage/index?type=games",
+      "group": "门店业务配置",
+      "status": "retained"
+    },
+    {
+      "key": "门店业务配置:targets",
+      "title": "门店月目标",
+      "permission": "sport:dept-sales-check:query",
+      "url": "/pages/admin-business/manage/index?type=targets",
+      "group": "门店业务配置",
+      "status": "retained"
+    },
+    {
+      "key": "库存与单据:inventory",
+      "title": "即开库存",
+      "permission": "sport:inventory-ggl:query",
+      "url": "/pages/admin-ledger/index?key=inventory",
+      "group": "库存与单据",
+      "status": "retained"
+    },
+    {
+      "key": "库存与单据:funds",
+      "title": "五账户余额",
+      "permission": "sport:inventory-fund:query",
+      "url": "/pages/admin-ledger/index?key=funds",
+      "group": "库存与单据",
+      "status": "retained"
+    },
+    {
+      "key": "库存与单据:purchases",
+      "title": "采购单据",
+      "permission": "sport:purchasing-order:query",
+      "url": "/pages/admin-ledger/index?key=purchases",
+      "group": "库存与单据",
+      "status": "retained"
+    },
+    {
+      "key": "库存与单据:transfers",
+      "title": "票据调拨",
+      "permission": "sport:allot-bill-join:query",
+      "url": "/pages/admin-ledger/index?key=transfers",
+      "group": "库存与单据",
+      "status": "retained"
+    },
+    {
+      "key": "库存与单据:cash",
+      "title": "资金调拨",
+      "permission": "sport:allot-fund-join:query",
+      "url": "/pages/admin-ledger/index?key=cash",
+      "group": "库存与单据",
+      "status": "retained"
+    },
+    {
+      "key": "库存与单据:activity",
+      "title": "活动核销流水",
+      "permission": "sport:check-sales-activity:query",
+      "url": "/pages/admin-ledger/index?key=activity",
+      "group": "库存与单据",
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-posts",
+      "title": "岗位管理",
+      "permission": "system:post:query",
+      "url": "/pages/admin-system/posts/index",
+      "group": "系统管理",
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-notices",
+      "title": "公告管理",
+      "permission": "system:notice:query",
+      "url": "/pages/admin-system/notices/index",
+      "group": "系统管理",
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-menus",
+      "title": "菜单管理",
+      "permission": "system:menu:query",
+      "url": "/pages/admin-system/global/index?type=menus",
+      "group": "系统管理",
+      "platformOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-dict-types",
+      "title": "字典类型",
+      "permission": "system:dict:query",
+      "url": "/pages/admin-system/global/index?type=dict-types",
+      "group": "系统管理",
+      "platformOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-dict-data",
+      "title": "字典数据",
+      "permission": "system:dict:query",
+      "url": "/pages/admin-system/global/index?type=dict-data",
+      "group": "系统管理",
+      "platformOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-tenants",
+      "title": "租户管理",
+      "permission": "system:tenant:query",
+      "url": "/pages/admin-system/platform/index?type=tenants",
+      "group": "系统管理",
+      "platformOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-packages",
+      "title": "租户套餐",
+      "permission": "system:tenant-package:query",
+      "url": "/pages/admin-system/platform/index?type=packages",
+      "group": "系统管理",
+      "platformOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-login-logs",
+      "title": "登录日志",
+      "permission": "system:login-log:query",
+      "url": "/pages/admin-system/logs/index?type=login",
+      "group": "系统管理",
+      "status": "retained"
+    },
+    {
+      "key": "系统管理:admin-system-operate-logs",
+      "title": "操作日志",
+      "permission": "system:operate-log:query",
+      "url": "/pages/admin-system/logs/index?type=operate",
+      "group": "系统管理",
+      "status": "retained"
+    },
+    {
+      "key": "messages:sms-channels",
+      "title": "短信渠道",
+      "permission": "system:sms-channel:query",
+      "url": "/pages/admin-messaging/manage/index?type=sms-channels",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "messages:sms-templates",
+      "title": "短信模板",
+      "permission": "system:sms-template:query",
+      "url": "/pages/admin-messaging/manage/index?type=sms-templates",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "messages:mail-accounts",
+      "title": "邮件账号",
+      "permission": "system:mail-account:query",
+      "url": "/pages/admin-messaging/manage/index?type=mail-accounts",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "messages:mail-templates",
+      "title": "邮件模板",
+      "permission": "system:mail-template:query",
+      "url": "/pages/admin-messaging/manage/index?type=mail-templates",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "messages:notify-templates",
+      "title": "站内信模板",
+      "permission": "system:notify-template:query",
+      "url": "/pages/admin-messaging/manage/index?type=notify-templates",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "messages:social-clients",
+      "title": "社交客户端",
+      "permission": "system:social-client:query",
+      "url": "/pages/admin-messaging/manage/index?type=social-clients",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "messages:sms-logs",
+      "title": "短信发送记录",
+      "permission": "system:sms-log:query",
+      "url": "/pages/admin-messaging/manage/index?type=sms-logs",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "messages:mail-logs",
+      "title": "邮件发送记录",
+      "permission": "system:mail-log:query",
+      "url": "/pages/admin-messaging/manage/index?type=mail-logs",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "messages:notify-messages",
+      "title": "站内信记录",
+      "permission": "system:notify-message:query",
+      "url": "/pages/admin-messaging/manage/index?type=notify-messages",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "messages:social-users",
+      "title": "社交用户",
+      "permission": "system:social-user:query",
+      "url": "/pages/admin-messaging/manage/index?type=social-users",
+      "group": "消息与授权",
+      "platformOnly": true,
+      "status": "deferred"
+    },
+    {
+      "key": "inbox",
+      "title": "我的消息",
+      "url": "/pages/admin-messaging/inbox/index",
+      "group": "消息与地区",
+      "authOnly": true,
+      "status": "retained"
+    },
+    {
+      "key": "pay-app",
+      "title": "支付应用",
+      "url": "/pages/admin-pay/app/index",
+      "permission": "pay:app:query",
+      "group": "支付中心",
+      "status": "deferred"
+    },
+    {
+      "key": "pay-order",
+      "title": "支付订单",
+      "url": "/pages/admin-pay/transactions/index?kind=order",
+      "permission": "pay:order:query",
+      "group": "支付中心",
+      "status": "deferred"
+    },
+    {
+      "key": "pay-refund",
+      "title": "退款订单",
+      "url": "/pages/admin-pay/transactions/index?kind=refund",
+      "permission": "pay:refund:query",
+      "group": "支付中心",
+      "status": "deferred"
+    },
+    {
+      "key": "pay-transfer",
+      "title": "转账订单",
+      "url": "/pages/admin-pay/transactions/index?kind=transfer",
+      "permission": "pay:transfer:query",
+      "group": "支付中心",
+      "status": "deferred"
+    },
+    {
+      "key": "pay-notify",
+      "title": "通知任务",
+      "url": "/pages/admin-pay/notify/index",
+      "permission": "pay:notify:query",
+      "group": "支付中心",
+      "status": "deferred"
+    },
+    {
+      "key": "pay-wallet",
+      "title": "钱包与流水",
+      "url": "/pages/admin-pay/wallet/index",
+      "permission": "pay:wallet:query",
+      "group": "支付中心",
+      "status": "deferred"
+    },
+    {
+      "key": "pay-package",
+      "title": "充值套餐",
+      "url": "/pages/admin-pay/package/index",
+      "permission": "pay:wallet-recharge-package:query",
+      "group": "支付中心",
+      "status": "deferred"
+    },
+    {
+      "key": "user-import",
+      "title": "账号导入",
+      "url": "/pages/admin-system/user-import/index",
+      "permission": "system:user:import",
+      "group": "系统管理",
+      "status": "retained"
+    }
+  ],
+  "bossModules": [
+    {
+      "key": "inventory",
+      "title": "即开盘点",
+      "permission": "sport:check-ggl:query"
+    },
+    {
+      "key": "funds",
+      "title": "资金盘点",
+      "permission": "sport:check-fund:query"
+    },
+    {
+      "key": "business",
+      "title": "营业数据",
+      "permission": "sport:check-service:query"
+    },
+    {
+      "key": "commission",
+      "title": "返佣盘点",
+      "permission": "sport:check-game-sales:query"
+    },
+    {
+      "key": "costs",
+      "title": "成本记录",
+      "permission": "sport:cost-record:query"
+    },
+    {
+      "key": "materials",
+      "title": "票种物料",
+      "permission": "sport:material-ggl:query"
+    },
+    {
+      "key": "users",
+      "title": "员工管理",
+      "permission": "system:user:list"
+    },
+    {
+      "key": "roles",
+      "title": "角色管理",
+      "permission": "system:role:query"
+    },
+    {
+      "key": "attendance",
+      "title": "考勤排班",
+      "permission": "sport:staff-schedule:query"
+    }
+  ]
+}
