@@ -37,7 +37,11 @@ export function entryPayload(kind: EntryKind, values: Record<string,string>, shi
   if (!shifts.some(s => s.value === values.classes)) throw Error('请选择启用班次')
   record.classes = values.classes
   // Preserve existing private voucher references without accepting arbitrary metadata from the form.
-  if (original?.voucherPic != null) record.voucherPic = original.voucherPic
+  if (Object.prototype.hasOwnProperty.call(values,'voucherPic')) {
+   const refs = values.voucherPic ? values.voucherPic.split(',') : [], legacy = String(original?.voucherPic || '').split(',')
+   if (refs.length > 6 || new Set(refs).size !== refs.length || refs.some(ref => !/^pv:[a-f0-9]{32}$/.test(ref) && !legacy.includes(ref))) throw Error('凭证无效、重复或超过6张')
+   record.voucherPic = values.voucherPic
+  } else if (original?.voucherPic != null) record.voucherPic = original.voucherPic
  }
  return record
 }

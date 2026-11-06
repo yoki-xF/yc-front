@@ -2,7 +2,7 @@ import { session, saveSession, isCurrent } from './session'
 export class ApiError extends Error { constructor(message: string, public code?: number) { super(message) } }
 const base = (import.meta.env.VITE_API_BASE || '/admin-api').replace(/\/$/, '')
 let refreshFlight: { key: string; promise: Promise<void> } | null = null
-interface Options { method?: string; data?: Record<string, unknown>; public?: boolean; tenantId?: string; signal?: AbortSignal; operatingDay?: string }
+interface Options { method?: string; data?: Record<string, unknown>; public?: boolean; tenantId?: string; signal?: AbortSignal; operatingDay?: string; file?: File; responseType?: 'blob' }
 async function send(path: string, options: Options, token?: string) {
   const url = new URL(base + path, window.location.origin)
   const method = options.method || 'GET'
@@ -12,6 +12,7 @@ async function send(path: string, options: Options, token?: string) {
     if (!/^[a-f0-9-]{36}$/.test(options.operatingDay)) throw new ApiError('缺少有效营业日，请重新读取')
     headers['X-Operating-Day'] = options.operatingDay
   }
+  if (options.file) delete headers['content-type']
   if (token) headers.Authorization = 'Bearer ' + token
   if (options.tenantId) headers['tenant-id'] = options.tenantId
   const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 20000)
@@ -19,10 +20,19 @@ async function send(path: string, options: Options, token?: string) {
   options.signal?.addEventListener('abort', abort, { once: true })
   if (options.signal?.aborted) controller.abort()
   try {
-    const response = await fetch(url, { method, headers, body: method === 'GET' ? undefined : JSON.stringify(options.data || {}), signal: controller.signal, credentials: 'omit', cache: 'no-store' })
+    let payload: BodyInit | undefined = method === 'GET' ? undefined : JSON.stringify(options.data || {})
+    if (options.file) {
+      if (method === 'GET') throw new ApiError('文件上传需要提交请求')
+      const form = new FormData(); form.append('file', options.file)
+      for (const [key,value] of Object.entries(options.data || {})) if (value != null) form.append(key,String(value))
+      payload = form
+    }
+    const response = await fetch(url, { method, headers, body: payload, signal: controller.signal, credentials: 'omit', cache: 'no-store' })
+    if (options.responseType === 'blob' && response.ok && ['image/jpeg','image/png','image/webp'].includes(response.headers.get('content-type')?.split(';')[0] || '')) return await response.blob()
     const body = await response.json().catch(() => null)
     if (response.status === 401 || body?.code === 401) throw new ApiError('登录已过期，请重新登录', 401)
     if (!response.ok || body?.code !== 0) throw new ApiError(body?.msg || '服务请求失败，请稍后重试', body?.code || response.status)
+    if (options.responseType === 'blob') throw new ApiError('凭证格式无效或暂不可预览')
     return body.data
   } catch (error) {
     if (error instanceof ApiError) throw error

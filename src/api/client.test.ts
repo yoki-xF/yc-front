@@ -58,3 +58,13 @@ test('employee write carries the reviewed operating day and is not replayed on t
  expect(fetch).toHaveBeenCalledTimes(1)
  expect((fetch.mock.calls[0] as unknown as [URL,RequestInit])[1].headers).toMatchObject({'X-Operating-Day':'01928a10-aabb-4abc-9abc-abcdef123456'})
 })
+test('private voucher upload uses authenticated multipart data, not JSON or public URLs',async()=>{
+ const {request}=await setup();const fetch=vi.fn(async()=>response('pv:'+'a'.repeat(32)));vi.stubGlobal('fetch',fetch)
+ await request('/sport/wx/night/count/service/voucher',{method:'POST',data:{deptId:'9007199254740993'},file:new File(['fixture'],'test.png',{type:'image/png'})})
+ const [,options]=fetch.mock.calls[0] as unknown as [URL,RequestInit]
+ expect(options.headers).toMatchObject({Authorization:'Bearer old','tenant-id':'9007199254740993'});expect(options.headers).not.toHaveProperty('content-type');expect((options.body as FormData).get('deptId')).toBe('9007199254740993')
+})
+test('private voucher preview returns an image blob and checks the active account',async()=>{
+ const {request}=await setup();vi.stubGlobal('fetch',vi.fn(async()=>new Response(new Blob(['fixture'],{type:'image/png'}),{headers:{'content-type':'image/png','cache-control':'private, no-store'}})))
+ expect((await request<Blob>('/sport/wx/night/count/service/voucher',{data:{deptId:'1',ref:'pv:'+'a'.repeat(32)},responseType:'blob'})).type).toBe('image/png')
+})

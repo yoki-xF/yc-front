@@ -30,3 +30,9 @@ test('员工表单拒绝跨账号门店和已结店上下文，草稿按登录�
  const key=entryDraftKey('login',actor,dept,day,'fund')
  expect(new Set([key,entryDraftKey('other',actor,dept,day,'fund'),entryDraftKey('login','2',dept,day,'fund'),entryDraftKey('login',actor,'2',day,'fund'),entryDraftKey('login',actor,dept,'other','fund'),entryDraftKey('login',actor,dept,day,'business')]).size).toBe(6)
 })
+test('营业凭证仅允许私有引用或原有历史关联，不能新增公开URL',()=>{
+ const values=entryValues('business',null);values.classes='Late';values.voucherPic='pv:'+'a'.repeat(32)
+ expect(entryPayload('business',values,[{value:'Late'}],null).voucherPic).toBe(values.voucherPic)
+ values.voucherPic='https://example.com/new.png';expect(()=>entryPayload('business',values,[{value:'Late'}],null)).toThrow('凭证')
+ values.voucherPic='';expect(entryPayload('business',values,[{value:'Late'}],null).voucherPic).toBe('')
+})
