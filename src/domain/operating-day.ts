@@ -15,6 +15,10 @@ export function closingPreview(raw: any, day: Day) {
   const fundKeys = ['xj','wxBalance','hsk','zfb','szRmb']
   if (!Array.isArray(raw.funds) || raw.funds.length !== 5 || new Set(raw.funds.map((f: any) => f.key)).size !== 5 || raw.funds.some((f: any) => !fundKeys.includes(f.key))) throw Error('五类资金明细不完整')
   const funds = raw.funds.map((f: any) => ({ key: f.key, opening: money(cents(f.opening)), closing: money(cents(f.closing)) }))
+  for (const field of ['opening','closing'] as const) {
+    const total = funds.reduce((sum: number, f: any) => sum + cents(f[field]), 0)
+    if (!Number.isSafeInteger(total) || total !== cents(report[field === 'opening' ? 'openingFunds' : 'closingFunds'])) throw Error('五类资金与合计不一致')
+  }
   return { sourceRevision: raw.sourceRevision as string, report, funds: funds as {key: string; opening: string; closing: string}[] }
 }
 export type DayCommand = { action: 'open'|'close'; data: { deptId: string; requestKey: string; dayId?: string; revision?: number; sourceRevision?: string } }
