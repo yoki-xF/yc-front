@@ -21,6 +21,10 @@ function getResource(key) { if (!Object.prototype.hasOwnProperty.call(resources,
 function can(permissions, permission) { return Array.isArray(permissions) && (permissions.includes('*:*:*') || permissions.includes(permission)) }
 function display(value, key) {
   if (value === null || value === undefined || value === '') return '—'
+  if (['checkTime','createTime','belongTime','scheduleDate','checkDate'].includes(key) && typeof value === 'string' && /^\d{4}-\d{2}-\d{2}(?:T| )/.test(value)) {
+    const [date, time] = value.split(/[T ]/)
+    return key === 'createTime' ? date + ' ' + (time || '').slice(0, 5) : date
+  }
   if (key === 'classes') return ({ Morning: '早班', Late: '晚班' })[value] || String(value)
   if (key === 'status') return Number(value) === 0 ? '启用' : Number(value) === 1 ? '停用' : '未知'
   if (Array.isArray(value)) return value.join('-')

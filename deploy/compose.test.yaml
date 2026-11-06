@@ -1,6 +1,12 @@
 # Extends the existing yc-acceptance project; no new DB or data copy.
 services:
+  mysql:
+    restart: unless-stopped
+  redis:
+    restart: unless-stopped
   backend:
+    build:
+      context: ${YC_BACKEND_SOURCE:?set existing yc-backend source checkout}
     restart: unless-stopped
     environment:
       SPRINGDOC_API_DOCS_ENABLED: 'false'

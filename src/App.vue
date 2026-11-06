@@ -4,8 +4,9 @@ import { useRoute } from 'vue-router'
 import { router } from './router'
 import { session } from './api/session'
 import { clearAccount } from './api/account'
+import { clearRecordQueries } from './domain/record-query'
 const route = useRoute()
-watch(() => session.value?.key, key => { clearAccount(); if (!key) router.replace('/login') })
+watch(() => session.value?.key, key => { clearAccount(); clearRecordQueries(); if (!key) router.replace('/login') })
 </script>
 <template>
   <div class="app-shell">
