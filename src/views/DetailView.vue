@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { request } from '../api/client'
 import { getResource, recordView, can } from '../domain/resources.js'
 import PageState from '../components/PageState.vue'
-const editable = ref(false)
+const editable = ref(false), correctable = ref(false)
 const route = useRoute(), loading = ref(true), error = ref(''), record = ref<any>(null)
 let disposed = false, controller: AbortController | undefined
 onUnmounted(() => { disposed = true; controller?.abort() })
@@ -19,10 +19,11 @@ async function load() {
     editable.value = ['materials','costs'].includes(type) && can(info.permissions, type === 'materials' ? 'sport:material-ggl:update' : 'sport:cost-record:update')
     const raw = await request((resource.queryBase || resource.base) + '/get', { data: { id }, signal: controller.signal })
     if (!raw || String(raw.id) !== id) throw Error('记录不存在或无权访问')
-    if (!disposed) record.value = { ...recordView(type, raw), lines: raw.lines }
+    correctable.value = ['inventory','funds','business','commission'].includes(type) && raw.correctionSupported === true && can(info.permissions, resource.permission.replace(/:query$/,':update'))
+    if (!disposed) record.value = { ...recordView(type, raw), lines: raw.lines, loginAccount: type === 'users' ? `yc-${id}` : '' }
   } catch (e) { if (!disposed) error.value = (e as Error).message }
   finally { if (!disposed) loading.value = false }
 }
 onMounted(load)
 </script>
-<template><router-link :to="'/records?type=' + route.params.type" class="text-link">← 返回经营记录</router-link><div class="page-title"><h1>记录详情</h1><p class="intro">仅展示当前账号可读取的数据。</p></div><PageState :loading="loading" :error="error" @retry="load"><router-link v-if="record && editable" :to="'/catalog/' + route.params.type + '/' + route.params.id + '/edit'" class="module-card quick-link"><strong>编辑此记录</strong><span>读取最新版本后核对修改 ↗</span></router-link><section v-if="record" class="card"><h2>{{ record.title }}</h2><dl><div v-for="field in record.fields" :key="field.key"><dt>{{ field.label }}</dt><dd>{{ field.value }}</dd></div></dl></section><section v-for="(line, index) in record?.lines || []" :key="index" class="card"><h2>{{ line.materialName || '票种明细' }}</h2><dl><div><dt>面值 / 单包价格</dt><dd>{{ line.money ?? '—' }} / {{ line.price ?? '—' }}</dd></div><div><dt>包数 / 张数</dt><dd>{{ line.invPackageNum ?? '—' }} / {{ line.invZhangNum ?? '—' }}</dd></div></dl></section></PageState></template>
+<template><router-link :to="'/records?type=' + route.params.type" class="text-link">← 返回经营记录</router-link><div class="page-title"><h1>记录详情</h1><p class="intro">仅展示当前账号可读取的数据。</p></div><PageState :loading="loading" :error="error" @retry="load"><router-link v-if="record && editable" :to="'/catalog/' + route.params.type + '/' + route.params.id + '/edit'" class="module-card quick-link"><strong>编辑此记录</strong><span>读取最新版本后核对修改 ↗</span></router-link><router-link v-if="record && correctable" :to="'/corrections/' + route.params.type + '/' + route.params.id" class="module-card quick-link"><strong>申请留痕更正</strong><span>填写原因、预览库存资金及报表影响 ↗</span></router-link><section v-if="record" class="card"><h2>{{ record.title }}</h2><dl><div v-if="record.loginAccount"><dt>专属登录号</dt><dd>{{ record.loginAccount }}</dd></div><div v-for="field in record.fields" :key="field.key"><dt>{{ field.label }}</dt><dd>{{ field.value }}</dd></div></dl></section><section v-for="(line, index) in record?.lines || []" :key="index" class="card"><h2>{{ line.materialName || '票种明细' }}</h2><dl><div><dt>面值 / 单包价格</dt><dd>{{ line.money ?? '—' }} / {{ line.price ?? '—' }}</dd></div><div><dt>包数 / 张数</dt><dd>{{ line.invPackageNum ?? '—' }} / {{ line.invZhangNum ?? '—' }}</dd></div></dl></section></PageState></template>

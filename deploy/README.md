@@ -10,3 +10,7 @@
 6. 检查公网 /healthz、/version.json、登录及读取权限。发布记录必须保存前后端提交、镜像ID、JAR SHA256、实际测试数量与探针结果。
 
 回退：先停止本次发布，核对operations中的before-发布号.json，人工将其中镜像ID重新标记为yc-front:test/yc-backend:acceptance，再用部署目录Compose加`--no-build`更新相应服务并核对健康。仅支持应用回退；有数据库迁移时另审查迁移和后续写入，不自动恢复SQL。生产及其他项目不在脚本范围。
+
+容量与复用：Docker VM容量与macOS可用空间不同。脚本在构建前检查VM空间：后端重建至少1GiB，只构建前端至少64MiB；空间不足直接停止，不关闭磁盘健康检查。后端提交与成功发布回执、运行镜像及健康状态全部一致时复用，不重复运行后端测试/构建；前端仍在Docker构建内检查。成功后保存backend-release.json及本次发布回执。
+
+旧构建清理：`python3 deploy/prune-test-images.py`只生成计划；确认后`--execute`。候选仅来自本部署before-*.json的易彩测试镜像，排除任何容器引用、标签/摘要镜像，默认保留最近两份历史镜像；`--keep-history 1`至少保留最近一次回退镜像。脚本从不删除容器、数据卷、SQL备份或其他项目镜像。
