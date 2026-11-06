@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { router } from './router'
 import { session } from './api/session'
-import { clearAccount } from './api/account'
+import { allowed, clearAccount, departments, identity } from './api/account'
 import { clearRecordQueries } from './domain/record-query'
 const route = useRoute()
+const reportPath = computed(() => identity.value && departments.value.length && !allowed('sport:check-ggl:query') && !allowed('sport:check-service:query') ? '/personal-report' : '/reports')
 watch(() => session.value?.key, key => { clearAccount(); clearRecordQueries(); if (!key) router.replace('/login') })
 </script>
 <template>
@@ -15,7 +16,7 @@ watch(() => session.value?.key, key => { clearAccount(); clearRecordQueries(); i
     <van-tabbar v-if="session" route safe-area-inset-bottom>
       <van-tabbar-item to="/" icon="wap-home-o">工作台</van-tabbar-item>
       <van-tabbar-item to="/records" icon="orders-o">记录</van-tabbar-item>
-      <van-tabbar-item to="/reports" icon="chart-trending-o">报表</van-tabbar-item>
+      <van-tabbar-item :to="reportPath" icon="chart-trending-o">报表</van-tabbar-item>
       <van-tabbar-item to="/mine" icon="user-o">我的</van-tabbar-item>
     </van-tabbar>
   </div>

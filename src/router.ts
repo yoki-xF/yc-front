@@ -5,6 +5,7 @@ export const router = createRouter({ history: createWebHashHistory(), routes: [
   { path: '/', component: () => import('./views/WorkspaceView.vue') },
   { path: '/records', component: () => import('./views/RecordsView.vue') },
   { path: '/records/:type/:id', component: () => import('./views/DetailView.vue') },
+  { path: '/operating-day', component: () => import('./views/OperatingDayView.vue') },
   { path: '/personal-report', component: () => import('./views/PersonalReportView.vue') },
   { path: '/reports', component: () => import('./views/ReportsView.vue') },
   { path: '/mine', component: () => import('./views/MineView.vue') },
