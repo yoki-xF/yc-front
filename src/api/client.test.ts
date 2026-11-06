@@ -52,3 +52,9 @@ test('public login requests do not inherit the previous account token', async ()
   const options = fetch.mock.calls[0]?.[1] as any
   expect(options.headers.Authorization).toBeUndefined(); expect(options.headers['tenant-id']).toBe('2')
 })
+test('employee write carries the reviewed operating day and is not replayed on timeout', async()=>{
+ const {request}=await setup(), fetch=vi.fn(async()=>{throw Error('timeout')});vi.stubGlobal('fetch',fetch)
+ await expect(request('/sport/wx/night/count/fund/safe-submit',{method:'POST',operatingDay:'01928a10-aabb-4abc-9abc-abcdef123456',data:{deptId:'9007199254740993'}})).rejects.toThrow('提交操作请先核对结果')
+ expect(fetch).toHaveBeenCalledTimes(1)
+ expect((fetch.mock.calls[0] as unknown as [URL,RequestInit])[1].headers).toMatchObject({'X-Operating-Day':'01928a10-aabb-4abc-9abc-abcdef123456'})
+})

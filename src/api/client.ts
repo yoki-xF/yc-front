@@ -2,12 +2,16 @@ import { session, saveSession, isCurrent } from './session'
 export class ApiError extends Error { constructor(message: string, public code?: number) { super(message) } }
 const base = (import.meta.env.VITE_API_BASE || '/admin-api').replace(/\/$/, '')
 let refreshFlight: { key: string; promise: Promise<void> } | null = null
-interface Options { method?: string; data?: Record<string, unknown>; public?: boolean; tenantId?: string; signal?: AbortSignal }
+interface Options { method?: string; data?: Record<string, unknown>; public?: boolean; tenantId?: string; signal?: AbortSignal; operatingDay?: string }
 async function send(path: string, options: Options, token?: string) {
   const url = new URL(base + path, window.location.origin)
   const method = options.method || 'GET'
   if (method === 'GET') for (const [key, value] of Object.entries(options.data || {})) if (value != null && value !== '') url.searchParams.set(key, String(value))
   const headers: Record<string, string> = { 'content-type': 'application/json' }
+  if (options.operatingDay) {
+    if (!/^[a-f0-9-]{36}$/.test(options.operatingDay)) throw new ApiError('缺少有效营业日，请重新读取')
+    headers['X-Operating-Day'] = options.operatingDay
+  }
   if (token) headers.Authorization = 'Bearer ' + token
   if (options.tenantId) headers['tenant-id'] = options.tenantId
   const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 20000)
