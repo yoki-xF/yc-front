@@ -35,7 +35,7 @@ async function load(replaceDraft=false) {
   if(!departments.value.some(d=>d.id===dept.value))throw Error('请选择已授权的员工门店')
   const actor=String(identity.value!.user.id), login=session.value!.key
   const current=employeeDay(await request('/sport/wx/store/operating-day',{data:{deptId:dept.value},signal:controller.signal}),dept.value,actor)
-  const raw=entrySnapshot(await request(`/sport/wx/night/count/${path}/safe-item`,{data:{deptId:dept.value},signal:controller.signal}))
+  const raw=entrySnapshot(await request(`/sport/wx/night/count/${path}/safe-item`,{data:{deptId:dept.value},operatingDay:current.id,signal:controller.signal}))
   let options: {value:string;label:string}[]=[]
   if(kind==='business') {
    const rows=await request<any[]>('/system/dict-data/type',{data:{type:'class'},signal:controller.signal})
