@@ -14,3 +14,7 @@
 容量与复用：Docker VM容量与macOS可用空间不同。脚本在构建前检查VM空间：后端重建至少1GiB，只构建前端至少64MiB；空间不足直接停止，不关闭磁盘健康检查。后端提交与成功发布回执、运行镜像及健康状态全部一致时复用，不重复运行后端测试/构建；前端仍在Docker构建内检查。成功后保存backend-release.json及本次发布回执。
 
 旧构建清理：`python3 deploy/prune-test-images.py`只生成计划；确认后`--execute`。候选仅来自本部署before-*.json的易彩测试镜像，排除任何容器引用、标签/摘要镜像，默认保留最近两份历史镜像；`--keep-history 1`至少保留最近一次回退镜像。脚本从不删除容器、数据卷、SQL备份或其他项目镜像。
+
+Docker 使用 containerd snapshotter 时，删除最终镜像后仍可能留下持有 JAR 的中间层。先运行 `audit-orphan-backend-images.py` 逐层核验内嵌应用类及 Maven 坐标，再运行 `prune-audited-backend-images.py` 查看计划；审阅后加 `--execute`。所有带标签、容器引用、最近回退镜像及祖先层都保留，不强制删除、不清卷。审计证据超过一小时必须重新核验。
+
+2026-11-07 在线检查确认 `/var/lib/docker` 挂载自独立 `/dev/vdb1[/docker]` 数据盘；其 root 预留从5%降至0%，恢复约1GiB可用空间。系统根盘未改，未重启共享虚拟机。剩余空间仍须每次预检，不以此替代容量规划。

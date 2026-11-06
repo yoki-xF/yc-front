@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Identify unused YC backend images by the embedded JAR identity; plan only."""
-import datetime, json, subprocess, tempfile, uuid, zipfile
+import datetime, json, subprocess, sys, tempfile, uuid, zipfile
 from pathlib import Path
 
 def run(*args):
@@ -15,7 +15,8 @@ with tempfile.TemporaryDirectory(prefix='yc-image-audit-') as directory:
     for image in images:
         if image['Id'] in used or image.get('RepoTags') or image.get('RepoDigests'):
             continue
-        if image.get('Config', {}).get('Entrypoint') != ['sh', '-c', 'exec java $JAVA_OPTS -jar /app/app.jar "$@"', '--']:
+        config = image.get('Config') or {}
+        if config.get('WorkingDir') != '/app' or config.get('Entrypoint') not in (['sh', '-c', 'exec java $JAVA_OPTS -jar /app/app.jar "$@"', '--'], ['/__cacert_entrypoint.sh']):
             continue
         name = 'yc-image-audit-' + uuid.uuid4().hex[:12]
         created = False
@@ -30,7 +31,7 @@ with tempfile.TemporaryDirectory(prefix='yc-image-audit-') as directory:
             if 'Start-Class: cn.jxc.yc.YcApplication' in manifest and 'artifactId=yc-backend' in identity and 'groupId=cn.jxc.yc' in identity:
                 matches.append({'image': image['Id'], 'created': image['Created'], 'size': image['Size'], 'identity': identity.strip()})
         except (subprocess.CalledProcessError, KeyError, zipfile.BadZipFile) as error:
-            print('Skipped image audit:', image['Id'], type(error).__name__)
+            print('Skipped image audit:', image['Id'], type(error).__name__, file=sys.stderr)
         finally:
             if created:
                 run('docker', 'rm', name)
