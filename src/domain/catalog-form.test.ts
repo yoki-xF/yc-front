@@ -3,6 +3,13 @@ import { catalogId, catalogPayload, catalogType, catalogValues, requireCatalogPe
 const context: CatalogContext = {permissions:['*:*:*'],departments:[{id:'9007199254740993',name:'门店'}],writeScopeAllowed:true}
 const material = {materialName:' 票种 ',brandName:'品牌',money:'9999999999.99',price:'0.01',num:'999999999'}
 const cost = {deptId:'9007199254740993',costTypeName:'房租',cost:'999999999',belongTime:'2024-02-29'}
+test('服务器定点整元金额能直接编辑，绝不截断非整元历史金额', () => {
+  const original={id:'1',revision:'a'.repeat(64),...cost,cost:'12.00',belongTime:'2026-11-07T00:00'}
+  const values=catalogValues('costs',original)
+  expect(values.cost).toBe('12')
+  expect(catalogPayload('costs',{...values,costTypeName:'改名'},{...context,original}).cost).toBe(12)
+  for(const invalid of ['12.01','-1.00','1000000000.00','12.001'])expect(()=>catalogValues('costs',{...original,cost:invalid})).toThrow('整元')
+})
 test('exact material command retains decimal and long ID precision, omits unrelated fields', () => {
   expect(catalogPayload('materials',material,context)).toEqual({...material,materialName:'票种',num:999999999})
   expect(catalogId('9007199254740993')).toBe('9007199254740993')

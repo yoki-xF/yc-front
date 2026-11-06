@@ -45,6 +45,9 @@ export function catalogValues(type: CatalogType, row?: Record<string, unknown>):
     values.deptId = row ? catalogId(row.deptId) : ''
     // Preserve the original time on an unchanged date; never silently rewrite historical time.
     if (row) {
+      const integralCost = /^(0|[1-9]\d{0,8})(?:\.0{1,2})?$/.exec(values.cost!)
+      if (!integralCost) throw Error('原成本不是有效整元金额，请联系管理员核对')
+      values.cost = integralCost[1]!
       values.belongTime = dateTime(values.belongTime!).slice(0,10)
     }
   }
