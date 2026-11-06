@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "平台管理",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

@@ -15,3 +15,6 @@ runtime/
 **/target/
 **/.flattened-pom.xml
 node_modules/
+dist/
+coverage/
+*.tsbuildinfo

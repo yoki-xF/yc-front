@@ -1,1 +1,0 @@
-<view wx:if="{{visible}}" class="entry"><button class="entry-button" type="primary" bindtap="open">进入管理工作台</button></view>

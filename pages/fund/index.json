@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "资金盘点",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

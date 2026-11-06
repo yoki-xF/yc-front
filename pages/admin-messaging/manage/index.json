@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "消息与授权管理",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

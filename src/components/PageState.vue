@@ -1,0 +1,2 @@
+<script setup lang="ts">defineProps<{ loading?: boolean; error?: string }>(); defineEmits<{ retry: [] }>()</script>
+<template><section v-if="loading" class="card state" role="status"><van-loading color="#0052d9" />正在读取，请稍候</section><section v-else-if="error" class="card state" role="alert"><van-icon name="warning-o" size="28" color="#b42318" /><p>{{ error }}</p><van-button plain type="primary" @click="$emit('retry')">重试读取</van-button></section><slot v-else /></template>

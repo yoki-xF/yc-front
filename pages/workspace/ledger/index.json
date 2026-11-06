@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "单据与记录",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

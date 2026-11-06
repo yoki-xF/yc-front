@@ -1,4 +1,0 @@
-@import "../../boss/home/index.wxss";
-.page{font-size:30rpx;line-height:1.6}.page textarea{width:100%;box-sizing:border-box;min-height:220rpx;background:#fff;padding:20rpx}.page input{margin:18rpx 0}.page button{font-size:30rpx;white-space:normal}.page>view{margin-bottom:20rpx;overflow-wrap:anywhere}
-
-@import "../../../styles/business-page.wxss";

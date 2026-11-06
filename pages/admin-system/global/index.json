@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "平台配置",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

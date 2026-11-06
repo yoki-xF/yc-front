@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "新建订票单",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

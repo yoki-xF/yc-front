@@ -1,3 +1,5 @@
+> 历史记录：本文描述已废止的小程序或旧迁移过程，不能作为 H5 完成证据。当前入口见 `docs/H5-MIGRATION.md`。
+
 > 历史验证交接：下文旧源码路径已归档删除，不能照旧命令继续开发。当前仅使用 yc-front 与 yc-backend 两仓库；后端在根目录执行 Maven，不再使用 -pl/-am。当前交付状态以新仓库 README 和后端 docs/MIGRATION.md 为准。
 
 # Jimu 原生模板管理交接

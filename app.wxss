@@ -1,2 +1,0 @@
-@import "styles/tokens.wxss";
-page { background: var(--yc-background); color: var(--yc-text); font-size: 28rpx; }

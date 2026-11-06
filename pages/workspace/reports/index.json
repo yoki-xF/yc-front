@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "报表",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

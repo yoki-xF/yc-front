@@ -1,5 +1,0 @@
-@import "../../styles/employee-form.wxss";
-.other { color: #526276; line-height: 1.6; margin-top: 24rpx; }
-.image-row { display: inline-flex; flex-direction: column; margin: 12rpx; align-items: center; } .image-row image { width: 150rpx; height: 150rpx; border-radius: 8rpx; } .image-row button { margin-top: 8rpx; }
-
-@import "../../styles/business-page.wxss";

@@ -1,4 +1,0 @@
-@import "../../../styles/business-page.wxss";
-.yc-page > view { margin: 24rpx 0; line-height: 1.7; overflow-wrap: anywhere; }
-.yc-page input { background: var(--yc-surface); border: 1rpx solid var(--yc-border); border-radius: 12rpx; padding: 20rpx; }
-.yc-page button { margin-top: 20rpx; }

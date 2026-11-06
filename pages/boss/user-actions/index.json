@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "员工账号管理",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

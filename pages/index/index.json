@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "门店管理",
-  "usingComponents": {
-    "boss-entry": "/components/boss-entry/index"
-  }
-}

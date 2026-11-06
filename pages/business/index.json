@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "营业数据",
-  "usingComponents": {
-    "page-heading": "/components/page-heading/index"
-  }
-}

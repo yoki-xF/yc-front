@@ -1,4 +1,0 @@
-@import "../form/index.wxss";
-.page{padding-bottom:calc(40rpx + env(safe-area-inset-bottom))}.card>view{margin:16rpx 0;line-height:1.6}.fund{padding:16rpx 0;border-bottom:1rpx solid #e7ebf0}.page button{margin-top:22rpx;width:100%;max-width:none}
-
-@import "../../../styles/business-page.wxss";
