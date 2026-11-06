@@ -17,7 +17,9 @@ test('营业数据须为启用班次，仅发送可编辑字段并保留原凭�
 test('读取不把缺失资金当零，不接受已损失精度的数字金额',()=>{
  expect(entryValues('fund',null).xj).toBe('')
  expect(entryValues('fund',{xj:'9999999999.99',hskCount:0})).toMatchObject({xj:'9999999999.99',hskCount:'0'})
- expect(()=>entryValues('fund',{xj:1.1})).toThrow()
+ expect(entryValues('fund',{xj:1.1}).xj).toBe('1.1')
+ expect(()=>entryValues('fund',{xj:1.123})).toThrow()
+ expect(()=>entryValues('fund',{xj:10000000000})).toThrow()
  expect(()=>entrySnapshot({revision:'bad',record:null})).toThrow()
  expect(entrySnapshot({revision:'a'.repeat(64),record:null}).record).toBeNull()
 })

@@ -14,7 +14,7 @@ export function entryValues(kind: EntryKind, record: any) {
  const values: Record<string,string> = {}
  for (const f of entryFields(kind)) {
   const value = record?.[f.key]
-  if (typeof value === 'number' && (!Number.isSafeInteger(value) || !f.count)) throw Error('接口金额须以精确字符串返回')
+  if (typeof value === 'number' && (f.count ? !Number.isSafeInteger(value) : !Number.isFinite(value) || Math.abs(value) > 9999999999.99 || !/^-?\d+(\.\d{1,2})?$/.test(String(value)))) throw Error('接口金额或数量超出可安全读取范围')
   values[f.key] = value == null ? (kind === 'fund' ? '' : f.count ? '0' : '0.00') : String(value)
  }
  values.classes = record?.classes || ''
