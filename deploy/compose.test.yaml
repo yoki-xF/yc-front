@@ -1,0 +1,28 @@
+# Extends the existing yc-acceptance project; no new DB or data copy.
+services:
+  backend:
+    restart: unless-stopped
+    environment:
+      SPRINGDOC_API_DOCS_ENABLED: 'false'
+      SPRINGDOC_SWAGGER_UI_ENABLED: 'false'
+      KNIFE4J_ENABLE: 'false'
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+  web:
+    image: yc-front:test
+    container_name: yc-h5-test
+    build:
+      context: ${YC_FRONT_SOURCE:?set existing yc-front source checkout}
+      args:
+        YC_FRONT_SHA: ${YC_FRONT_SHA:?set reviewed frontend commit}
+    restart: unless-stopped
+    ports: ['127.0.0.1:15181:8080']
+    networks: [isolated, h5-edge]
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+    depends_on:
+      backend: {condition: service_healthy}
+networks:
+  h5-edge: {}
