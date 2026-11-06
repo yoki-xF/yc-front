@@ -6,8 +6,9 @@ export interface Department { id: string; name: string }
 export const identity = shallowRef<Identity | null>(null)
 export const departments = shallowRef<Department[]>([])
 export const selectedDept = shallowRef('')
+export const employeeScopeError = shallowRef('')
 export function allowed(permission: string) { return !!identity.value?.permissions.some(p => p === '*:*:*' || p === permission) }
-export function clearAccount() { identity.value = null; departments.value = []; selectedDept.value = '' }
+export function clearAccount() { identity.value = null; departments.value = []; selectedDept.value = ''; employeeScopeError.value = '' }
 export async function loadAccount() {
   const key = session.value?.key
   if (!key) throw Error('请先登录')
@@ -17,9 +18,16 @@ export async function loadAccount() {
   if (!isCurrent(key)) return
   identity.value = info
   // Employee scope is separate from boss management scope; never substitute one for the other.
-  const mobile = await request<{ depts: Department[] }>('/system/auth/get-mobile-permission-info')
-  if (!isCurrent(key)) return
-  if (!Array.isArray(mobile.depts)) throw Error('门店范围数据不完整')
-  departments.value = mobile.depts.map(d => ({ id: String(d.id), name: d.name }))
-  selectedDept.value = departments.value[0]?.id || ''
+  try {
+    const mobile = await request<{ depts: Department[] }>('/system/auth/get-mobile-permission-info')
+    if (!isCurrent(key)) return
+    if (!Array.isArray(mobile?.depts)) throw Error('员工门店范围数据不完整')
+    departments.value = mobile.depts.map(d => ({ id: String(d.id), name: d.name }))
+    selectedDept.value = departments.value[0]?.id || ''
+  } catch (error) {
+    if (!isCurrent(key)) throw error
+    // Boss management queries use their own server-scoped department endpoint.
+    // An unavailable employee scope must never be replaced by that broader scope.
+    employeeScopeError.value = '员工门店范围暂不可用，管理查询仍按你的管理权限开放。可刷新后重试。'
+  }
 }
