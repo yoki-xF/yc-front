@@ -7,6 +7,7 @@ import {session} from '../api/session'
 import {getResource,can} from '../domain/resources.js'
 import {definitions,command,labelled,reports} from '../domain/corrections.js'
 import {correctionPending} from '../domain/correction-pending'
+import {identityId} from '../domain/account-login'
 const route=useRoute(),type=String(route.params.type),id=String(route.params.id)
 const loading=ref(false),ready=ref(false),error=ref(''),record=ref<any>(null),values=ref<Record<string,string>>({}),lines=ref<any[]>([]),reason=ref(''),preview=ref<any>(null),previewCommand=ref<any>(null),pending=ref<any>(null),result=ref<any>(null),history=ref<any[]>([]),blocked=ref(false)
 const fields=computed(()=>record.value?definitions(type,record.value):[]),locked=computed(()=>loading.value||!!pending.value||!!result.value||blocked.value||record.value?.correctionSupported!==true)
@@ -24,8 +25,7 @@ async function load(){
   if(!['inventory','funds','business','commission'].includes(type)||!/^\d+$/.test(id)||id==='0')throw Error('更正记录类型或编号无效')
   const info=await request('/system/auth/get-permission-info',{signal:controller.signal}),resource=getResource(type)
   if(!current())return
-  if(typeof info.user?.id!=='string'||!/^\d+$/.test(info.user.id))throw Error('账号身份数据不完整')
-  actorId=info.user.id
+  actorId=identityId(info.user?.id)
   if(!can(info.permissions,resource.permission)||!can(info.permissions,resource.permission.replace(/:query$/,':update')))throw Error('当前账号没有盘点查询和更正权限')
   const raw=await request(`/sport/boss/records/${type}/get`,{data:{id},signal:controller.signal})
   if(!raw||String(raw.id)!==id)throw Error('记录编号不一致')
@@ -33,7 +33,10 @@ async function load(){
   record.value=raw;values.value=Object.fromEntries(definitions(type,raw).map((f:any)=>[f.key,String(raw[f.key]??'')]));lines.value=(raw.lines||[]).map((l:any)=>({...l}));reason.value=''
   if(raw.correctionHistoryAvailable!==false)history.value=await request('/sport/boss/corrections/history',{data:{type,id},signal:controller.signal})
   if(!current())return
-  pending.value=raw.correctionHistoryAvailable===false?null:correctionPending(sessionStorage.getItem(key()),type,id)
+  const stable=key(),legacy=`yc-correction:${login}:${type}:${id}`,saved=sessionStorage.getItem(stable),old=sessionStorage.getItem(legacy)
+  if(saved&&old&&saved!==old)throw Error('存在多笔待核对更正，请联系管理员核对')
+  pending.value=raw.correctionHistoryAvailable===false?null:correctionPending(saved||old,type,id)
+  if(pending.value&&old){sessionStorage.setItem(stable,JSON.stringify(pending.value));sessionStorage.removeItem(legacy)}
   if(pending.value){values.value={...values.value,...pending.value.fields};reason.value=pending.value.reason;const edits=new Map(pending.value.lines.map((l:any)=>[String(l.id),l]));lines.value=lines.value.map(l=>({...l,...(edits.get(String(l.id)) as any||{})}))}
   ready.value=true
  }catch(e){if(current()){error.value=(e as Error).message;blocked.value=true}}

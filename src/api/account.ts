@@ -1,6 +1,7 @@
 import { shallowRef } from 'vue'
 import { request } from './client'
 import { session, isCurrent } from './session'
+import { identityId } from '../domain/account-login'
 export interface Identity { user: { id: string; nickname?: string; username: string }; permissions: string[] }
 export interface Department { id: string; name: string }
 export const identity = shallowRef<Identity | null>(null)
@@ -15,6 +16,7 @@ export async function loadAccount() {
   clearAccount()
   const info = await request<Identity>('/system/auth/get-permission-info')
   if (!info?.user || !Array.isArray(info.permissions)) throw Error('账号权限数据不完整')
+  info.user.id = identityId(info.user.id)
   if (!isCurrent(key)) return
   identity.value = info
   // Employee scope is separate from boss management scope; never substitute one for the other.

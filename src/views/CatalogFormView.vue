@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { showConfirmDialog } from 'vant'
 import { request } from '../api/client'
 import { session } from '../api/session'
+import { identityId } from '../domain/account-login'
 import { catalogFields, catalogId, catalogPayload, catalogType, catalogValues, requireCatalogPermission, type CatalogDepartment, type CatalogValues } from '../domain/catalog-form'
 const route = useRoute()
 const type = computed(() => { try { return catalogType(route.params.type) } catch { return null } })
@@ -11,9 +12,9 @@ const edit = computed(() => route.params.id != null)
 const title = computed(() => (edit.value ? '编辑' : '新增') + (type.value === 'materials' ? '票种物料' : '成本记录'))
 const values = ref<CatalogValues>({}), original = ref<Record<string, unknown>>(), depts = ref<CatalogDepartment[]>([]), permissions = ref<string[]>([])
 const loading = ref(false), ready = ref(false), uncertain = ref(false), saved = ref(false), scope = ref(false), error = ref(''), success = ref('')
-let version = 0, disposed = false, controller: AbortController | undefined
+let version = 0, disposed = false, controller: AbortController | undefined, actorId = ''
 const locked = computed(() => loading.value || !ready.value || uncertain.value || saved.value)
-function pendingKey() { return `yc-catalog-pending:${session.value?.key}:${type.value}:${route.params.id || 'new'}` }
+function pendingKey() { if (!session.value || !actorId) throw Error('请重新读取账号'); return `yc-catalog-pending:${session.value.tenantId}:${actorId}:${type.value}:${route.params.id || 'new'}` }
 function invalidate() { version++; controller?.abort(); ready.value = false; values.value = {}; original.value = undefined; depts.value = []; permissions.value = []; error.value = ''; success.value = ''; uncertain.value = false; saved.value = false }
 onUnmounted(() => { disposed = true; invalidate() })
 async function load() {
@@ -28,6 +29,7 @@ async function load() {
     if (!active()) return
     if (!Array.isArray(info?.permissions)) throw Error('权限信息不完整')
     requireCatalogPermission(kind, info.permissions, edit.value)
+    actorId = identityId(info.user?.id)
     const departments = kind === 'costs' ? await request('/sport/boss/departments', { signal }) : []
     if (!active()) return
     if (!Array.isArray(departments)) throw Error('门店范围数据不完整')
@@ -42,7 +44,9 @@ async function load() {
     if (kind === 'materials' && probe?.writeScopeAllowed !== true) throw Error('票种物料需要全部数据管理范围')
     if (row && (typeof row.revision !== 'string' || !/^[a-f0-9]{64}$/.test(row.revision))) throw Error('记录版本缺失，请重新读取')
     permissions.value = info.permissions; depts.value = nextDepts; original.value = row; scope.value = probe?.writeScopeAllowed === true; values.value = nextValues
-    ready.value = true; uncertain.value = sessionStorage.getItem(pendingKey()) === '1'; saved.value = false
+    const legacy = `yc-catalog-pending:${key}:${type.value}:${route.params.id || 'new'}`
+    if (sessionStorage.getItem(legacy) === '1') { sessionStorage.setItem(pendingKey(),'1'); sessionStorage.removeItem(legacy) }
+    uncertain.value = sessionStorage.getItem(pendingKey()) === '1'; saved.value = false; ready.value = true
   } catch (e) {
     if (active()) {
       error.value = (e as Error).message
@@ -51,6 +55,7 @@ async function load() {
 }
 async function reread() {
   if (loading.value) return
+  if (!ready.value) { await load(); return }
   const current = version, key = session.value?.key
   try {
     await showConfirmDialog({title:'重新读取',message:uncertain.value&&!edit.value?'新增结果不明，不能在此重复新增。请先到记录列表核对是否已创建。':'重新读取会替换当前输入，请先保留需要核对的内容。',confirmButtonText:'确认读取'})
