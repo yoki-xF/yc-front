@@ -9,6 +9,7 @@ export const router = createRouter({ history: createWebHashHistory(), routes: [
   { path: '/corrections/:type(inventory|funds|business|commission)/:id', component: () => import('./views/CorrectionView.vue') },
   { path: '/catalog/:type(materials|costs)/new', component: () => import('./views/CatalogFormView.vue') },
   { path: '/catalog/:type(materials|costs)/:id/edit', component: () => import('./views/CatalogFormView.vue') },
+  { path: '/cash-ledger', component: () => import('./views/CashLedgerView.vue') },
   { path: '/orders', component: () => import('./views/OrderLedgerView.vue') },
   { path: '/check-status', component: () => import('./views/CheckStatusView.vue') },
   { path: '/count/:kind(morning|evening)', component: () => import('./views/InventoryEntryView.vue') },
