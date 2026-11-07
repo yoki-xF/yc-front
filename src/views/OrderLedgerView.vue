@@ -101,7 +101,7 @@ function displayMoney(v:unknown){try{return decimal(v)}catch{return '金额精�
 async function submit(action:'create'|Action){
  if(locked.value||((action==='create')&&createPending.value))return
  const e=epoch,c=context.value,s=action==='create'?null:action==='edit'?original.value:detail.value
- let succeeded=false,writeKey='',createdId:string|null=null
+ let succeeded=false,writeKey='',writeJournal='',createdId:string|null=null
  busy.value=true;error.value='';notice.value=''
  try{
   const d=await readDay(e);if(!d)throw Error('当前门店未开店，禁止写入')
@@ -138,17 +138,18 @@ async function submit(action:'create'|Action){
   const storageKey=key(s?ledgerId(s.order.id):'create');writeKey=storageKey
   if(localStorage.getItem(storageKey)!==null)throw Error('存在尚未核对的提交，请先核对结果')
   const journal:Journal={action,day:d.id,revision:s?.revision,payload,sentAt:new Date().toISOString()}
-  localStorage.setItem(storageKey,JSON.stringify(journal));verifiedList.value=false;refreshLocks()
+  writeJournal=JSON.stringify(journal)
+  localStorage.setItem(storageKey,writeJournal);verifiedList.value=false;refreshLocks()
   const path=action==='confirm'||action==='cancel'?transitionPath(type.value,action,dept.value,ledgerId(s!.order.id),s!.revision):`/sport/wx/order-ledger/${type.value}/${action}`
   const receipt=await request(path,{method:'POST',data:action==='confirm'||action==='cancel'?undefined:payload,operatingDay:d.id})
   createdId=writeResult(action,receipt)
   // Clear the captured scope only after a definite success, even if the user switched away.
-  localStorage.removeItem(storageKey)
+  if(localStorage.getItem(storageKey)===writeJournal)localStorage.removeItem(storageKey)
   if(!current(e,c))return
   succeeded=true;refreshLocks();editor.value=false;notice.value='操作已成功。请刷新库存与结店预检，必要时重新晚盘；未自动生成最终日报。'
  }catch(err){if(current(e,c)&&err!=='cancel'&&err!=='close'){error.value=message(err)
    if(writeKey&&err instanceof ApiError&&[400,403,10086].includes(err.code||0)){
-    try{localStorage.removeItem(writeKey)}catch{storageError.value='无法清理明确失败的请求，请核对浏览器存储'}
+    try{if(localStorage.getItem(writeKey)===writeJournal)localStorage.removeItem(writeKey)}catch{storageError.value='无法清理明确失败的请求，请核对浏览器存储'}
    }
    refreshLocks()}}
  finally{if(current(e,c)){busy.value=false;if(succeeded)await load();if(createdId&&succeeded)await open(createdId);else if((pending.value||succeeded)&&detail.value){const id=ledgerId(detail.value.order.id);await open(id)}}else busy.value=false}
@@ -160,9 +161,12 @@ async function acknowledge(existing=false){
  try{
   if(existing){if(!s||!verified(j,s))throw Error('重读记录尚未证实状态变化，继续锁定；请联系管理员核查，不可重放')}
   else if(!verifiedList.value)throw Error('请先重新读取列表并逐页核对')
+  const storageKey=key(existing?ledgerId(s!.order.id):'create'),saved=localStorage.getItem(storageKey)
+  if(saved!==JSON.stringify(j))throw Error('待核对请求已变化，请重新读取核对')
   await showConfirmDialog({title:'人工核对提交结果',message:existing?`门店 ${storeName.value}，原请求 ${j.action}；已重读单据 ${s!.order.orderNo}，请核对当前内容和原请求。解除锁不会重放请求。`:`门店 ${storeName.value}：请检查所有相关历史页及单据详情，确认 ${j.sentAt} 的创建结果，避免重复建单。解除锁后也不会自动重放。`,confirmButtonText:'我已核对结果'})
   if(!current(e,c))return
-  localStorage.removeItem(key(existing?ledgerId(s!.order.id):'create'));refreshLocks()
+  if(localStorage.getItem(storageKey)!==saved)throw Error('待核对请求已被其他页面更新，请重新读取核对')
+  localStorage.removeItem(storageKey);refreshLocks()
  }catch(err){if(current(e,c)&&err!=='cancel'&&err!=='close')error.value=message(err)}
 }
 async function initialize(){const login=session.value?.key;try{await loadAccount();if(disposed||login!==session.value?.key)return;if(employeeScopeError.value)throw Error(employeeScopeError.value);if(!departments.value.some(d=>d.id===dept.value))dept.value=departments.value[0]?.id||'';if(validScope.value)await load()}catch(err){error.value=message(err)}}
