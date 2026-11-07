@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { showConfirmDialog } from 'vant'
 import { session, saveSession } from '../api/session'
-import { identity, clearAccount } from '../api/account'
+import { identity, clearAccount, loadAccount } from '../api/account'
 import { request } from '../api/client'
 const busy = ref(false), error = ref('')
+onMounted(async () => {
+  if (identity.value) return
+  const key = session.value?.key
+  busy.value = true
+  try { await loadAccount() } catch (e) { if (session.value?.key === key) error.value = (e as Error).message }
+  finally { if (session.value?.key === key) busy.value = false }
+})
 async function logout() {
   if (busy.value) return
   try { await showConfirmDialog({ title: '退出当前账号', message: '确定退出当前组织账号吗？' }) } catch { return }

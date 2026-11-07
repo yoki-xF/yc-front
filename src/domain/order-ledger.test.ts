@@ -56,7 +56,7 @@ describe('employee order ledger',()=>{
  })
 })
 
-import {writeResult,requireEditorDay} from './order-ledger'
+import {writeResult,requireEditorDay,createdLabel} from './order-ledger'
 it('不完整的成功响应不能清理未知结果；创建回执必须是精确单据ID',()=>{
  expect(writeResult('create','9007199254740993')).toBe('9007199254740993')
  expect(writeResult('confirm',true)).toBeNull()
@@ -70,4 +70,10 @@ it('源库存可超过单笔上限，但表单跨营业日必须重新核对',()
  expect(()=>requireEditorDay('old-day','new-day')).toThrow('营业日')
  expect(()=>requireEditorDay('','new-day')).toThrow()
  expect(()=>requireEditorDay('same-day','same-day')).not.toThrow()
+})
+
+it('创建日期可用于人工查单，不将毫秒时间戳原样显示',()=>{
+ expect(createdLabel('2026-11-07T15:30:01')).toBe('2026-11-07 15:30:01')
+ expect(createdLabel(1794036600000)).toContain('2026')
+ expect(createdLabel(null)).toBe('时间待核对')
 })

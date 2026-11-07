@@ -109,3 +109,9 @@ export function writeResult(action:'create'|Action,result:unknown):string|null {
  if(result!==true)throw Error('单据回执不完整，请保留原请求并核对')
  return null
 }
+
+export function createdLabel(value:unknown):string {
+ if(typeof value==='number'&&Number.isSafeInteger(value)){const d=new Date(value);if(Number.isFinite(d.getTime()))return d.toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})}
+ if(typeof value==='string'&&/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(value))return value.replace('T',' ').slice(0,19)
+ return '时间待核对'
+}
