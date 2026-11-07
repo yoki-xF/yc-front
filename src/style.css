@@ -4,3 +4,5 @@
 .full-row{grid-column:1/-1}.entry-fields h2:not(:first-child){margin-top:16px}.entry-fields label{font-size:15px}.entry-fields{margin-top:18px}
 .upload-field{display:block;margin:18px 0;color:#526782;font-size:14px}.upload-field input{font-size:14px;max-width:100%;overflow:hidden}.voucher-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid #edf1f7}.voucher-row>span{flex:1}.voucher-preview{margin-top:18px}.voucher-preview img{display:block;max-width:100%;max-height:420px;object-fit:contain;margin:0 auto 16px}
 textarea{display:block;width:100%;min-height:100px;margin-top:8px;padding:12px;font:inherit;line-height:1.7;color:#182c47;background:#f8faff;border:1px solid #dce4ef;border-radius:10px;resize:vertical}textarea:focus{outline:2px solid #8cb5ff;outline-offset:1px}.success p{overflow-wrap:anywhere}
+
+.profile-select{display:flex;align-items:center;gap:20px;padding:14px 16px}.profile-select select{flex:1;min-width:0;padding:10px;border:1px solid var(--line,#dce4ef);border-radius:10px;background:#fff;color:inherit;font:inherit}.card li{margin:12px 0;line-height:1.7}
