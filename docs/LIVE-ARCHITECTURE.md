@@ -31,3 +31,11 @@
 后续：冻结稳定发行版本与镜像摘要；单容器资源测量；浏览器发布/观看最小闭环；Java鉴权联调；Mac mini—云公网媒体路径验证；再完成菜单、房间、分享及配额。当前不标记为直播功能已实现。
 
 官方资料：https://github.com/bluenviron/mediamtx ，https://mediamtx.org/docs/publish/web-browsers ，https://github.com/ossrs/srs ，https://github.com/livekit/livekit ，https://docs.livekit.io/transport/self-hosting/ 。
+
+## 2026-11-09 直播间业务首批实现
+
+本机实现Java直播间创建、查询、门店列表；租户与门店校验、原请求幂等、组织总量20间限制、创建者标识。新增追加SQL sql/mysql/20261109_live_rooms.sql，尚未应用到测试数据库。yc.live.enabled默认false，未准备好媒体和表结构时拒绝创建，不向用户伪装为在线。新房间仅NOT_STARTED，不提供伪开播按钮或未经媒体验证的在线状态。新增5项测试，后端总485项通过。
+
+H5增加/live与/live/watch/:id，工作台直播入口、标题创建、门店列表和复制观看链接。分享仍需登录且有门店授权，暂无匿名观看。原创建命令按组织/操作者/门店保存在浏览器，结果未知时同编号核对重试。前端75项测试、类型检查与构建通过，尚未包含新直播界面的自动交互验收。
+
+此批属于基础业务，尚未部署启用。媒体容器、发布/观看短期凭证、场次、真实在线状态、停用/编辑、手机摄像头及ICE/TURN连通仍待开发。Mac mini另执行只读媒体部署评估，本机负责业务代码，不等待远端代替开发。
