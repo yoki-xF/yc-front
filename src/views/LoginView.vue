@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { request } from '../api/client'
 import { saveSession } from '../api/session'
 import { accountLoginSession } from '../domain/account-login'
+import { liveReturn } from '../domain/live-return'
 import { router } from '../router'
 const username = ref(''), password = ref(''), busy = ref(false), error = ref('')
 async function login() {
@@ -12,7 +13,7 @@ async function login() {
   try {
     const result = await request('/system/auth/account-login', { public: true, method: 'POST', data: { account: username.value.trim(), password: password.value } })
     saveSession(accountLoginSession(result, crypto.randomUUID()))
-    password.value = ''; await router.replace('/')
+    password.value = ''; await router.replace(liveReturn(router.currentRoute.value.query.next) || '/')
   } catch (e) { error.value = (e as Error).message } finally { busy.value = false }
 }
 </script>

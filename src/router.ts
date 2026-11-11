@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { liveReturn } from './domain/live-return'
 import { session } from './api/session'
 export const router = createRouter({ history: createWebHashHistory(), routes: [
   { path: '/login', component: () => import('./views/LoginView.vue'), meta: { public: true } },
@@ -25,4 +26,10 @@ export const router = createRouter({ history: createWebHashHistory(), routes: [
   { path: '/mine', component: () => import('./views/MineView.vue') },
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ] })
-router.beforeEach(to => { if (!to.meta.public && !session.value) return '/login'; if (to.path === '/login' && session.value) return '/' })
+router.beforeEach(to => {
+  if (!to.meta.public && !session.value) {
+    const next = liveReturn(to.path)
+    return next ? { path: '/login', query: { next } } : '/login'
+  }
+  if (to.path === '/login' && session.value) return liveReturn(to.query.next) || '/'
+})
