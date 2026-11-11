@@ -23,6 +23,7 @@ export const router = createRouter({ history: createWebHashHistory(), routes: [
   { path: '/reports', component: () => import('./views/ReportsView.vue') },
   { path: '/profile', component: () => import('./views/ProfileView.vue') },
   { path: '/guide', component: () => import('./views/GuideView.vue') },
+  { path: '/platform', component: () => import('./views/PlatformView.vue') },
   { path: '/mine', component: () => import('./views/MineView.vue') },
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ] })
