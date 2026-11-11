@@ -8,8 +8,30 @@ type Row = { id: string; name: string; status: number }
 const kind = ref<Kind>('tenants'), page = ref(1), total = ref(0), search = ref(''), applied = ref('')
 const rows = ref<Row[]>([]), busy = ref(false), error = ref('')
 const authorized = computed(() => !!session.value && identity.value?.permissions.includes('*:*:*'))
-let serial = 0
-function clear() { serial++; rows.value = []; total.value = 0; busy.value = false; error.value = '' }
+const detail = ref<{ name: string; fields: { label: string; value: string }[] } | null>(null)
+const detailBusy = ref(false), detailError = ref('')
+let serial = 0, detailSerial = 0
+function closeDetail() { detailSerial++; detail.value = null; detailBusy.value = false; detailError.value = '' }
+async function openDetail(row: Row) {
+  closeDetail()
+  if (!authorized.value) return
+  const token = detailSerial, resource = kind.value
+  detailBusy.value = true
+  try {
+    const data = await request('/system/admin-native/platform/' + resource + '/get', { data: { id: row.id } })
+    if (token !== detailSerial || !authorized.value) return
+    if (data?.id !== row.id || typeof data.name !== 'string' || ![0, 1].includes(data.status)) throw Error('平台详情返回格式不完整')
+    const fields = [{ label: '状态', value: data.status === 0 ? '启用' : '停用' }]
+    if (resource === 'tenants') {
+      fields.push({ label: '组织类型', value: data.systemTenant === true ? '系统组织' : '客户组织' })
+      if (typeof data.expireTime === 'string' && data.expireTime) fields.push({ label: '有效期', value: data.expireTime.replace('T', ' ') })
+      if (Number.isSafeInteger(data.accountCount)) fields.push({ label: '账号配额', value: String(data.accountCount) })
+    } else if (Array.isArray(data.menuIds)) fields.push({ label: '配置菜单数', value: String(data.menuIds.length) })
+    detail.value = { name: data.name, fields }
+  } catch (err) { if (token === detailSerial) detailError.value = (err as Error).message }
+  finally { if (token === detailSerial) detailBusy.value = false }
+}
+function clear() { closeDetail(); serial++; rows.value = []; total.value = 0; busy.value = false; error.value = '' }
 watch(() => session.value?.key, clear, { flush: 'sync' })
 onUnmounted(clear)
 async function load() {
@@ -53,10 +75,17 @@ onMounted(initialize)
     </section>
     <section class="card">
       <van-empty v-if="!busy && !error && !rows.length" description="没有匹配记录" />
-      <dl v-for="row in rows" :key="row.id"><div><dt>{{ row.name }}</dt><dd>{{ row.status === 0 ? '启用' : '停用' }}</dd></div></dl>
+      <van-cell v-for="row in rows" :key="row.id" :title="row.name" :value="row.status === 0 ? '启用' : '停用'" is-link @click="openDetail(row)" />
       <van-button :disabled="busy || page <= 1" @click="page--; load()">上一页</van-button>
       <span> 第 {{ page }} 页 / 共 {{ total }} 条 </span>
       <van-button :disabled="busy || page * 20 >= total || page >= 100000" @click="page++; load()">下一页</van-button>
+    </section>
+    <van-loading v-if="detailBusy" />
+    <section v-if="detailError" class="card error" role="alert">{{ detailError }}</section>
+    <section v-if="detail" class="card">
+      <h2>{{ detail.name }}</h2>
+      <dl><div v-for="field in detail.fields" :key="field.label"><dt>{{ field.label }}</dt><dd>{{ field.value }}</dd></div></dl>
+      <van-button @click="closeDetail">关闭详情</van-button>
     </section>
   </template>
 </template>
