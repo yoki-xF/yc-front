@@ -6,7 +6,7 @@ const line={materialId:id,packageNum:'2',sheetNum:'3',expectedPrice:'10.10',expe
 describe('employee order ledger',()=>{
  it('limits actions to direction and pending modern orders',()=>{
   expect(allowedActions('transfer','in',order)).toEqual(['edit','cancel'])
-  expect(allowedActions('transfer','out',order)).toEqual(['confirm'])
+  expect(allowedActions('transfer','out',order)).toEqual(['confirm','reject'])
   expect(allowedActions('purchase','in',{stat:'0'})).toEqual(['edit','confirm','cancel'])
   for(const stat of [1,2,3])expect(allowedActions('purchase','in',{stat})).toEqual([])
   expect(allowedActions('transfer','out',{...order,orderNo:'OLD'})).toEqual([])
@@ -77,3 +77,14 @@ it('创建日期可用于人工查单，不将毫秒时间戳原样显示',()=>{
  expect(createdLabel(1794036600000)).toContain('2026')
  expect(createdLabel(null)).toBe('时间待核对')
 })
+
+ it('调出拒绝使用安全接口并可核对未知结果，不混同取消或确认',()=>{
+  expect(transitionPath('transfer','reject','2',id,rev)).toContain('/transfer/reject?deptId=2')
+  expect(()=>transitionPath('purchase','reject','2',id,rev)).toThrow()
+  const j={action:'reject' as const,day:'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',revision:rev,payload:{deptId:'2',id,revision:rev},sentAt:'2026-11-11T00:00:00Z'}
+  expect(readJournal(JSON.stringify(j))).toEqual(j)
+  for(const stat of [0,1,2])expect(verified(j,{order:{stat},items:[],revision:rev,direction:'out'})).toBe(false)
+  expect(verified(j,{order:{stat:3},items:[],revision:rev,direction:'out'})).toBe(true)
+  expect(allowedActions('transfer','out',{...order,stat:3})).toEqual([])
+  expect(allowedActions('transfer','in',order)).not.toContain('reject')
+ })

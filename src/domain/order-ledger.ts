@@ -1,6 +1,6 @@
 export type OrderType = 'purchase' | 'transfer'
 export type Direction = 'in' | 'out'
-export type Action = 'edit' | 'confirm' | 'cancel'
+export type Action = 'edit' | 'confirm' | 'cancel' | 'reject'
 export function ledgerId(v: unknown): string {
  if (typeof v === 'number' && Number.isSafeInteger(v) && v > 0) return String(v)
  if (typeof v !== 'string' || !/^[1-9]\d*$/.test(v) || BigInt(v)>9223372036854775807n) throw Error('编号无效或精度不安全')
@@ -41,7 +41,7 @@ export function choices(raw: any, inventory=false): Choice[] {
 }
 export function allowedActions(type:OrderType,direction:Direction,order:any):Action[]{
  if(String(order?.stat)!=='0'||(type==='transfer'&&!/^T[0-9a-f]{32}$/.test(order?.orderNo)))return []
- return type==='purchase'?['edit','confirm','cancel']:direction==='in'?['edit','cancel']:['confirm']
+ return type==='purchase'?['edit','confirm','cancel']:direction==='in'?['edit','cancel']:[ 'confirm','reject']
 }
 export function lineTotal(lines:Line[]) {
  let total=0n
@@ -84,13 +84,14 @@ export interface Journal { action:'create'|Action; day:string; revision?:string;
 export function readJournal(text:string|null):Journal|null {
  if(text===null)return null
  const j=JSON.parse(text)
- if(!j||!['create','edit','confirm','cancel'].includes(j.action)||typeof j.day!=='string'||!/^([a-f0-9]{8}-)([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(j.day)||!j.payload||typeof j.payload!=='object'||typeof j.sentAt!=='string'||!Number.isFinite(Date.parse(j.sentAt)))throw Error('结果未知记录损坏，禁止提交，请联系管理员核对')
+ if(!j||!['create','edit','confirm','cancel','reject'].includes(j.action)||typeof j.day!=='string'||!/^([a-f0-9]{8}-)([a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(j.day)||!j.payload||typeof j.payload!=='object'||typeof j.sentAt!=='string'||!Number.isFinite(Date.parse(j.sentAt)))throw Error('结果未知记录损坏，禁止提交，请联系管理员核对')
  if(j.action!=='create')revisionOf(j.revision)
  return j
 }
 export function verified(j:Journal,s:Snapshot):boolean {
  if(j.action==='create')return false
  if(j.action==='confirm')return String(s.order.stat)==='1'
+ if(j.action==='reject')return String(s.order.stat)==='3'
  if(j.action==='cancel')return String(s.order.stat)==='2'
  if(!j.revision||s.revision===j.revision||String(s.order.stat)!=='0')return false
  try {
@@ -100,7 +101,8 @@ export function verified(j:Journal,s:Snapshot):boolean {
   return p.items.every(l=>actual.some(a=>a.materialId===l.materialId&&qty(a.packageNum)===qty(l.packageNum)&&qty(a.sheetNum)===qty(l.sheetNum)&&a.expectedPrice===decimal(l.expectedPrice)&&a.expectedMoney===decimal(l.expectedMoney)))&&String(s.order.remark??s.items[0]?.remark??'')===String(p.remark??'')
  }catch{return false}
 }
-export function transitionPath(type:OrderType,action:'confirm'|'cancel',dept:string,id:string,revision:string) {
+export function transitionPath(type:OrderType,action:'confirm'|'cancel'|'reject',dept:string,id:string,revision:string) {
+ if(type==='purchase'&&action==='reject')throw Error('订票不支持调出拒绝')
  return `/sport/wx/order-ledger/${type}/${action}?`+new URLSearchParams({deptId:ledgerId(dept),id:ledgerId(id),revision:revisionOf(revision)})
 }
 
