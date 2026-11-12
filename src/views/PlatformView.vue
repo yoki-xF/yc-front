@@ -18,9 +18,10 @@ type Editor = {
 const base='/system/admin-native/platform'
 const editor=ref<Editor>(), menuOptions=ref<{id:string;name:string}[]>([]), packageOptions=ref<Row[]>([])
 const notice=ref(''), menuFilter=ref('')
+const detail=ref<{row:Row;fields:[string,string][]}>()
 const visibleMenus=computed(()=>menuOptions.value.filter(item=>item.name.includes(menuFilter.value.trim())))
 const legacyMenus=computed(()=>editor.value?.menuIds.filter(id=>!menuOptions.value.some(item=>item.id===id))??[])
-function resetEditor(){editor.value=undefined;menuOptions.value=[];packageOptions.value=[];menuFilter.value='';notice.value=''}
+function resetEditor(){detail.value=undefined;editor.value=undefined;menuOptions.value=[];packageOptions.value=[];menuFilter.value='';notice.value=''}
 
 const authorized = computed(() => !!session.value && canManagePlatform())
 const query = (value:Kind) => allowed((value==='tenants'?'system:tenant:':'system:tenant-package:')+'query')
@@ -65,11 +66,23 @@ async function perform(operation:(token:number)=>Promise<void>){
   catch(err){if(token===serial&&err!=='cancel'&&err!=='close')error.value=(err as Error).message}
   finally{if(token===serial)busy.value=false}
 }
-function newEditor(row?:Row){
+function newEditor(row?:Row, readOnly=false){
   return perform(async token=>{
     const selected=kind.value
     const original=row ? await request(base+'/'+selected+'/get',{data:{id:row.id}}) : {}
     if(token!==serial||!authorized.value)return
+    if (row && (original?.id!==row.id || typeof original.name!=='string' || ![0,1].includes(original.status))) throw Error('平台详情返回格式不完整')
+    if (row && readOnly) {
+      editor.value=undefined
+      const fields:[string,string][]=[['状态',original.status===0?'启用':'停用']]
+      if (selected==='tenants') {
+        fields.push(['组织类型',original.systemTenant===true?'系统组织':'客户组织'])
+        if(typeof original.expireTime==='string'&&original.expireTime)fields.push(['有效期',original.expireTime.replace('T',' ')])
+        if(Number.isSafeInteger(original.accountCount))fields.push(['账号配额',String(original.accountCount)])
+      } else if(Array.isArray(original.menuIds))fields.push(['配置菜单数',String(original.menuIds.length)])
+      detail.value={row:{id:row.id,name:original.name,status:original.status},fields}
+      return
+    }
     if(selected==='packages'){
       const choices=await request<{id:string;name:string}[]>(base+'/package-menus')
       if(token!==serial||!authorized.value)return
@@ -86,6 +99,7 @@ function newEditor(row?:Row){
       }while(options.length<expected)
       packageOptions.value=options.filter(item=>item.status===0||item.id===String(original.packageId))
     }
+    detail.value=undefined
     menuFilter.value=''
     editor.value={
       id:row?.id,revision:original.revision,systemTenant:original.systemTenant,name:String(original.name??''),status:Number(original.status??0),
@@ -162,10 +176,16 @@ onMounted(initialize)
     </section>
     <section class="card">
       <van-empty v-if="!busy && !error && !rows.length" description="没有匹配记录" />
-      <dl v-for="row in rows" :key="row.id"><div><dt>{{ row.name }}</dt><dd>{{ row.status === 0 ? '启用' : '停用' }} <van-button size="small" :disabled="busy" @click="newEditor(row)">查看与编辑</van-button></dd></div></dl>
+      <van-cell v-for="row in rows" :key="row.id" :title="row.name" :value="row.status===0?'启用':'停用'" is-link :clickable="!busy" @click="newEditor(row,true)"/>
       <van-button :disabled="busy || page <= 1" @click="page--; load()">上一页</van-button>
       <span> 第 {{ page }} 页 / 共 {{ total }} 条 </span>
       <van-button :disabled="busy || page * 20 >= total || page >= 100000" @click="page++; load()">下一页</van-button>
+    </section>
+    <section v-if="detail" class="card">
+      <h2>{{ detail.row.name }}</h2>
+      <dl><div v-for="[label,value] in detail.fields" :key="label"><dt>{{ label }}</dt><dd>{{ value }}</dd></div></dl>
+      <van-button v-if="can('update') || can('delete')" :disabled="busy" @click="newEditor(detail.row)">维护配置</van-button>
+      <van-button :disabled="busy" @click="resetEditor">关闭详情</van-button>
     </section>
     <form v-if="editor" class="card" @submit.prevent="save">
       <h2>{{ editor.id ? '编辑' : '新增' }}{{ kind === 'tenants' ? '组织' : '套餐' }}</h2>
