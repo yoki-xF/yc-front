@@ -42,3 +42,10 @@ test('original revision/day stay locked; reread comparison never resolves or ret
  for(const changed of [{...day,date:'2026-11-10'},{...day,id:'22345678-abcd-abcd-abcd-123456789abc'}])expect(()=>requireActivityDay(j.day,changed)).toThrow()
  expect(()=>activityJournal(scope,{...day,date:'2026-02-30'},j.payload)).toThrow()
 })
+
+test('activity response accepts precise numeric fields from the legacy backend',()=>{
+ const numeric={deptId:10,activityId:12,activityName:'活动',userId:13,salesAmount:1.25}
+ expect(activitySnapshot({revision,items:[numeric]},'10').items[0]).toEqual({...numeric,deptId:'10',activityId:'12',userId:'13',salesAmount:'1.25'})
+ expect(()=>activitySnapshot({revision,items:[{...numeric,activityId:Number.MAX_SAFE_INTEGER+1}]},'10')).toThrow()
+ expect(()=>activitySnapshot({revision,items:[{...numeric,salesAmount:1.251}]},'10')).toThrow()
+})

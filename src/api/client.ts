@@ -2,7 +2,7 @@ import { session, saveSession, isCurrent } from './session'
 export class ApiError extends Error { constructor(message: string, public code?: number) { super(message) } }
 const base = (import.meta.env.VITE_API_BASE || '/admin-api').replace(/\/$/, '')
 let refreshFlight: { key: string; promise: Promise<void> } | null = null
-interface Options { method?: string; data?: Record<string, unknown>; public?: boolean; tenantId?: string; signal?: AbortSignal; operatingDay?: string; file?: File; responseType?: 'blob' }
+interface Options { method?: string; data?: Record<string, unknown>; public?: boolean; tenantId?: string; signal?: AbortSignal; operatingDay?: string; file?: File; fileField?: string; responseType?: 'blob' | 'xlsx' | 'csv' }
 async function send(path: string, options: Options, token?: string) {
   const url = new URL(base + path, window.location.origin)
   const method = options.method || 'GET'
@@ -23,15 +23,20 @@ async function send(path: string, options: Options, token?: string) {
     let payload: BodyInit | undefined = method === 'GET' ? undefined : JSON.stringify(options.data || {})
     if (options.file) {
       if (method === 'GET') throw new ApiError('文件上传需要提交请求')
-      const form = new FormData(); form.append('file', options.file)
+      const form = new FormData(); form.append(options.fileField ?? 'file', options.file)
       for (const [key,value] of Object.entries(options.data || {})) if (value != null) form.append(key,String(value))
       payload = form
     }
     const response = await fetch(url, { method, headers, body: payload, signal: controller.signal, credentials: 'omit', cache: 'no-store' })
     if (options.responseType === 'blob' && response.ok && ['image/jpeg','image/png','image/webp'].includes(response.headers.get('content-type')?.split(';')[0] || '')) return await response.blob()
+    if (options.responseType === 'xlsx' && response.ok &&
+        response.headers.get('content-type')?.split(';')[0] === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') return await response.blob()
+    if (options.responseType === 'csv' && response.ok && response.headers.get('content-type')?.split(';')[0] === 'text/csv') return await response.blob()
     const body = await response.json().catch(() => null)
     if (response.status === 401 || body?.code === 401) throw new ApiError('登录已过期，请重新登录', 401)
     if (!response.ok || body?.code !== 0) throw new ApiError(body?.msg || '服务请求失败，请稍后重试', body?.code || response.status)
+    if (options.responseType === 'csv') throw new ApiError('导出文件格式无效')
+    if (options.responseType === 'xlsx') throw new ApiError('导入模板格式无效')
     if (options.responseType === 'blob') throw new ApiError('凭证格式无效或暂不可预览')
     return body.data
   } catch (error) {

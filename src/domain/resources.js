@@ -50,4 +50,4 @@ function query(key, filters, pageNo) {
   if (r.searchField && filters.keyword && filters.keyword.trim()) data[r.searchField] = filters.keyword.trim()
   return data
 }
-export { resources, getResource, can, recordView, query }
+export { resources, getResource, can, display, recordView, query }

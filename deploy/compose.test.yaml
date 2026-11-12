@@ -1,9 +1,5 @@
 # Extends the existing yc-acceptance project; no new DB or data copy.
 services:
-  mysql:
-    restart: unless-stopped
-  redis:
-    restart: unless-stopped
   backend:
     build:
       context: ${YC_BACKEND_SOURCE:?set existing yc-backend source checkout}
@@ -12,6 +8,7 @@ services:
       SPRINGDOC_API_DOCS_ENABLED: 'false'
       SPRINGDOC_SWAGGER_UI_ENABLED: 'false'
       KNIFE4J_ENABLE: 'false'
+      YC_LIVE_ENABLED: 'true'
     logging:
       driver: json-file
       options: {max-size: 10m, max-file: '3'}

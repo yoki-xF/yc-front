@@ -36,4 +36,22 @@ function normalize(raw,filters){
  return {rows,ranked,summary:{...summary,rankedStores:ranked.length,totalSales:money(add(add(total.instantSales,total.electronicSales),total.sportsBettingSales)),...Object.fromEntries(METRICS.map(k=>[k,money(total[k])]))}}
 }
 
-export { RULE, days, period, normalize, money, cents }
+function reportCsv(report, range) {
+ const header=['范围','门店','营业日','状态','总销量','即开','电彩','竞彩','资金账差','错票']
+ const metrics=['totalSales',...METRICS]
+ const rows=report.rows.flatMap(store=>store.days.map(day=>[
+  range,store.deptName,day.businessDate,day.statusLabel,...metrics.map(key=>day[key]??'')
+ ]))
+ const csvText=value=>{
+  const text=String(value)
+  const safe=/^[\s]*[=+@-]/.test(text)&&! /^-?\d+(\.\d+)?$/.test(text)?"'"+text:text
+  return '"'+safe.replaceAll('"','""')+'"'
+ }
+ return '\ufeff'+[
+  header,
+  [range,'全部所选门店','','已核对合计',...metrics.map(key=>report.summary[key])],
+  ...rows,
+ ].map(row=>row.map(csvText).join(',')).join('\r\n')+'\r\n'
+}
+
+export { RULE, days, period, normalize, money, cents, reportCsv }

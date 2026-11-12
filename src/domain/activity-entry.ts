@@ -7,6 +7,9 @@ export function activityId(value:unknown):string {
  if(typeof value!=='string')throw Error('编号必须为精确字符串')
  return ledgerId(value)
 }
+function activityResponseId(value:unknown):string {
+ return activityId(typeof value==='number'&&Number.isSafeInteger(value)?String(value):value)
+}
 export function activityAmount(value:unknown):string {
  const result=decimal(value)
  if(BigInt(result.replace('.',''))>999999999999n)throw Error('促销金额上限9999999999.99元')
@@ -22,8 +25,8 @@ export function activitySnapshot(raw:any,dept:string):ActivitySnapshot {
  activityId(dept);const revision=revisionOf(raw?.revision)
  if(!Array.isArray(raw?.items)||raw.items.length>100)throw Error('活动列表不完整')
  const items:ActivityLine[]=raw.items.map((r:any):ActivityLine=>{
-  if(activityId(r?.deptId)!==dept||typeof r.activityName!=='string'||!r.activityName.trim())throw Error('活动门店或名称无效')
-  return {deptId:dept,activityId:activityId(r.activityId),activityName:r.activityName,userId:r.userId==null?'':activityId(r.userId),salesAmount:r.salesAmount==null?'':activityAmount(r.salesAmount)}
+  if(activityResponseId(r?.deptId)!==dept||typeof r.activityName!=='string'||!r.activityName.trim())throw Error('活动门店或名称无效')
+  return {deptId:dept,activityId:activityResponseId(r.activityId),activityName:r.activityName,userId:r.userId==null?'':activityResponseId(r.userId),salesAmount:r.salesAmount==null?'':activityAmount(typeof r.salesAmount==='number'?String(r.salesAmount):r.salesAmount)}
  })
  if(new Set(items.map(i=>i.activityId)).size!==items.length)throw Error('活动编号重复')
  return {revision,items}
@@ -40,23 +43,24 @@ export function activityPayload(snapshot:ActivitySnapshot,lines:ActivityLine[],d
  })
  return {deptId:dept,revision:revisionOf(snapshot.revision),items}
 }
-export interface ActivityJournal {version:1;scope:ActivityScope;day:{id:string;date:string};payload:ReturnType<typeof activityPayload>}
+export interface ActivityJournal {version:1;requestKey?:string;scope:ActivityScope;day:{id:string;date:string};payload:ReturnType<typeof activityPayload>}
 export function activityJournalKey(scope:ActivityScope){return `yc-activity-pending-v1:${activityId(scope.tenantId)}:${activityId(scope.actorId)}:${activityId(scope.deptId)}`}
 export function requireActivityDay(original:{id:string;date:string},current:{id:string;date:string}){
  if(!dayUuid(original.id)||!/^\d{4}-\d{2}-\d{2}$/.test(original.date)||!Number.isFinite(Date.parse(original.date))||new Date(original.date).toISOString().slice(0,10)!==original.date||original.id!==current.id||original.date!==current.date)throw Error('原营业日已结束或变化，禁止无原因改写')
 }
-export function activityJournal(scope:ActivityScope,day:{id:string;date:string},payload:ReturnType<typeof activityPayload>):ActivityJournal {
+export function activityJournal(scope:ActivityScope,day:{id:string;date:string},payload:ReturnType<typeof activityPayload>,requestKey?:string):ActivityJournal {
+ if(requestKey!==undefined&&!dayUuid(requestKey))throw Error('原请求编号无效')
  activityJournalKey(scope);requireActivityDay(day,day)
  const snapshot=activitySnapshot({revision:payload.revision,items:payload.items.map(i=>({...i,activityName:i.activityId}))},scope.deptId)
  const checked=activityPayload(snapshot,snapshot.items,scope.deptId,payload.items.map(i=>({value:i.userId})))
  if(JSON.stringify(checked)!==JSON.stringify(payload))throw Error('原请求格式不完整')
- return JSON.parse(JSON.stringify({version:1,scope,day,payload}))
+ return JSON.parse(JSON.stringify({version:1,requestKey,scope,day,payload}))
 }
 export function readActivityJournal(text:string|null,scope:ActivityScope):ActivityJournal|null {
  if(text===null)return null
  const raw=JSON.parse(text)
  if(raw?.version!==1||raw.scope?.tenantId!==scope.tenantId||raw.scope?.actorId!==scope.actorId||raw.scope?.deptId!==scope.deptId)throw Error('原请求范围不符，禁止新写入')
- return activityJournal(scope,raw.day,raw.payload)
+ return activityJournal(scope,raw.day,raw.payload,raw.requestKey)
 }
 export function compareActivity(journal:ActivityJournal,snapshot:ActivitySnapshot,day:{id:string;date:string}):string {
  requireActivityDay(journal.day,day)

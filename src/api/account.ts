@@ -2,13 +2,17 @@ import { shallowRef } from 'vue'
 import { request } from './client'
 import { session, isCurrent } from './session'
 import { identityId } from '../domain/account-login'
-export interface Identity { user: { id: string; nickname?: string; username: string }; permissions: string[] }
+export interface Identity { user: { id: string; nickname?: string; username: string }; permissions: string[]; roles?: string[] }
 export interface Department { id: string; name: string }
 export const identity = shallowRef<Identity | null>(null)
 export const departments = shallowRef<Department[]>([])
 export const selectedDept = shallowRef('')
 export const employeeScopeError = shallowRef('')
 export function allowed(permission: string) { return !!identity.value?.permissions.some(p => p === '*:*:*' || p === permission) }
+export function canManagePlatform() {
+  return Array.isArray(identity.value?.roles) && identity.value.roles.includes('super_admin') &&
+    (allowed('system:tenant:query') || allowed('system:tenant-package:query'))
+}
 export function clearAccount() { identity.value = null; departments.value = []; selectedDept.value = ''; employeeScopeError.value = '' }
 export async function loadAccount() {
   const key = session.value?.key

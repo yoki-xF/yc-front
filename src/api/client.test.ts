@@ -68,3 +68,15 @@ test('private voucher preview returns an image blob and checks the active accoun
  const {request}=await setup();vi.stubGlobal('fetch',vi.fn(async()=>new Response(new Blob(['fixture'],{type:'image/png'}),{headers:{'content-type':'image/png','cache-control':'private, no-store'}})))
  expect((await request<Blob>('/sport/wx/night/count/service/voucher',{data:{deptId:'1',ref:'pv:'+'a'.repeat(32)},responseType:'blob'})).type).toBe('image/png')
 })
+test('profile avatar upload uses the server multipart field and the current session', async () => {
+  const { request } = await setup()
+  const fetch = vi.fn(async () => response('/avatar.png'))
+  vi.stubGlobal('fetch', fetch)
+  const file = new File(['fixture'], 'avatar.png', { type: 'image/png' })
+  await expect(request('/system/boss/profile/avatar', { method: 'POST', file, fileField: 'avatarFile' })).resolves.toBe('/avatar.png')
+  const [, options] = fetch.mock.calls[0] as unknown as [URL, RequestInit]
+  expect(options.headers).toMatchObject({ Authorization: 'Bearer old', 'tenant-id': '9007199254740993' })
+  expect(options.headers).not.toHaveProperty('content-type')
+  expect((options.body as FormData).get('avatarFile')).toEqual(file)
+  expect((options.body as FormData).has('file')).toBe(false)
+})

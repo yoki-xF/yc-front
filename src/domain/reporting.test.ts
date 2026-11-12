@@ -27,3 +27,20 @@ const off=r.normalize(raw([store('1',[{businessDate:'2026-11-01',status:'NOT_OPE
 assert.throws(()=>r.cents('90071992547409.92'),/范围/);assert.equal(r.money(r.cents('90071992547409.91')),'90071992547409.91')
 
 })
+
+test('日报 CSV 使用页面核对合计，待核对金额留空，门店名不会成为公式', () => {
+  const filters = { start: '2026-11-01', end: '2026-11-02' }
+  const report = r.normalize({
+    schemaVersion: 2, ...filters, stores: [{
+      deptId: '1', deptName: '=门店,"甲"', days: [
+        { businessDate: filters.start, status: 'FRESH', closed: true, ruleVersion: r.RULE, totalSales: '6.00',
+          instantSales: '1.00', electronicSales: '2.00', sportsBettingSales: '3.00', variance: '-0.01', wrongTicket: '0.00' },
+        { businessDate: filters.end, status: 'STALE' },
+      ],
+    }],
+  }, filters)
+  const csv = r.reportCsv(report, filters.start + ' 至 ' + filters.end)
+  assert.match(csv, /"已核对合计","6.00","1.00","2.00","3.00","-0.01","0.00"/)
+  assert.ok(csv.includes(`"'=门店,""甲"""`))
+  assert.match(csv, /"需重新生成","","","","","",""\r\n/)
+})

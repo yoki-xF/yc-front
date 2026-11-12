@@ -10,7 +10,13 @@ for repo in "$YC_FRONT_SOURCE" "$YC_BACKEND_SOURCE"; do
   test -z "$(git -C "$repo" status --porcelain)" || { echo "Dirty source: $repo" >&2; exit 1; }
   test "$(git -C "$repo" rev-parse HEAD)" = "$(git -C "$repo" rev-parse origin/main)" || { echo 'Source must match fetched origin/main' >&2; exit 1; }
 done
-test "$(docker inspect --format '{{index .Config.Labels "com.docker.compose.project"}}' yc-acceptance-mysql)" = yc-acceptance
+for dependency in local-shared-mysql local-shared-redis; do
+  test "$(docker inspect --format '{{.State.Running}}' "$dependency")" = true
+  test "$(docker inspect --format '{{if index .NetworkSettings.Networks "yc-acceptance_isolated"}}yes{{end}}' "$dependency")" = yes || {
+    echo "$dependency must be attached to yc-acceptance_isolated" >&2
+    exit 1
+  }
+done
 mkdir -p "$DEPLOY/backups" "$OPS"
 chmod 700 "$OPS" "$DEPLOY/backups"
 export YC_FRONT_SHA="$(git -C "$YC_FRONT_SOURCE" rev-parse HEAD)"
@@ -46,18 +52,21 @@ for name in ['yc-h5-test','yc-acceptance-backend']:
     if result.returncode==0:images[name]=result.stdout.strip()
 (ops/('before-'+os.environ['YC_RELEASE']+'.json')).write_text(json.dumps({'images':images},indent=2))
 p=root/'backups'/('before-'+os.environ['YC_RELEASE']+'.sql.gz')
-result=subprocess.run(['docker','exec','yc-acceptance-mysql','sh','-c','MYSQL_PWD="$MYSQL_ROOT_PASSWORD" exec mysqldump -uroot --single-transaction --routines --triggers --databases yc_acceptance'],capture_output=True,check=True)
+result=subprocess.run(['docker','exec','local-shared-mysql','sh','-c','MYSQL_PWD="$MYSQL_ROOT_PASSWORD" exec mysqldump -uroot --single-transaction --routines --triggers --databases yc_acceptance'],capture_output=True,check=True)
 with gzip.open(p,'wb') as output:output.write(result.stdout)
 p.chmod(0o600)
 print('Test DB backup SHA256:',hashlib.sha256(p.read_bytes()).hexdigest())
 PY
+for migration in 20261109_live_rooms.sql 20261111_mobile_activity_request.sql; do
+  docker exec -i local-shared-mysql sh -c 'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" exec mysql -uroot yc_acceptance' < "$YC_BACKEND_SOURCE/sql/mysql/$migration"
+done
 cp "$YC_BACKEND_SOURCE/compose.acceptance.yaml" "$DEPLOY/compose.yaml"
 cp "$YC_FRONT_SOURCE/deploy/compose.test.yaml" "$DEPLOY/compose.h5-test.yaml"
 compose() { docker compose --env-file "$DEPLOY/.env" -f "$DEPLOY/compose.yaml" -f "$DEPLOY/compose.h5-test.yaml" --profile app "$@"; }
 compose config --quiet
 if test "$YC_SKIP_BACKEND" != 1; then
   cd "$YC_BACKEND_SOURCE"
-  JAVA_HOME=/opt/homebrew/opt/openjdk@21 mvn -s "$OPS/maven-settings.xml" -Dmaven.repo.local=/private/tmp/yc-maven-repository -Dmaven-surefire-plugin.version=3.5.6 -DskipTests=false -Dmaven.test.skip=false -DargLine=-javaagent:/private/tmp/yc-maven-repository/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar package > "$OPS/backend-build-$YC_RELEASE.log" 2>&1
+  JAVA_HOME=/opt/homebrew/opt/openjdk@21 mvn -s "${YC_MAVEN_SETTINGS:-$OPS/maven-settings.xml}" -Dmaven.repo.local=/private/tmp/yc-maven-repository -Dmaven-surefire-plugin.version=3.5.6 -DskipTests=false -Dmaven.test.skip=false -DargLine=-javaagent:/private/tmp/yc-maven-repository/net/bytebuddy/byte-buddy-agent/1.14.19/byte-buddy-agent-1.14.19.jar package > "$OPS/backend-build-$YC_RELEASE.log" 2>&1
   compose build backend > "$OPS/backend-docker-build-$YC_RELEASE.log" 2>&1
   compose up -d --wait backend
 else
