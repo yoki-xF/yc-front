@@ -15,7 +15,7 @@ watch(() => session.value?.key, key => { clearAccount(); clearRecordQueries(); i
 </script>
 <template>
   <div class="app-shell">
-    <header class="brand"><router-link to="/" class="brand-mark">易</router-link><div><strong>易彩</strong><span>门店经营管理</span></div><span class="edition">H5</span></header>
+    <header class="brand"><router-link to="/" class="brand-mark">易</router-link><div><strong>易彩</strong><span>门店经营管理</span></div></header>
     <main><section v-if="pageError" class="card error" role="alert">{{pageError}}<van-button @click="reloadPage">刷新页面</van-button></section><router-view :key="route.fullPath" /></main>
     <van-tabbar v-if="session" route safe-area-inset-bottom>
       <van-tabbar-item to="/" icon="wap-home-o">工作台</van-tabbar-item>
